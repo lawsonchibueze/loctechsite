@@ -2,13 +2,8 @@ import { ModelInit, MutableModel, __modelMeta__, ManagedIdentifier } from "@aws-
 // @ts-ignore
 import { LazyLoading, LazyLoadingDisabled } from "@aws-amplify/datastore";
 
-export enum Level {
-  FOUNDATION = "FOUNDATION",
-  INTERMEDIATE = "INTERMEDIATE",
-  ADVANCE = "ADVANCE"
-}
-
-export enum CourseCategory {
+export enum Category {
+  AUTOCAD = "AUTOCAD",
   DATA_SCIENCE = "DATA_SCIENCE",
   WEB_DEVELOPMENT = "WEB_DEVELOPMENT",
   CREATIVE_GRAPHICS_DESIGN = "CREATIVE_GRAPHICS_DESIGN",
@@ -18,50 +13,17 @@ export enum CourseCategory {
   PROJECT_MANAGEMENT = "PROJECT_MANAGEMENT",
   NETWORKING = "NETWORKING",
   PROGRAMMING = "PROGRAMMING",
-  AUTOCAD = "AUTOCAD",
   DIGITAL_MARKETING = "DIGITAL_MARKETING",
   FINANCE_ACCOUNTING = "FINANCE_ACCOUNTING"
 }
 
-
-
-type EagerInstructor = {
-  readonly [__modelMeta__]: {
-    identifier: ManagedIdentifier<Instructor, 'id'>;
-    readOnlyFields: 'createdAt' | 'updatedAt';
-  };
-  readonly id: string;
-  readonly name: string;
-  readonly bio: string;
-  readonly title?: string | null;
-  readonly linkedin: string;
-  readonly twitter: string;
-  readonly image: string;
-  readonly createdAt?: string | null;
-  readonly updatedAt?: string | null;
+export enum Level {
+  FOUNDATION = "FOUNDATION",
+  INTERMEDIATE = "INTERMEDIATE",
+  ADVANCE = "ADVANCE"
 }
 
-type LazyInstructor = {
-  readonly [__modelMeta__]: {
-    identifier: ManagedIdentifier<Instructor, 'id'>;
-    readOnlyFields: 'createdAt' | 'updatedAt';
-  };
-  readonly id: string;
-  readonly name: string;
-  readonly bio: string;
-  readonly title?: string | null;
-  readonly linkedin: string;
-  readonly twitter: string;
-  readonly image: string;
-  readonly createdAt?: string | null;
-  readonly updatedAt?: string | null;
-}
 
-export declare type Instructor = LazyLoading extends LazyLoadingDisabled ? EagerInstructor : LazyInstructor
-
-export declare const Instructor: (new (init: ModelInit<Instructor>) => Instructor) & {
-  copyOf(source: Instructor, mutator: (draft: MutableModel<Instructor>) => MutableModel<Instructor> | void): Instructor;
-}
 
 type EagerCourse = {
   readonly [__modelMeta__]: {
@@ -73,13 +35,13 @@ type EagerCourse = {
   readonly descriptions: string;
   readonly price: number;
   readonly excerpt: string;
-  readonly image: string;
+  readonly image?: string | null;
   readonly video?: string | null;
-  readonly category: CourseCategory | keyof typeof CourseCategory;
-  readonly duration: number;
-  readonly learning_objective?: string[] | null;
+  readonly category: Category | keyof typeof Category;
+  readonly duration?: number | null;
+  readonly learningObjective?: (string | null)[] | null;
   readonly level?: Level | keyof typeof Level | null;
-  readonly curriculum?: string[] | null;
+  readonly curriculum?: (string | null)[] | null;
   readonly isFeatured: boolean;
   readonly createdAt?: string | null;
   readonly updatedAt?: string | null;
@@ -95,13 +57,13 @@ type LazyCourse = {
   readonly descriptions: string;
   readonly price: number;
   readonly excerpt: string;
-  readonly image: string;
+  readonly image?: string | null;
   readonly video?: string | null;
-  readonly category: CourseCategory | keyof typeof CourseCategory;
-  readonly duration: number;
-  readonly learning_objective?: string[] | null;
+  readonly category: Category | keyof typeof Category;
+  readonly duration?: number | null;
+  readonly learningObjective?: (string | null)[] | null;
   readonly level?: Level | keyof typeof Level | null;
-  readonly curriculum?: string[] | null;
+  readonly curriculum?: (string | null)[] | null;
   readonly isFeatured: boolean;
   readonly createdAt?: string | null;
   readonly updatedAt?: string | null;

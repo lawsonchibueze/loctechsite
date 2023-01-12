@@ -1,15 +1,15 @@
 {
   "staging": {
     "awscloudformation": {
-      "AuthRoleName": "amplify-loctechapps-staging-180446-authRole",
-      "UnauthRoleArn": "arn:aws:iam::484645543282:role/amplify-loctechapps-staging-180446-unauthRole",
-      "AuthRoleArn": "arn:aws:iam::484645543282:role/amplify-loctechapps-staging-180446-authRole",
+      "AuthRoleName": "amplify-amplify628b805112a44-staging-111646-authRole",
+      "UnauthRoleArn": "arn:aws:iam::484645543282:role/amplify-amplify628b805112a44-staging-111646-unauthRole",
+      "AuthRoleArn": "arn:aws:iam::484645543282:role/amplify-amplify628b805112a44-staging-111646-authRole",
       "Region": "us-west-2",
-      "DeploymentBucketName": "amplify-loctechapps-staging-180446-deployment",
-      "UnauthRoleName": "amplify-loctechapps-staging-180446-unauthRole",
-      "StackName": "amplify-loctechapps-staging-180446",
-      "StackId": "arn:aws:cloudformation:us-west-2:484645543282:stack/amplify-loctechapps-staging-180446/1d636880-86da-11ed-adb0-022bb55ffc87",
-      "AmplifyAppId": "d2p5f1lth1s35l"
+      "DeploymentBucketName": "amplify-amplify628b805112a44-staging-111646-deployment",
+      "UnauthRoleName": "amplify-amplify628b805112a44-staging-111646-unauthRole",
+      "StackName": "amplify-amplify628b805112a44-staging-111646",
+      "StackId": "arn:aws:cloudformation:us-west-2:484645543282:stack/amplify-amplify628b805112a44-staging-111646/9a19bc80-926a-11ed-b18c-027572b4f05b",
+      "AmplifyAppId": "d1b3auu8c4bkoh"
     }
   }
 }

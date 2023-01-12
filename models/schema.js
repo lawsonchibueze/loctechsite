@@ -1,99 +1,5 @@
 export const schema = {
     "models": {
-        "Instructor": {
-            "name": "Instructor",
-            "fields": {
-                "id": {
-                    "name": "id",
-                    "isArray": false,
-                    "type": "ID",
-                    "isRequired": true,
-                    "attributes": []
-                },
-                "name": {
-                    "name": "name",
-                    "isArray": false,
-                    "type": "String",
-                    "isRequired": true,
-                    "attributes": []
-                },
-                "bio": {
-                    "name": "bio",
-                    "isArray": false,
-                    "type": "String",
-                    "isRequired": true,
-                    "attributes": []
-                },
-                "title": {
-                    "name": "title",
-                    "isArray": false,
-                    "type": "String",
-                    "isRequired": false,
-                    "attributes": []
-                },
-                "linkedin": {
-                    "name": "linkedin",
-                    "isArray": false,
-                    "type": "AWSURL",
-                    "isRequired": true,
-                    "attributes": []
-                },
-                "twitter": {
-                    "name": "twitter",
-                    "isArray": false,
-                    "type": "AWSURL",
-                    "isRequired": true,
-                    "attributes": []
-                },
-                "image": {
-                    "name": "image",
-                    "isArray": false,
-                    "type": "AWSURL",
-                    "isRequired": true,
-                    "attributes": []
-                },
-                "createdAt": {
-                    "name": "createdAt",
-                    "isArray": false,
-                    "type": "AWSDateTime",
-                    "isRequired": false,
-                    "attributes": [],
-                    "isReadOnly": true
-                },
-                "updatedAt": {
-                    "name": "updatedAt",
-                    "isArray": false,
-                    "type": "AWSDateTime",
-                    "isRequired": false,
-                    "attributes": [],
-                    "isReadOnly": true
-                }
-            },
-            "syncable": true,
-            "pluralName": "Instructors",
-            "attributes": [
-                {
-                    "type": "model",
-                    "properties": {}
-                },
-                {
-                    "type": "auth",
-                    "properties": {
-                        "rules": [
-                            {
-                                "allow": "public",
-                                "operations": [
-                                    "create",
-                                    "update",
-                                    "delete",
-                                    "read"
-                                ]
-                            }
-                        ]
-                    }
-                }
-            ]
-        },
         "Course": {
             "name": "Course",
             "fields": {
@@ -136,13 +42,13 @@ export const schema = {
                     "name": "image",
                     "isArray": false,
                     "type": "AWSURL",
-                    "isRequired": true,
+                    "isRequired": false,
                     "attributes": []
                 },
                 "video": {
                     "name": "video",
                     "isArray": false,
-                    "type": "String",
+                    "type": "AWSURL",
                     "isRequired": false,
                     "attributes": []
                 },
@@ -150,7 +56,7 @@ export const schema = {
                     "name": "category",
                     "isArray": false,
                     "type": {
-                        "enum": "CourseCategory"
+                        "enum": "Category"
                     },
                     "isRequired": true,
                     "attributes": []
@@ -159,14 +65,14 @@ export const schema = {
                     "name": "duration",
                     "isArray": false,
                     "type": "Int",
-                    "isRequired": true,
+                    "isRequired": false,
                     "attributes": []
                 },
-                "learning_objective": {
-                    "name": "learning_objective",
+                "learningObjective": {
+                    "name": "learningObjective",
                     "isArray": true,
                     "type": "String",
-                    "isRequired": true,
+                    "isRequired": false,
                     "attributes": [],
                     "isArrayNullable": true
                 },
@@ -183,7 +89,7 @@ export const schema = {
                     "name": "curriculum",
                     "isArray": true,
                     "type": "String",
-                    "isRequired": true,
+                    "isRequired": false,
                     "attributes": [],
                     "isArrayNullable": true
                 },
@@ -238,17 +144,10 @@ export const schema = {
         }
     },
     "enums": {
-        "Level": {
-            "name": "Level",
+        "Category": {
+            "name": "Category",
             "values": [
-                "FOUNDATION",
-                "INTERMEDIATE",
-                "ADVANCE"
-            ]
-        },
-        "CourseCategory": {
-            "name": "CourseCategory",
-            "values": [
+                "AUTOCAD",
                 "DATA_SCIENCE",
                 "WEB_DEVELOPMENT",
                 "CREATIVE_GRAPHICS_DESIGN",
@@ -258,13 +157,20 @@ export const schema = {
                 "PROJECT_MANAGEMENT",
                 "NETWORKING",
                 "PROGRAMMING",
-                "AUTOCAD",
                 "DIGITAL_MARKETING",
                 "FINANCE_ACCOUNTING"
+            ]
+        },
+        "Level": {
+            "name": "Level",
+            "values": [
+                "FOUNDATION",
+                "INTERMEDIATE",
+                "ADVANCE"
             ]
         }
     },
     "nonModels": {},
     "codegenVersion": "3.3.2",
-    "version": "77e6a1c214d38f83941092b5747ceb2e"
+    "version": "196be0f30764f62c12ae347f66354d03"
 };

@@ -177,7 +177,7 @@ export default function CourseUpdateForm(props) {
     video: undefined,
     category: undefined,
     duration: undefined,
-    learning_objective: [],
+    learningObjective: [],
     level: undefined,
     curriculum: [],
     isFeatured: false,
@@ -192,8 +192,8 @@ export default function CourseUpdateForm(props) {
   const [video, setVideo] = React.useState(initialValues.video);
   const [category, setCategory] = React.useState(initialValues.category);
   const [duration, setDuration] = React.useState(initialValues.duration);
-  const [learning_objective, setLearning_objective] = React.useState(
-    initialValues.learning_objective
+  const [learningObjective, setLearningObjective] = React.useState(
+    initialValues.learningObjective
   );
   const [level, setLevel] = React.useState(initialValues.level);
   const [curriculum, setCurriculum] = React.useState(initialValues.curriculum);
@@ -209,8 +209,8 @@ export default function CourseUpdateForm(props) {
     setVideo(cleanValues.video);
     setCategory(cleanValues.category);
     setDuration(cleanValues.duration);
-    setLearning_objective(cleanValues.learning_objective ?? []);
-    setCurrentLearning_objectiveValue(undefined);
+    setLearningObjective(cleanValues.learningObjective ?? []);
+    setCurrentLearningObjectiveValue(undefined);
     setLevel(cleanValues.level);
     setCurriculum(cleanValues.curriculum ?? []);
     setCurrentCurriculumValue(undefined);
@@ -226,9 +226,9 @@ export default function CourseUpdateForm(props) {
     queryData();
   }, [id, course]);
   React.useEffect(resetStateValues, [courseRecord]);
-  const [currentLearning_objectiveValue, setCurrentLearning_objectiveValue] =
+  const [currentLearningObjectiveValue, setCurrentLearningObjectiveValue] =
     React.useState(undefined);
-  const learning_objectiveRef = React.createRef();
+  const learningObjectiveRef = React.createRef();
   const [currentCurriculumValue, setCurrentCurriculumValue] =
     React.useState(undefined);
   const curriculumRef = React.createRef();
@@ -237,13 +237,13 @@ export default function CourseUpdateForm(props) {
     descriptions: [{ type: "Required" }],
     price: [{ type: "Required" }],
     excerpt: [{ type: "Required" }],
-    image: [{ type: "Required" }, { type: "URL" }],
-    video: [],
+    image: [{ type: "URL" }],
+    video: [{ type: "URL" }],
     category: [{ type: "Required" }],
-    duration: [{ type: "Required" }],
-    learning_objective: [{ type: "Required" }],
+    duration: [],
+    learningObjective: [],
     level: [],
-    curriculum: [{ type: "Required" }],
+    curriculum: [],
     isFeatured: [{ type: "Required" }],
   };
   const runValidationTasks = async (fieldName, value) => {
@@ -269,10 +269,10 @@ export default function CourseUpdateForm(props) {
           price,
           excerpt,
           image: image || undefined,
-          video,
+          video: video || undefined,
           category,
           duration,
-          learning_objective,
+          learningObjective,
           level,
           curriculum,
           isFeatured,
@@ -334,7 +334,7 @@ export default function CourseUpdateForm(props) {
               video,
               category,
               duration,
-              learning_objective,
+              learningObjective,
               level,
               curriculum,
               isFeatured,
@@ -369,7 +369,7 @@ export default function CourseUpdateForm(props) {
               video,
               category,
               duration,
-              learning_objective,
+              learningObjective,
               level,
               curriculum,
               isFeatured,
@@ -413,7 +413,7 @@ export default function CourseUpdateForm(props) {
               video,
               category,
               duration,
-              learning_objective,
+              learningObjective,
               level,
               curriculum,
               isFeatured,
@@ -448,7 +448,7 @@ export default function CourseUpdateForm(props) {
               video,
               category,
               duration,
-              learning_objective,
+              learningObjective,
               level,
               curriculum,
               isFeatured,
@@ -468,7 +468,7 @@ export default function CourseUpdateForm(props) {
       ></TextField>
       <TextField
         label="Image"
-        isRequired={true}
+        isRequired={false}
         isReadOnly={false}
         defaultValue={image}
         onChange={(e) => {
@@ -483,7 +483,7 @@ export default function CourseUpdateForm(props) {
               video,
               category,
               duration,
-              learning_objective,
+              learningObjective,
               level,
               curriculum,
               isFeatured,
@@ -518,7 +518,7 @@ export default function CourseUpdateForm(props) {
               video: value,
               category,
               duration,
-              learning_objective,
+              learningObjective,
               level,
               curriculum,
               isFeatured,
@@ -553,7 +553,7 @@ export default function CourseUpdateForm(props) {
               video,
               category: value,
               duration,
-              learning_objective,
+              learningObjective,
               level,
               curriculum,
               isFeatured,
@@ -572,53 +572,53 @@ export default function CourseUpdateForm(props) {
         {...getOverrideProps(overrides, "category")}
       >
         <option
+          children="Autocad"
+          value="AUTOCAD"
+          {...getOverrideProps(overrides, "categoryoption0")}
+        ></option>
+        <option
           children="Data science"
           value="DATA_SCIENCE"
-          {...getOverrideProps(overrides, "categoryoption0")}
+          {...getOverrideProps(overrides, "categoryoption1")}
         ></option>
         <option
           children="Web development"
           value="WEB_DEVELOPMENT"
-          {...getOverrideProps(overrides, "categoryoption1")}
+          {...getOverrideProps(overrides, "categoryoption2")}
         ></option>
         <option
           children="Creative graphics design"
           value="CREATIVE_GRAPHICS_DESIGN"
-          {...getOverrideProps(overrides, "categoryoption2")}
+          {...getOverrideProps(overrides, "categoryoption3")}
         ></option>
         <option
           children="Office productivity"
           value="OFFICE_PRODUCTIVITY"
-          {...getOverrideProps(overrides, "categoryoption3")}
+          {...getOverrideProps(overrides, "categoryoption4")}
         ></option>
         <option
           children="Security"
           value="SECURITY"
-          {...getOverrideProps(overrides, "categoryoption4")}
+          {...getOverrideProps(overrides, "categoryoption5")}
         ></option>
         <option
           children="Cloud computing"
           value="CLOUD_COMPUTING"
-          {...getOverrideProps(overrides, "categoryoption5")}
+          {...getOverrideProps(overrides, "categoryoption6")}
         ></option>
         <option
           children="Project management"
           value="PROJECT_MANAGEMENT"
-          {...getOverrideProps(overrides, "categoryoption6")}
+          {...getOverrideProps(overrides, "categoryoption7")}
         ></option>
         <option
           children="Networking"
           value="NETWORKING"
-          {...getOverrideProps(overrides, "categoryoption7")}
+          {...getOverrideProps(overrides, "categoryoption8")}
         ></option>
         <option
           children="Programming"
           value="PROGRAMMING"
-          {...getOverrideProps(overrides, "categoryoption8")}
-        ></option>
-        <option
-          children="Autocad"
-          value="AUTOCAD"
           {...getOverrideProps(overrides, "categoryoption9")}
         ></option>
         <option
@@ -634,7 +634,7 @@ export default function CourseUpdateForm(props) {
       </SelectField>
       <TextField
         label="Duration"
-        isRequired={true}
+        isRequired={false}
         isReadOnly={false}
         type="number"
         step="any"
@@ -658,7 +658,7 @@ export default function CourseUpdateForm(props) {
               video,
               category,
               duration: value,
-              learning_objective,
+              learningObjective,
               level,
               curriculum,
               isFeatured,
@@ -689,47 +689,47 @@ export default function CourseUpdateForm(props) {
               video,
               category,
               duration,
-              learning_objective: values,
+              learningObjective: values,
               level,
               curriculum,
               isFeatured,
             };
             const result = onChange(modelFields);
-            values = result?.learning_objective ?? values;
+            values = result?.learningObjective ?? values;
           }
-          setLearning_objective(values);
-          setCurrentLearning_objectiveValue(undefined);
+          setLearningObjective(values);
+          setCurrentLearningObjectiveValue(undefined);
         }}
-        currentFieldValue={currentLearning_objectiveValue}
+        currentFieldValue={currentLearningObjectiveValue}
         label={"Learning objective"}
-        items={learning_objective}
-        hasError={errors.learning_objective?.hasError}
-        setFieldValue={setCurrentLearning_objectiveValue}
-        inputFieldRef={learning_objectiveRef}
+        items={learningObjective}
+        hasError={errors.learningObjective?.hasError}
+        setFieldValue={setCurrentLearningObjectiveValue}
+        inputFieldRef={learningObjectiveRef}
         defaultFieldValue={undefined}
       >
         <TextField
           label="Learning objective"
-          isRequired={true}
+          isRequired={false}
           isReadOnly={false}
-          value={currentLearning_objectiveValue}
+          value={currentLearningObjectiveValue}
           onChange={(e) => {
             let { value } = e.target;
-            if (errors.learning_objective?.hasError) {
-              runValidationTasks("learning_objective", value);
+            if (errors.learningObjective?.hasError) {
+              runValidationTasks("learningObjective", value);
             }
-            setCurrentLearning_objectiveValue(value);
+            setCurrentLearningObjectiveValue(value);
           }}
           onBlur={() =>
             runValidationTasks(
-              "learning_objective",
-              currentLearning_objectiveValue
+              "learningObjective",
+              currentLearningObjectiveValue
             )
           }
-          errorMessage={errors.learning_objective?.errorMessage}
-          hasError={errors.learning_objective?.hasError}
-          ref={learning_objectiveRef}
-          {...getOverrideProps(overrides, "learning_objective")}
+          errorMessage={errors.learningObjective?.errorMessage}
+          hasError={errors.learningObjective?.hasError}
+          ref={learningObjectiveRef}
+          {...getOverrideProps(overrides, "learningObjective")}
         ></TextField>
       </ArrayField>
       <SelectField
@@ -749,7 +749,7 @@ export default function CourseUpdateForm(props) {
               video,
               category,
               duration,
-              learning_objective,
+              learningObjective,
               level: value,
               curriculum,
               isFeatured,
@@ -796,7 +796,7 @@ export default function CourseUpdateForm(props) {
               video,
               category,
               duration,
-              learning_objective,
+              learningObjective,
               level,
               curriculum: values,
               isFeatured,
@@ -817,7 +817,7 @@ export default function CourseUpdateForm(props) {
       >
         <TextField
           label="Curriculum"
-          isRequired={true}
+          isRequired={false}
           isReadOnly={false}
           value={currentCurriculumValue}
           onChange={(e) => {
@@ -853,7 +853,7 @@ export default function CourseUpdateForm(props) {
               video,
               category,
               duration,
-              learning_objective,
+              learningObjective,
               level,
               curriculum,
               isFeatured: value,

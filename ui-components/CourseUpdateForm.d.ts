@@ -22,7 +22,7 @@ export declare type CourseUpdateFormInputValues = {
     video?: string;
     category?: string;
     duration?: number;
-    learning_objective?: string[];
+    learningObjective?: string[];
     level?: string;
     curriculum?: string[];
     isFeatured?: boolean;
@@ -36,7 +36,7 @@ export declare type CourseUpdateFormValidationValues = {
     video?: ValidationFunction<string>;
     category?: ValidationFunction<string>;
     duration?: ValidationFunction<number>;
-    learning_objective?: ValidationFunction<string>;
+    learningObjective?: ValidationFunction<string>;
     level?: ValidationFunction<string>;
     curriculum?: ValidationFunction<string>;
     isFeatured?: ValidationFunction<boolean>;
@@ -52,7 +52,7 @@ export declare type CourseUpdateFormOverridesProps = {
     video?: FormProps<TextFieldProps>;
     category?: FormProps<SelectFieldProps>;
     duration?: FormProps<TextFieldProps>;
-    learning_objective?: FormProps<TextFieldProps>;
+    learningObjective?: FormProps<TextFieldProps>;
     level?: FormProps<SelectFieldProps>;
     curriculum?: FormProps<TextFieldProps>;
     isFeatured?: FormProps<SwitchFieldProps>;

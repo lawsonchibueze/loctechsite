@@ -2,13 +2,8 @@
 import { initSchema } from '@aws-amplify/datastore';
 import { schema } from './schema';
 
-const Level = {
-  "FOUNDATION": "FOUNDATION",
-  "INTERMEDIATE": "INTERMEDIATE",
-  "ADVANCE": "ADVANCE"
-};
-
-const CourseCategory = {
+const Category = {
+  "AUTOCAD": "AUTOCAD",
   "DATA_SCIENCE": "DATA_SCIENCE",
   "WEB_DEVELOPMENT": "WEB_DEVELOPMENT",
   "CREATIVE_GRAPHICS_DESIGN": "CREATIVE_GRAPHICS_DESIGN",
@@ -18,16 +13,20 @@ const CourseCategory = {
   "PROJECT_MANAGEMENT": "PROJECT_MANAGEMENT",
   "NETWORKING": "NETWORKING",
   "PROGRAMMING": "PROGRAMMING",
-  "AUTOCAD": "AUTOCAD",
   "DIGITAL_MARKETING": "DIGITAL_MARKETING",
   "FINANCE_ACCOUNTING": "FINANCE_ACCOUNTING"
 };
 
-const { Instructor, Course } = initSchema(schema);
+const Level = {
+  "FOUNDATION": "FOUNDATION",
+  "INTERMEDIATE": "INTERMEDIATE",
+  "ADVANCE": "ADVANCE"
+};
+
+const { Course } = initSchema(schema);
 
 export {
-  Instructor,
   Course,
-  Level,
-  CourseCategory
+  Category,
+  Level
 };

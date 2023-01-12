@@ -2,7 +2,7 @@
   "providers": [
     "awscloudformation"
   ],
-  "projectName": "loctechapps",
+  "projectName": "loctechsite",
   "version": "3.1",
   "frontend": "javascript",
   "javascript": {
