@@ -1,0 +1,321 @@
+
+enum Category {
+  AUTOCAD
+  DATA_SCIENCE
+  WEB_DEVELOPMENT
+  CREATIVE_GRAPHICS_DESIGN
+  OFFICE_PRODUCTIVITY
+  SECURITY
+  CLOUD_COMPUTING
+  PROJECT_MANAGEMENT
+  NETWORKING
+  PROGRAMMING
+  DIGITAL_MARKETING
+  FINANCE_ACCOUNTING
+}
+
+enum Level {
+  FOUNDATION
+  INTERMEDIATE
+  ADVANCE
+}
+
+type Course @aws_iam @aws_api_key {
+  id: ID!
+  name: String!
+  descriptions: String!
+  price: Float!
+  excerpt: String!
+  image: AWSURL
+  video: AWSURL
+  category: Category!
+  duration: Int
+  learningObjective: [String]
+  level: Level
+  curriculum: [String]
+  isFeatured: Boolean!
+  createdAt: AWSDateTime!
+  updatedAt: AWSDateTime!
+  _version: Int!
+  _deleted: Boolean
+  _lastChangedAt: AWSTimestamp!
+}
+
+input ModelStringInput {
+  ne: String
+  eq: String
+  le: String
+  lt: String
+  ge: String
+  gt: String
+  contains: String
+  notContains: String
+  between: [String]
+  beginsWith: String
+  attributeExists: Boolean
+  attributeType: ModelAttributeTypes
+  size: ModelSizeInput
+}
+
+input ModelIntInput {
+  ne: Int
+  eq: Int
+  le: Int
+  lt: Int
+  ge: Int
+  gt: Int
+  between: [Int]
+  attributeExists: Boolean
+  attributeType: ModelAttributeTypes
+}
+
+input ModelFloatInput {
+  ne: Float
+  eq: Float
+  le: Float
+  lt: Float
+  ge: Float
+  gt: Float
+  between: [Float]
+  attributeExists: Boolean
+  attributeType: ModelAttributeTypes
+}
+
+input ModelBooleanInput {
+  ne: Boolean
+  eq: Boolean
+  attributeExists: Boolean
+  attributeType: ModelAttributeTypes
+}
+
+input ModelIDInput {
+  ne: ID
+  eq: ID
+  le: ID
+  lt: ID
+  ge: ID
+  gt: ID
+  contains: ID
+  notContains: ID
+  between: [ID]
+  beginsWith: ID
+  attributeExists: Boolean
+  attributeType: ModelAttributeTypes
+  size: ModelSizeInput
+}
+
+input ModelSubscriptionStringInput {
+  ne: String
+  eq: String
+  le: String
+  lt: String
+  ge: String
+  gt: String
+  contains: String
+  notContains: String
+  between: [String]
+  beginsWith: String
+  in: [String]
+  notIn: [String]
+}
+
+input ModelSubscriptionIntInput {
+  ne: Int
+  eq: Int
+  le: Int
+  lt: Int
+  ge: Int
+  gt: Int
+  between: [Int]
+  in: [Int]
+  notIn: [Int]
+}
+
+input ModelSubscriptionFloatInput {
+  ne: Float
+  eq: Float
+  le: Float
+  lt: Float
+  ge: Float
+  gt: Float
+  between: [Float]
+  in: [Float]
+  notIn: [Float]
+}
+
+input ModelSubscriptionBooleanInput {
+  ne: Boolean
+  eq: Boolean
+}
+
+input ModelSubscriptionIDInput {
+  ne: ID
+  eq: ID
+  le: ID
+  lt: ID
+  ge: ID
+  gt: ID
+  contains: ID
+  notContains: ID
+  between: [ID]
+  beginsWith: ID
+  in: [ID]
+  notIn: [ID]
+}
+
+enum ModelAttributeTypes {
+  binary
+  binarySet
+  bool
+  list
+  map
+  number
+  numberSet
+  string
+  stringSet
+  _null
+}
+
+input ModelSizeInput {
+  ne: Int
+  eq: Int
+  le: Int
+  lt: Int
+  ge: Int
+  gt: Int
+  between: [Int]
+}
+
+enum ModelSortDirection {
+  ASC
+  DESC
+}
+
+type ModelCourseConnection @aws_api_key @aws_iam {
+  items: [Course]!
+  nextToken: String
+  startedAt: AWSTimestamp
+}
+
+input ModelCategoryInput {
+  eq: Category
+  ne: Category
+}
+
+input ModelLevelInput {
+  eq: Level
+  ne: Level
+}
+
+input ModelCourseFilterInput {
+  id: ModelIDInput
+  name: ModelStringInput
+  descriptions: ModelStringInput
+  price: ModelFloatInput
+  excerpt: ModelStringInput
+  image: ModelStringInput
+  video: ModelStringInput
+  category: ModelCategoryInput
+  duration: ModelIntInput
+  learningObjective: ModelStringInput
+  level: ModelLevelInput
+  curriculum: ModelStringInput
+  isFeatured: ModelBooleanInput
+  and: [ModelCourseFilterInput]
+  or: [ModelCourseFilterInput]
+  not: ModelCourseFilterInput
+}
+
+type Query {
+  getCourse(id: ID!): Course @aws_api_key @aws_iam
+  listCourses(filter: ModelCourseFilterInput, limit: Int, nextToken: String): ModelCourseConnection @aws_api_key @aws_iam
+  syncCourses(filter: ModelCourseFilterInput, limit: Int, nextToken: String, lastSync: AWSTimestamp): ModelCourseConnection @aws_api_key @aws_iam
+}
+
+input ModelCourseConditionInput {
+  name: ModelStringInput
+  descriptions: ModelStringInput
+  price: ModelFloatInput
+  excerpt: ModelStringInput
+  image: ModelStringInput
+  video: ModelStringInput
+  category: ModelCategoryInput
+  duration: ModelIntInput
+  learningObjective: ModelStringInput
+  level: ModelLevelInput
+  curriculum: ModelStringInput
+  isFeatured: ModelBooleanInput
+  and: [ModelCourseConditionInput]
+  or: [ModelCourseConditionInput]
+  not: ModelCourseConditionInput
+}
+
+input CreateCourseInput {
+  id: ID
+  name: String!
+  descriptions: String!
+  price: Float!
+  excerpt: String!
+  image: AWSURL
+  video: AWSURL
+  category: Category!
+  duration: Int
+  learningObjective: [String]
+  level: Level
+  curriculum: [String]
+  isFeatured: Boolean!
+  _version: Int
+}
+
+input UpdateCourseInput {
+  id: ID!
+  name: String
+  descriptions: String
+  price: Float
+  excerpt: String
+  image: AWSURL
+  video: AWSURL
+  category: Category
+  duration: Int
+  learningObjective: [String]
+  level: Level
+  curriculum: [String]
+  isFeatured: Boolean
+  _version: Int
+}
+
+input DeleteCourseInput {
+  id: ID!
+  _version: Int
+}
+
+type Mutation {
+  createCourse(input: CreateCourseInput!, condition: ModelCourseConditionInput): Course @aws_api_key @aws_iam
+  updateCourse(input: UpdateCourseInput!, condition: ModelCourseConditionInput): Course @aws_api_key @aws_iam
+  deleteCourse(input: DeleteCourseInput!, condition: ModelCourseConditionInput): Course @aws_api_key @aws_iam
+}
+
+input ModelSubscriptionCourseFilterInput {
+  id: ModelSubscriptionIDInput
+  name: ModelSubscriptionStringInput
+  descriptions: ModelSubscriptionStringInput
+  price: ModelSubscriptionFloatInput
+  excerpt: ModelSubscriptionStringInput
+  image: ModelSubscriptionStringInput
+  video: ModelSubscriptionStringInput
+  category: ModelSubscriptionStringInput
+  duration: ModelSubscriptionIntInput
+  learningObjective: ModelSubscriptionStringInput
+  level: ModelSubscriptionStringInput
+  curriculum: ModelSubscriptionStringInput
+  isFeatured: ModelSubscriptionBooleanInput
+  and: [ModelSubscriptionCourseFilterInput]
+  or: [ModelSubscriptionCourseFilterInput]
+}
+
+type Subscription {
+  onCreateCourse(filter: ModelSubscriptionCourseFilterInput): Course @aws_subscribe(mutations: ["createCourse"]) @aws_api_key @aws_iam
+  onUpdateCourse(filter: ModelSubscriptionCourseFilterInput): Course @aws_subscribe(mutations: ["updateCourse"]) @aws_api_key @aws_iam
+  onDeleteCourse(filter: ModelSubscriptionCourseFilterInput): Course @aws_subscribe(mutations: ["deleteCourse"]) @aws_api_key @aws_iam
+}
+

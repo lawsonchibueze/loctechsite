@@ -1,0 +1,13 @@
+{
+    "AppSyncApiName": "loctechsite",
+    "DynamoDBBillingMode": "PAY_PER_REQUEST",
+    "DynamoDBEnableServerSideEncryption": false,
+    "authRoleName": {
+        "Ref": "AuthRoleName"
+    },
+    "unauthRoleName": {
+        "Ref": "UnauthRoleName"
+    },
+    "S3DeploymentBucket": "amplify-amplify628b805112a44-staging-111646-deployment",
+    "S3DeploymentRootKey": "amplify-appsync-files/30988e45a164ced2de895169fdd3e1e28457967d"
+}
