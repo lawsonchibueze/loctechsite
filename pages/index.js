@@ -1,13 +1,29 @@
 import Head from "next/head";
 import Image from "next/image";
-import CourseCards from "./components/CourseCards";
 import Features from "./components/Features";
 import Hero from "./components/Hero";
 import Navbar from "./components/Navbar";
 import { DataStore } from "@aws-amplify/datastore";
 import { Course } from "../models";
+import { useState, useEffect } from "react";
+
+import FeaturedCourses from "./components/FeaturedCourses";
 
 export default function Home() {
+  const [courses, setCourses] = useState([]);
+  useEffect(() => {
+    fetchCourse();
+
+    async function fetchCourse() {
+      const courseData = await DataStore.query(Course);
+      setCourses(courseData);
+      console.log(courses);
+    }
+    DataStore.observe(Course).subscribe((msg) => {
+      fetchCourse();
+      console.log("Just Updated my Course Data");
+    });
+  }, []);
   return (
     <div>
       <Head>
@@ -16,18 +32,12 @@ export default function Home() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <body>
-        <div>
-          <Navbar />
-          <Hero />
-          <Features />
-          <CourseCards />
-        </div>
-      </body>
-
-      <footer>
-        <h2>Footer</h2>
-      </footer>
+      <div>
+        <Navbar />
+        <Hero />
+        <Features />
+        <FeaturedCourses />
+      </div>
     </div>
   );
 }
