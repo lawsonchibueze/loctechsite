@@ -10,7 +10,9 @@
   },
   "dependencies": {
     "@aws-amplify/ui-react": "^1.2.26",
-    "aws-amplify": "^5.0.9",
+    "@headlessui/react": "^1.7.7",
+    "@tailwindcss/typography": "^0.5.8",
+    "aws-amplify": "^5.0.10",
     "eslint": "8.30.0",
     "eslint-config-next": "13.1.1",
     "next": "13.1.1",

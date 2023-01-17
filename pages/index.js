@@ -2,7 +2,7 @@ import Head from "next/head";
 import Image from "next/image";
 import Features from "./components/Features";
 import Hero from "./components/Hero";
-import Navbar from "./components/Navbar";
+
 import { DataStore } from "@aws-amplify/datastore";
 import { Course } from "../models";
 import { useState, useEffect } from "react";
@@ -33,7 +33,6 @@ export default function Home() {
       </Head>
 
       <div>
-        <Navbar />
         <Hero />
         <Features />
         <FeaturedCourses />

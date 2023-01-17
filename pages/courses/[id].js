@@ -30,7 +30,14 @@ export default function CourseComponent({ course }) {
               <h1 className="text-gray-900 text-3xl title-font font-medium mb-1">
                 {course.category}
               </h1>
-
+              <div className="flex mb-4">
+                <span className="flex items-center">
+                  <span className="text-gray-600 ml-3">4 Reviews</span>
+                </span>
+                <span className="flex ml-3 pl-3 py-2 border-l-2 border-gray-200 space-x-2s">
+                  <a className="text-gray-500"></a>
+                </span>
+              </div>
               <p className="leading-relaxed">{course.descriptions}</p>
               <hr className=" h-2 p-4 pt-5 pb-5 mt-5 mb-5 " />
 
