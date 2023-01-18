@@ -180,6 +180,9 @@ export default function CourseCreateForm(props) {
     level: undefined,
     curriculum: [],
     isFeatured: false,
+    headDescription: undefined,
+    headTitle: undefined,
+    headContent: undefined,
   };
   const [name, setName] = React.useState(initialValues.name);
   const [descriptions, setDescriptions] = React.useState(
@@ -197,6 +200,13 @@ export default function CourseCreateForm(props) {
   const [level, setLevel] = React.useState(initialValues.level);
   const [curriculum, setCurriculum] = React.useState(initialValues.curriculum);
   const [isFeatured, setIsFeatured] = React.useState(initialValues.isFeatured);
+  const [headDescription, setHeadDescription] = React.useState(
+    initialValues.headDescription
+  );
+  const [headTitle, setHeadTitle] = React.useState(initialValues.headTitle);
+  const [headContent, setHeadContent] = React.useState(
+    initialValues.headContent
+  );
   const [errors, setErrors] = React.useState({});
   const resetStateValues = () => {
     setName(initialValues.name);
@@ -213,6 +223,9 @@ export default function CourseCreateForm(props) {
     setCurriculum(initialValues.curriculum);
     setCurrentCurriculumValue(undefined);
     setIsFeatured(initialValues.isFeatured);
+    setHeadDescription(initialValues.headDescription);
+    setHeadTitle(initialValues.headTitle);
+    setHeadContent(initialValues.headContent);
     setErrors({});
   };
   const [currentLearningObjectiveValue, setCurrentLearningObjectiveValue] =
@@ -234,6 +247,9 @@ export default function CourseCreateForm(props) {
     level: [],
     curriculum: [],
     isFeatured: [{ type: "Required" }],
+    headDescription: [],
+    headTitle: [],
+    headContent: [],
   };
   const runValidationTasks = async (fieldName, value) => {
     let validationResponse = validateField(value, validations[fieldName]);
@@ -265,6 +281,9 @@ export default function CourseCreateForm(props) {
           level,
           curriculum,
           isFeatured,
+          headDescription,
+          headTitle,
+          headContent,
         };
         const validationResponses = await Promise.all(
           Object.keys(validations).reduce((promises, fieldName) => {
@@ -325,6 +344,9 @@ export default function CourseCreateForm(props) {
               level,
               curriculum,
               isFeatured,
+              headDescription,
+              headTitle,
+              headContent,
             };
             const result = onChange(modelFields);
             value = result?.name ?? value;
@@ -359,6 +381,9 @@ export default function CourseCreateForm(props) {
               level,
               curriculum,
               isFeatured,
+              headDescription,
+              headTitle,
+              headContent,
             };
             const result = onChange(modelFields);
             value = result?.descriptions ?? value;
@@ -402,6 +427,9 @@ export default function CourseCreateForm(props) {
               level,
               curriculum,
               isFeatured,
+              headDescription,
+              headTitle,
+              headContent,
             };
             const result = onChange(modelFields);
             value = result?.price ?? value;
@@ -436,6 +464,9 @@ export default function CourseCreateForm(props) {
               level,
               curriculum,
               isFeatured,
+              headDescription,
+              headTitle,
+              headContent,
             };
             const result = onChange(modelFields);
             value = result?.excerpt ?? value;
@@ -470,6 +501,9 @@ export default function CourseCreateForm(props) {
               level,
               curriculum,
               isFeatured,
+              headDescription,
+              headTitle,
+              headContent,
             };
             const result = onChange(modelFields);
             value = result?.image ?? value;
@@ -504,6 +538,9 @@ export default function CourseCreateForm(props) {
               level,
               curriculum,
               isFeatured,
+              headDescription,
+              headTitle,
+              headContent,
             };
             const result = onChange(modelFields);
             value = result?.video ?? value;
@@ -539,6 +576,9 @@ export default function CourseCreateForm(props) {
               level,
               curriculum,
               isFeatured,
+              headDescription,
+              headTitle,
+              headContent,
             };
             const result = onChange(modelFields);
             value = result?.category ?? value;
@@ -643,6 +683,9 @@ export default function CourseCreateForm(props) {
               level,
               curriculum,
               isFeatured,
+              headDescription,
+              headTitle,
+              headContent,
             };
             const result = onChange(modelFields);
             value = result?.duration ?? value;
@@ -674,6 +717,9 @@ export default function CourseCreateForm(props) {
               level,
               curriculum,
               isFeatured,
+              headDescription,
+              headTitle,
+              headContent,
             };
             const result = onChange(modelFields);
             values = result?.learningObjective ?? values;
@@ -734,6 +780,9 @@ export default function CourseCreateForm(props) {
               level: value,
               curriculum,
               isFeatured,
+              headDescription,
+              headTitle,
+              headContent,
             };
             const result = onChange(modelFields);
             value = result?.level ?? value;
@@ -781,6 +830,9 @@ export default function CourseCreateForm(props) {
               level,
               curriculum: values,
               isFeatured,
+              headDescription,
+              headTitle,
+              headContent,
             };
             const result = onChange(modelFields);
             values = result?.curriculum ?? values;
@@ -838,6 +890,9 @@ export default function CourseCreateForm(props) {
               level,
               curriculum,
               isFeatured: value,
+              headDescription,
+              headTitle,
+              headContent,
             };
             const result = onChange(modelFields);
             value = result?.isFeatured ?? value;
@@ -852,6 +907,117 @@ export default function CourseCreateForm(props) {
         hasError={errors.isFeatured?.hasError}
         {...getOverrideProps(overrides, "isFeatured")}
       ></SwitchField>
+      <TextField
+        label="Head description"
+        isRequired={false}
+        isReadOnly={false}
+        onChange={(e) => {
+          let { value } = e.target;
+          if (onChange) {
+            const modelFields = {
+              name,
+              descriptions,
+              price,
+              excerpt,
+              image,
+              video,
+              category,
+              duration,
+              learningObjective,
+              level,
+              curriculum,
+              isFeatured,
+              headDescription: value,
+              headTitle,
+              headContent,
+            };
+            const result = onChange(modelFields);
+            value = result?.headDescription ?? value;
+          }
+          if (errors.headDescription?.hasError) {
+            runValidationTasks("headDescription", value);
+          }
+          setHeadDescription(value);
+        }}
+        onBlur={() => runValidationTasks("headDescription", headDescription)}
+        errorMessage={errors.headDescription?.errorMessage}
+        hasError={errors.headDescription?.hasError}
+        {...getOverrideProps(overrides, "headDescription")}
+      ></TextField>
+      <TextField
+        label="Head title"
+        isRequired={false}
+        isReadOnly={false}
+        onChange={(e) => {
+          let { value } = e.target;
+          if (onChange) {
+            const modelFields = {
+              name,
+              descriptions,
+              price,
+              excerpt,
+              image,
+              video,
+              category,
+              duration,
+              learningObjective,
+              level,
+              curriculum,
+              isFeatured,
+              headDescription,
+              headTitle: value,
+              headContent,
+            };
+            const result = onChange(modelFields);
+            value = result?.headTitle ?? value;
+          }
+          if (errors.headTitle?.hasError) {
+            runValidationTasks("headTitle", value);
+          }
+          setHeadTitle(value);
+        }}
+        onBlur={() => runValidationTasks("headTitle", headTitle)}
+        errorMessage={errors.headTitle?.errorMessage}
+        hasError={errors.headTitle?.hasError}
+        {...getOverrideProps(overrides, "headTitle")}
+      ></TextField>
+      <TextField
+        label="Head content"
+        isRequired={false}
+        isReadOnly={false}
+        onChange={(e) => {
+          let { value } = e.target;
+          if (onChange) {
+            const modelFields = {
+              name,
+              descriptions,
+              price,
+              excerpt,
+              image,
+              video,
+              category,
+              duration,
+              learningObjective,
+              level,
+              curriculum,
+              isFeatured,
+              headDescription,
+              headTitle,
+              headContent: value,
+            };
+            const result = onChange(modelFields);
+            value = result?.headContent ?? value;
+          }
+          if (errors.headContent?.hasError) {
+            runValidationTasks("headContent", value);
+          }
+          setHeadContent(value);
+        }}
+        onBlur={() => runValidationTasks("headContent", headContent)}
+        errorMessage={errors.headContent?.errorMessage}
+        hasError={errors.headContent?.hasError}
+        {...getOverrideProps(overrides, "headContent")}
+      ></TextField>
       <Flex
         justifyContent="space-between"
         {...getOverrideProps(overrides, "CTAFlex")}

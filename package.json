@@ -11,6 +11,7 @@
   "dependencies": {
     "@aws-amplify/ui-react": "^1.2.26",
     "@headlessui/react": "^1.7.7",
+    "@heroicons/react": "^2.0.13",
     "@tailwindcss/typography": "^0.5.8",
     "aws-amplify": "^5.0.10",
     "eslint": "8.30.0",

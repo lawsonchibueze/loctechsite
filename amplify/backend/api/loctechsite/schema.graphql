@@ -1,3 +1,31 @@
+type Post @model @auth(rules: [{allow: public, operations: [create, read]}]) {
+  id: ID!
+  title: String
+  content: String
+  isFeatured: Boolean
+  image: AWSURL
+}
+
+type Hero @model @auth(rules: [{allow: public}]) {
+  id: ID!
+  image: String
+  smallText: String
+  mediumText: String
+  largeText: String
+  buttonText: String
+}
+
+type Instructor @model @auth(rules: [{allow: public}]) {
+  id: ID!
+  name: String
+  image: AWSURL
+  facebook: AWSURL
+  linkedin: AWSURL
+  rating: String
+  review: String
+  Courses: [Course] @manyToMany(relationName: "InstructorCourse")
+}
+
 enum Category {
   AUTOCAD
   DATA_SCIENCE
@@ -33,4 +61,9 @@ type Course @model @auth(rules: [{allow: public}]) {
   level: Level
   curriculum: [String]
   isFeatured: Boolean!
+  instructors: [Instructor] @manyToMany(relationName: "InstructorCourse")
+  headDescription: String
+  headTitle: String
+  headContent: String
 }
+ 

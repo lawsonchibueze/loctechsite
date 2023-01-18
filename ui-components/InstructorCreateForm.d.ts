@@ -14,29 +14,29 @@ export declare type ValidationResponse = {
 export declare type ValidationFunction<T> = (value: T, validationResponse: ValidationResponse) => ValidationResponse | Promise<ValidationResponse>;
 export declare type InstructorCreateFormInputValues = {
     name?: string;
-    bio?: string;
-    title?: string;
-    linkedin?: string;
-    twitter?: string;
     image?: string;
+    facebook?: string;
+    linkedin?: string;
+    rating?: string;
+    review?: string;
 };
 export declare type InstructorCreateFormValidationValues = {
     name?: ValidationFunction<string>;
-    bio?: ValidationFunction<string>;
-    title?: ValidationFunction<string>;
-    linkedin?: ValidationFunction<string>;
-    twitter?: ValidationFunction<string>;
     image?: ValidationFunction<string>;
+    facebook?: ValidationFunction<string>;
+    linkedin?: ValidationFunction<string>;
+    rating?: ValidationFunction<string>;
+    review?: ValidationFunction<string>;
 };
 export declare type FormProps<T> = Partial<T> & React.DOMAttributes<HTMLDivElement>;
 export declare type InstructorCreateFormOverridesProps = {
     InstructorCreateFormGrid?: FormProps<GridProps>;
     name?: FormProps<TextFieldProps>;
-    bio?: FormProps<TextFieldProps>;
-    title?: FormProps<TextFieldProps>;
-    linkedin?: FormProps<TextFieldProps>;
-    twitter?: FormProps<TextFieldProps>;
     image?: FormProps<TextFieldProps>;
+    facebook?: FormProps<TextFieldProps>;
+    linkedin?: FormProps<TextFieldProps>;
+    rating?: FormProps<TextFieldProps>;
+    review?: FormProps<TextFieldProps>;
 } & EscapeHatchProps;
 export declare type InstructorCreateFormProps = React.PropsWithChildren<{
     overrides?: InstructorCreateFormOverridesProps | undefined | null;

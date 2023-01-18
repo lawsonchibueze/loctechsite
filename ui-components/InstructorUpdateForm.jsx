@@ -26,27 +26,27 @@ export default function InstructorUpdateForm(props) {
   } = props;
   const initialValues = {
     name: undefined,
-    bio: undefined,
-    title: undefined,
-    linkedin: undefined,
-    twitter: undefined,
     image: undefined,
+    facebook: undefined,
+    linkedin: undefined,
+    rating: undefined,
+    review: undefined,
   };
   const [name, setName] = React.useState(initialValues.name);
-  const [bio, setBio] = React.useState(initialValues.bio);
-  const [title, setTitle] = React.useState(initialValues.title);
-  const [linkedin, setLinkedin] = React.useState(initialValues.linkedin);
-  const [twitter, setTwitter] = React.useState(initialValues.twitter);
   const [image, setImage] = React.useState(initialValues.image);
+  const [facebook, setFacebook] = React.useState(initialValues.facebook);
+  const [linkedin, setLinkedin] = React.useState(initialValues.linkedin);
+  const [rating, setRating] = React.useState(initialValues.rating);
+  const [review, setReview] = React.useState(initialValues.review);
   const [errors, setErrors] = React.useState({});
   const resetStateValues = () => {
     const cleanValues = { ...initialValues, ...instructorRecord };
     setName(cleanValues.name);
-    setBio(cleanValues.bio);
-    setTitle(cleanValues.title);
-    setLinkedin(cleanValues.linkedin);
-    setTwitter(cleanValues.twitter);
     setImage(cleanValues.image);
+    setFacebook(cleanValues.facebook);
+    setLinkedin(cleanValues.linkedin);
+    setRating(cleanValues.rating);
+    setReview(cleanValues.review);
     setErrors({});
   };
   const [instructorRecord, setInstructorRecord] = React.useState(instructor);
@@ -59,12 +59,12 @@ export default function InstructorUpdateForm(props) {
   }, [id, instructor]);
   React.useEffect(resetStateValues, [instructorRecord]);
   const validations = {
-    name: [{ type: "Required" }],
-    bio: [{ type: "Required" }],
-    title: [],
-    linkedin: [{ type: "Required" }, { type: "URL" }],
-    twitter: [{ type: "Required" }, { type: "URL" }],
-    image: [{ type: "Required" }, { type: "URL" }],
+    name: [],
+    image: [{ type: "URL" }],
+    facebook: [{ type: "URL" }],
+    linkedin: [{ type: "URL" }],
+    rating: [],
+    review: [],
   };
   const runValidationTasks = async (fieldName, value) => {
     let validationResponse = validateField(value, validations[fieldName]);
@@ -85,11 +85,11 @@ export default function InstructorUpdateForm(props) {
         event.preventDefault();
         let modelFields = {
           name,
-          bio,
-          title,
-          linkedin: linkedin || undefined,
-          twitter: twitter || undefined,
           image: image || undefined,
+          facebook: facebook || undefined,
+          linkedin: linkedin || undefined,
+          rating,
+          review,
         };
         const validationResponses = await Promise.all(
           Object.keys(validations).reduce((promises, fieldName) => {
@@ -133,7 +133,7 @@ export default function InstructorUpdateForm(props) {
     >
       <TextField
         label="Name"
-        isRequired={true}
+        isRequired={false}
         isReadOnly={false}
         defaultValue={name}
         onChange={(e) => {
@@ -141,11 +141,11 @@ export default function InstructorUpdateForm(props) {
           if (onChange) {
             const modelFields = {
               name: value,
-              bio,
-              title,
-              linkedin,
-              twitter,
               image,
+              facebook,
+              linkedin,
+              rating,
+              review,
             };
             const result = onChange(modelFields);
             value = result?.name ?? value;
@@ -161,66 +161,66 @@ export default function InstructorUpdateForm(props) {
         {...getOverrideProps(overrides, "name")}
       ></TextField>
       <TextField
-        label="Bio"
-        isRequired={true}
-        isReadOnly={false}
-        defaultValue={bio}
-        onChange={(e) => {
-          let { value } = e.target;
-          if (onChange) {
-            const modelFields = {
-              name,
-              bio: value,
-              title,
-              linkedin,
-              twitter,
-              image,
-            };
-            const result = onChange(modelFields);
-            value = result?.bio ?? value;
-          }
-          if (errors.bio?.hasError) {
-            runValidationTasks("bio", value);
-          }
-          setBio(value);
-        }}
-        onBlur={() => runValidationTasks("bio", bio)}
-        errorMessage={errors.bio?.errorMessage}
-        hasError={errors.bio?.hasError}
-        {...getOverrideProps(overrides, "bio")}
-      ></TextField>
-      <TextField
-        label="Title"
+        label="Image"
         isRequired={false}
         isReadOnly={false}
-        defaultValue={title}
+        defaultValue={image}
         onChange={(e) => {
           let { value } = e.target;
           if (onChange) {
             const modelFields = {
               name,
-              bio,
-              title: value,
+              image: value,
+              facebook,
               linkedin,
-              twitter,
-              image,
+              rating,
+              review,
             };
             const result = onChange(modelFields);
-            value = result?.title ?? value;
+            value = result?.image ?? value;
           }
-          if (errors.title?.hasError) {
-            runValidationTasks("title", value);
+          if (errors.image?.hasError) {
+            runValidationTasks("image", value);
           }
-          setTitle(value);
+          setImage(value);
         }}
-        onBlur={() => runValidationTasks("title", title)}
-        errorMessage={errors.title?.errorMessage}
-        hasError={errors.title?.hasError}
-        {...getOverrideProps(overrides, "title")}
+        onBlur={() => runValidationTasks("image", image)}
+        errorMessage={errors.image?.errorMessage}
+        hasError={errors.image?.hasError}
+        {...getOverrideProps(overrides, "image")}
+      ></TextField>
+      <TextField
+        label="Facebook"
+        isRequired={false}
+        isReadOnly={false}
+        defaultValue={facebook}
+        onChange={(e) => {
+          let { value } = e.target;
+          if (onChange) {
+            const modelFields = {
+              name,
+              image,
+              facebook: value,
+              linkedin,
+              rating,
+              review,
+            };
+            const result = onChange(modelFields);
+            value = result?.facebook ?? value;
+          }
+          if (errors.facebook?.hasError) {
+            runValidationTasks("facebook", value);
+          }
+          setFacebook(value);
+        }}
+        onBlur={() => runValidationTasks("facebook", facebook)}
+        errorMessage={errors.facebook?.errorMessage}
+        hasError={errors.facebook?.hasError}
+        {...getOverrideProps(overrides, "facebook")}
       ></TextField>
       <TextField
         label="Linkedin"
-        isRequired={true}
+        isRequired={false}
         isReadOnly={false}
         defaultValue={linkedin}
         onChange={(e) => {
@@ -228,11 +228,11 @@ export default function InstructorUpdateForm(props) {
           if (onChange) {
             const modelFields = {
               name,
-              bio,
-              title,
-              linkedin: value,
-              twitter,
               image,
+              facebook,
+              linkedin: value,
+              rating,
+              review,
             };
             const result = onChange(modelFields);
             value = result?.linkedin ?? value;
@@ -248,62 +248,62 @@ export default function InstructorUpdateForm(props) {
         {...getOverrideProps(overrides, "linkedin")}
       ></TextField>
       <TextField
-        label="Twitter"
-        isRequired={true}
+        label="Rating"
+        isRequired={false}
         isReadOnly={false}
-        defaultValue={twitter}
+        defaultValue={rating}
         onChange={(e) => {
           let { value } = e.target;
           if (onChange) {
             const modelFields = {
               name,
-              bio,
-              title,
-              linkedin,
-              twitter: value,
               image,
+              facebook,
+              linkedin,
+              rating: value,
+              review,
             };
             const result = onChange(modelFields);
-            value = result?.twitter ?? value;
+            value = result?.rating ?? value;
           }
-          if (errors.twitter?.hasError) {
-            runValidationTasks("twitter", value);
+          if (errors.rating?.hasError) {
+            runValidationTasks("rating", value);
           }
-          setTwitter(value);
+          setRating(value);
         }}
-        onBlur={() => runValidationTasks("twitter", twitter)}
-        errorMessage={errors.twitter?.errorMessage}
-        hasError={errors.twitter?.hasError}
-        {...getOverrideProps(overrides, "twitter")}
+        onBlur={() => runValidationTasks("rating", rating)}
+        errorMessage={errors.rating?.errorMessage}
+        hasError={errors.rating?.hasError}
+        {...getOverrideProps(overrides, "rating")}
       ></TextField>
       <TextField
-        label="Image"
-        isRequired={true}
+        label="Review"
+        isRequired={false}
         isReadOnly={false}
-        defaultValue={image}
+        defaultValue={review}
         onChange={(e) => {
           let { value } = e.target;
           if (onChange) {
             const modelFields = {
               name,
-              bio,
-              title,
+              image,
+              facebook,
               linkedin,
-              twitter,
-              image: value,
+              rating,
+              review: value,
             };
             const result = onChange(modelFields);
-            value = result?.image ?? value;
+            value = result?.review ?? value;
           }
-          if (errors.image?.hasError) {
-            runValidationTasks("image", value);
+          if (errors.review?.hasError) {
+            runValidationTasks("review", value);
           }
-          setImage(value);
+          setReview(value);
         }}
-        onBlur={() => runValidationTasks("image", image)}
-        errorMessage={errors.image?.errorMessage}
-        hasError={errors.image?.hasError}
-        {...getOverrideProps(overrides, "image")}
+        onBlur={() => runValidationTasks("review", review)}
+        errorMessage={errors.review?.errorMessage}
+        hasError={errors.review?.hasError}
+        {...getOverrideProps(overrides, "review")}
       ></TextField>
       <Flex
         justifyContent="space-between"

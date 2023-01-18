@@ -7,13 +7,14 @@
 /* eslint-disable */
 import * as React from "react";
 import { fetchByPath, validateField } from "./utils";
-import { Instructor } from "../models";
+import { Hero } from "../models";
 import { getOverrideProps } from "@aws-amplify/ui-react/internal";
 import { Button, Flex, Grid, TextField } from "@aws-amplify/ui-react";
 import { DataStore } from "aws-amplify";
-export default function InstructorCreateForm(props) {
+export default function HeroUpdateForm(props) {
   const {
-    clearOnSuccess = true,
+    id,
+    hero,
     onSuccess,
     onError,
     onSubmit,
@@ -24,36 +25,42 @@ export default function InstructorCreateForm(props) {
     ...rest
   } = props;
   const initialValues = {
-    name: undefined,
     image: undefined,
-    facebook: undefined,
-    linkedin: undefined,
-    rating: undefined,
-    review: undefined,
+    smallText: undefined,
+    mediumText: undefined,
+    largeText: undefined,
+    buttonText: undefined,
   };
-  const [name, setName] = React.useState(initialValues.name);
   const [image, setImage] = React.useState(initialValues.image);
-  const [facebook, setFacebook] = React.useState(initialValues.facebook);
-  const [linkedin, setLinkedin] = React.useState(initialValues.linkedin);
-  const [rating, setRating] = React.useState(initialValues.rating);
-  const [review, setReview] = React.useState(initialValues.review);
+  const [smallText, setSmallText] = React.useState(initialValues.smallText);
+  const [mediumText, setMediumText] = React.useState(initialValues.mediumText);
+  const [largeText, setLargeText] = React.useState(initialValues.largeText);
+  const [buttonText, setButtonText] = React.useState(initialValues.buttonText);
   const [errors, setErrors] = React.useState({});
   const resetStateValues = () => {
-    setName(initialValues.name);
-    setImage(initialValues.image);
-    setFacebook(initialValues.facebook);
-    setLinkedin(initialValues.linkedin);
-    setRating(initialValues.rating);
-    setReview(initialValues.review);
+    const cleanValues = { ...initialValues, ...heroRecord };
+    setImage(cleanValues.image);
+    setSmallText(cleanValues.smallText);
+    setMediumText(cleanValues.mediumText);
+    setLargeText(cleanValues.largeText);
+    setButtonText(cleanValues.buttonText);
     setErrors({});
   };
+  const [heroRecord, setHeroRecord] = React.useState(hero);
+  React.useEffect(() => {
+    const queryData = async () => {
+      const record = id ? await DataStore.query(Hero, id) : hero;
+      setHeroRecord(record);
+    };
+    queryData();
+  }, [id, hero]);
+  React.useEffect(resetStateValues, [heroRecord]);
   const validations = {
-    name: [],
-    image: [{ type: "URL" }],
-    facebook: [{ type: "URL" }],
-    linkedin: [{ type: "URL" }],
-    rating: [],
-    review: [],
+    image: [],
+    smallText: [],
+    mediumText: [],
+    largeText: [],
+    buttonText: [],
   };
   const runValidationTasks = async (fieldName, value) => {
     let validationResponse = validateField(value, validations[fieldName]);
@@ -73,12 +80,11 @@ export default function InstructorCreateForm(props) {
       onSubmit={async (event) => {
         event.preventDefault();
         let modelFields = {
-          name,
-          image: image || undefined,
-          facebook: facebook || undefined,
-          linkedin: linkedin || undefined,
-          rating,
-          review,
+          image,
+          smallText,
+          mediumText,
+          largeText,
+          buttonText,
         };
         const validationResponses = await Promise.all(
           Object.keys(validations).reduce((promises, fieldName) => {
@@ -103,12 +109,13 @@ export default function InstructorCreateForm(props) {
           modelFields = onSubmit(modelFields);
         }
         try {
-          await DataStore.save(new Instructor(modelFields));
+          await DataStore.save(
+            Hero.copyOf(heroRecord, (updated) => {
+              Object.assign(updated, modelFields);
+            })
+          );
           if (onSuccess) {
             onSuccess(modelFields);
-          }
-          if (clearOnSuccess) {
-            resetStateValues();
           }
         } catch (err) {
           if (onError) {
@@ -117,50 +124,22 @@ export default function InstructorCreateForm(props) {
         }
       }}
       {...rest}
-      {...getOverrideProps(overrides, "InstructorCreateForm")}
+      {...getOverrideProps(overrides, "HeroUpdateForm")}
     >
-      <TextField
-        label="Name"
-        isRequired={false}
-        isReadOnly={false}
-        onChange={(e) => {
-          let { value } = e.target;
-          if (onChange) {
-            const modelFields = {
-              name: value,
-              image,
-              facebook,
-              linkedin,
-              rating,
-              review,
-            };
-            const result = onChange(modelFields);
-            value = result?.name ?? value;
-          }
-          if (errors.name?.hasError) {
-            runValidationTasks("name", value);
-          }
-          setName(value);
-        }}
-        onBlur={() => runValidationTasks("name", name)}
-        errorMessage={errors.name?.errorMessage}
-        hasError={errors.name?.hasError}
-        {...getOverrideProps(overrides, "name")}
-      ></TextField>
       <TextField
         label="Image"
         isRequired={false}
         isReadOnly={false}
+        defaultValue={image}
         onChange={(e) => {
           let { value } = e.target;
           if (onChange) {
             const modelFields = {
-              name,
               image: value,
-              facebook,
-              linkedin,
-              rating,
-              review,
+              smallText,
+              mediumText,
+              largeText,
+              buttonText,
             };
             const result = onChange(modelFields);
             value = result?.image ?? value;
@@ -176,126 +155,126 @@ export default function InstructorCreateForm(props) {
         {...getOverrideProps(overrides, "image")}
       ></TextField>
       <TextField
-        label="Facebook"
+        label="Small text"
         isRequired={false}
         isReadOnly={false}
+        defaultValue={smallText}
         onChange={(e) => {
           let { value } = e.target;
           if (onChange) {
             const modelFields = {
-              name,
               image,
-              facebook: value,
-              linkedin,
-              rating,
-              review,
+              smallText: value,
+              mediumText,
+              largeText,
+              buttonText,
             };
             const result = onChange(modelFields);
-            value = result?.facebook ?? value;
+            value = result?.smallText ?? value;
           }
-          if (errors.facebook?.hasError) {
-            runValidationTasks("facebook", value);
+          if (errors.smallText?.hasError) {
+            runValidationTasks("smallText", value);
           }
-          setFacebook(value);
+          setSmallText(value);
         }}
-        onBlur={() => runValidationTasks("facebook", facebook)}
-        errorMessage={errors.facebook?.errorMessage}
-        hasError={errors.facebook?.hasError}
-        {...getOverrideProps(overrides, "facebook")}
+        onBlur={() => runValidationTasks("smallText", smallText)}
+        errorMessage={errors.smallText?.errorMessage}
+        hasError={errors.smallText?.hasError}
+        {...getOverrideProps(overrides, "smallText")}
       ></TextField>
       <TextField
-        label="Linkedin"
+        label="Medium text"
         isRequired={false}
         isReadOnly={false}
+        defaultValue={mediumText}
         onChange={(e) => {
           let { value } = e.target;
           if (onChange) {
             const modelFields = {
-              name,
               image,
-              facebook,
-              linkedin: value,
-              rating,
-              review,
+              smallText,
+              mediumText: value,
+              largeText,
+              buttonText,
             };
             const result = onChange(modelFields);
-            value = result?.linkedin ?? value;
+            value = result?.mediumText ?? value;
           }
-          if (errors.linkedin?.hasError) {
-            runValidationTasks("linkedin", value);
+          if (errors.mediumText?.hasError) {
+            runValidationTasks("mediumText", value);
           }
-          setLinkedin(value);
+          setMediumText(value);
         }}
-        onBlur={() => runValidationTasks("linkedin", linkedin)}
-        errorMessage={errors.linkedin?.errorMessage}
-        hasError={errors.linkedin?.hasError}
-        {...getOverrideProps(overrides, "linkedin")}
+        onBlur={() => runValidationTasks("mediumText", mediumText)}
+        errorMessage={errors.mediumText?.errorMessage}
+        hasError={errors.mediumText?.hasError}
+        {...getOverrideProps(overrides, "mediumText")}
       ></TextField>
       <TextField
-        label="Rating"
+        label="Large text"
         isRequired={false}
         isReadOnly={false}
+        defaultValue={largeText}
         onChange={(e) => {
           let { value } = e.target;
           if (onChange) {
             const modelFields = {
-              name,
               image,
-              facebook,
-              linkedin,
-              rating: value,
-              review,
+              smallText,
+              mediumText,
+              largeText: value,
+              buttonText,
             };
             const result = onChange(modelFields);
-            value = result?.rating ?? value;
+            value = result?.largeText ?? value;
           }
-          if (errors.rating?.hasError) {
-            runValidationTasks("rating", value);
+          if (errors.largeText?.hasError) {
+            runValidationTasks("largeText", value);
           }
-          setRating(value);
+          setLargeText(value);
         }}
-        onBlur={() => runValidationTasks("rating", rating)}
-        errorMessage={errors.rating?.errorMessage}
-        hasError={errors.rating?.hasError}
-        {...getOverrideProps(overrides, "rating")}
+        onBlur={() => runValidationTasks("largeText", largeText)}
+        errorMessage={errors.largeText?.errorMessage}
+        hasError={errors.largeText?.hasError}
+        {...getOverrideProps(overrides, "largeText")}
       ></TextField>
       <TextField
-        label="Review"
+        label="Button text"
         isRequired={false}
         isReadOnly={false}
+        defaultValue={buttonText}
         onChange={(e) => {
           let { value } = e.target;
           if (onChange) {
             const modelFields = {
-              name,
               image,
-              facebook,
-              linkedin,
-              rating,
-              review: value,
+              smallText,
+              mediumText,
+              largeText,
+              buttonText: value,
             };
             const result = onChange(modelFields);
-            value = result?.review ?? value;
+            value = result?.buttonText ?? value;
           }
-          if (errors.review?.hasError) {
-            runValidationTasks("review", value);
+          if (errors.buttonText?.hasError) {
+            runValidationTasks("buttonText", value);
           }
-          setReview(value);
+          setButtonText(value);
         }}
-        onBlur={() => runValidationTasks("review", review)}
-        errorMessage={errors.review?.errorMessage}
-        hasError={errors.review?.hasError}
-        {...getOverrideProps(overrides, "review")}
+        onBlur={() => runValidationTasks("buttonText", buttonText)}
+        errorMessage={errors.buttonText?.errorMessage}
+        hasError={errors.buttonText?.hasError}
+        {...getOverrideProps(overrides, "buttonText")}
       ></TextField>
       <Flex
         justifyContent="space-between"
         {...getOverrideProps(overrides, "CTAFlex")}
       >
         <Button
-          children="Clear"
+          children="Reset"
           type="reset"
           onClick={resetStateValues}
-          {...getOverrideProps(overrides, "ClearButton")}
+          {...getOverrideProps(overrides, "ResetButton")}
         ></Button>
         <Flex
           gap="15px"

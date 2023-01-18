@@ -10,12 +10,14 @@ const Navbar = () => {
         <div className="flex items-center justify-between">
           {/* Logo */}
           <div className="pt-2">
-            <Image
-              src="/assets/logo2.jpg"
-              width={120}
-              height={120}
-              alt="navbar"
-            />
+            <Link href="/">
+              <Image
+                src="/assets/logo.jpg"
+                width={120}
+                height={120}
+                alt="navbar"
+              />
+            </Link>
           </div>
 
           {/* Menu-Items */}
@@ -26,14 +28,11 @@ const Navbar = () => {
             <Link href="#" className="hover:text-darkGrayishBlue">
               About us
             </Link>
-            <Link href="#" className="hover:text-darkGrayishBlue">
+            <Link href="/courses" className="hover:text-darkGrayishBlue">
               Courses
             </Link>
-            <Link href="#" className="hover:text-darkGrayishBlue">
+            <Link href="/articles" className="hover:text-darkGrayishBlue">
               Articles
-            </Link>
-            <Link href="#" className="hover:text-darkGrayishBlue">
-              Free Courses
             </Link>
           </div>
 

@@ -25,6 +25,9 @@ export declare type CourseCreateFormInputValues = {
     level?: string;
     curriculum?: string[];
     isFeatured?: boolean;
+    headDescription?: string;
+    headTitle?: string;
+    headContent?: string;
 };
 export declare type CourseCreateFormValidationValues = {
     name?: ValidationFunction<string>;
@@ -39,6 +42,9 @@ export declare type CourseCreateFormValidationValues = {
     level?: ValidationFunction<string>;
     curriculum?: ValidationFunction<string>;
     isFeatured?: ValidationFunction<boolean>;
+    headDescription?: ValidationFunction<string>;
+    headTitle?: ValidationFunction<string>;
+    headContent?: ValidationFunction<string>;
 };
 export declare type FormProps<T> = Partial<T> & React.DOMAttributes<HTMLDivElement>;
 export declare type CourseCreateFormOverridesProps = {
@@ -55,6 +61,9 @@ export declare type CourseCreateFormOverridesProps = {
     level?: FormProps<SelectFieldProps>;
     curriculum?: FormProps<TextFieldProps>;
     isFeatured?: FormProps<SwitchFieldProps>;
+    headDescription?: FormProps<TextFieldProps>;
+    headTitle?: FormProps<TextFieldProps>;
+    headContent?: FormProps<TextFieldProps>;
 } & EscapeHatchProps;
 export declare type CourseCreateFormProps = React.PropsWithChildren<{
     overrides?: CourseCreateFormOverridesProps | undefined | null;

@@ -5,5 +5,11 @@
  **************************************************************************/
 
 export { default as studioTheme } from "./studioTheme";
+export { default as PostCreateForm } from "./PostCreateForm";
+export { default as PostUpdateForm } from "./PostUpdateForm";
+export { default as HeroCreateForm } from "./HeroCreateForm";
+export { default as HeroUpdateForm } from "./HeroUpdateForm";
+export { default as InstructorCreateForm } from "./InstructorCreateForm";
+export { default as InstructorUpdateForm } from "./InstructorUpdateForm";
 export { default as CourseCreateForm } from "./CourseCreateForm";
 export { default as CourseUpdateForm } from "./CourseUpdateForm";

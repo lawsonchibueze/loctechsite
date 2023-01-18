@@ -23,10 +23,14 @@ const Level = {
   "ADVANCE": "ADVANCE"
 };
 
-const { Course } = initSchema(schema);
+const { Post, Hero, Instructor, Course, InstructorCourse } = initSchema(schema);
 
 export {
+  Post,
+  Hero,
+  Instructor,
   Course,
+  InstructorCourse,
   Category,
   Level
 };
