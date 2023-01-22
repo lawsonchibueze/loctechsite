@@ -4,6 +4,8 @@ type Post @model @auth(rules: [{allow: public, operations: [create, read]}]) {
   content: String
   isFeatured: Boolean
   image: AWSURL
+  category: String
+  tags: String
 }
 
 type Hero @model @auth(rules: [{allow: public}]) {

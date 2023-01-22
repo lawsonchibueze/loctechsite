@@ -34,17 +34,23 @@ export default function PostCreateForm(props) {
     content: undefined,
     isFeatured: false,
     image: undefined,
+    category: undefined,
+    tags: undefined,
   };
   const [title, setTitle] = React.useState(initialValues.title);
   const [content, setContent] = React.useState(initialValues.content);
   const [isFeatured, setIsFeatured] = React.useState(initialValues.isFeatured);
   const [image, setImage] = React.useState(initialValues.image);
+  const [category, setCategory] = React.useState(initialValues.category);
+  const [tags, setTags] = React.useState(initialValues.tags);
   const [errors, setErrors] = React.useState({});
   const resetStateValues = () => {
     setTitle(initialValues.title);
     setContent(initialValues.content);
     setIsFeatured(initialValues.isFeatured);
     setImage(initialValues.image);
+    setCategory(initialValues.category);
+    setTags(initialValues.tags);
     setErrors({});
   };
   const validations = {
@@ -52,6 +58,8 @@ export default function PostCreateForm(props) {
     content: [],
     isFeatured: [],
     image: [{ type: "URL" }],
+    category: [],
+    tags: [],
   };
   const runValidationTasks = async (fieldName, value) => {
     let validationResponse = validateField(value, validations[fieldName]);
@@ -75,6 +83,8 @@ export default function PostCreateForm(props) {
           content,
           isFeatured,
           image: image || undefined,
+          category,
+          tags,
         };
         const validationResponses = await Promise.all(
           Object.keys(validations).reduce((promises, fieldName) => {
@@ -127,6 +137,8 @@ export default function PostCreateForm(props) {
               content,
               isFeatured,
               image,
+              category,
+              tags,
             };
             const result = onChange(modelFields);
             value = result?.title ?? value;
@@ -153,6 +165,8 @@ export default function PostCreateForm(props) {
               content: value,
               isFeatured,
               image,
+              category,
+              tags,
             };
             const result = onChange(modelFields);
             value = result?.content ?? value;
@@ -180,6 +194,8 @@ export default function PostCreateForm(props) {
               content,
               isFeatured: value,
               image,
+              category,
+              tags,
             };
             const result = onChange(modelFields);
             value = result?.isFeatured ?? value;
@@ -206,6 +222,8 @@ export default function PostCreateForm(props) {
               content,
               isFeatured,
               image: value,
+              category,
+              tags,
             };
             const result = onChange(modelFields);
             value = result?.image ?? value;
@@ -219,6 +237,62 @@ export default function PostCreateForm(props) {
         errorMessage={errors.image?.errorMessage}
         hasError={errors.image?.hasError}
         {...getOverrideProps(overrides, "image")}
+      ></TextField>
+      <TextField
+        label="Category"
+        isRequired={false}
+        isReadOnly={false}
+        onChange={(e) => {
+          let { value } = e.target;
+          if (onChange) {
+            const modelFields = {
+              title,
+              content,
+              isFeatured,
+              image,
+              category: value,
+              tags,
+            };
+            const result = onChange(modelFields);
+            value = result?.category ?? value;
+          }
+          if (errors.category?.hasError) {
+            runValidationTasks("category", value);
+          }
+          setCategory(value);
+        }}
+        onBlur={() => runValidationTasks("category", category)}
+        errorMessage={errors.category?.errorMessage}
+        hasError={errors.category?.hasError}
+        {...getOverrideProps(overrides, "category")}
+      ></TextField>
+      <TextField
+        label="Tags"
+        isRequired={false}
+        isReadOnly={false}
+        onChange={(e) => {
+          let { value } = e.target;
+          if (onChange) {
+            const modelFields = {
+              title,
+              content,
+              isFeatured,
+              image,
+              category,
+              tags: value,
+            };
+            const result = onChange(modelFields);
+            value = result?.tags ?? value;
+          }
+          if (errors.tags?.hasError) {
+            runValidationTasks("tags", value);
+          }
+          setTags(value);
+        }}
+        onBlur={() => runValidationTasks("tags", tags)}
+        errorMessage={errors.tags?.errorMessage}
+        hasError={errors.tags?.hasError}
+        {...getOverrideProps(overrides, "tags")}
       ></TextField>
       <Flex
         justifyContent="space-between"

@@ -35,6 +35,8 @@ type EagerPost = {
   readonly content?: string | null;
   readonly isFeatured?: boolean | null;
   readonly image?: string | null;
+  readonly category?: string | null;
+  readonly tags?: string | null;
   readonly createdAt?: string | null;
   readonly updatedAt?: string | null;
 }
@@ -49,6 +51,8 @@ type LazyPost = {
   readonly content?: string | null;
   readonly isFeatured?: boolean | null;
   readonly image?: string | null;
+  readonly category?: string | null;
+  readonly tags?: string | null;
   readonly createdAt?: string | null;
   readonly updatedAt?: string | null;
 }
