@@ -22,7 +22,7 @@ const Navbar = () => {
 
           {/* Menu-Items */}
           <div className="hidden space-x-6 md:flex">
-            <Link href="#" className="hover:text-darkGrayishBlue">
+            <Link href="/" className="hover:text-darkGrayishBlue">
               Home
             </Link>
             <Link href="#" className="hover:text-darkGrayishBlue">
