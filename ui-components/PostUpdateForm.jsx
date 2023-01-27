@@ -6,9 +6,6 @@
 
 /* eslint-disable */
 import * as React from "react";
-import { fetchByPath, validateField } from "./utils";
-import { Post } from "../models";
-import { getOverrideProps } from "@aws-amplify/ui-react/internal";
 import {
   Button,
   Flex,
@@ -16,27 +13,29 @@ import {
   SwitchField,
   TextField,
 } from "@aws-amplify/ui-react";
+import { getOverrideProps } from "@aws-amplify/ui-react/internal";
+import { Post } from "../models";
+import { fetchByPath, validateField } from "./utils";
 import { DataStore } from "aws-amplify";
 export default function PostUpdateForm(props) {
   const {
-    id,
+    id: idProp,
     post,
     onSuccess,
     onError,
     onSubmit,
-    onCancel,
     onValidate,
     onChange,
     overrides,
     ...rest
   } = props;
   const initialValues = {
-    title: undefined,
-    content: undefined,
+    title: "",
+    content: "",
     isFeatured: false,
-    image: undefined,
-    category: undefined,
-    tags: undefined,
+    image: "",
+    category: "",
+    tags: "",
   };
   const [title, setTitle] = React.useState(initialValues.title);
   const [content, setContent] = React.useState(initialValues.content);
@@ -46,7 +45,9 @@ export default function PostUpdateForm(props) {
   const [tags, setTags] = React.useState(initialValues.tags);
   const [errors, setErrors] = React.useState({});
   const resetStateValues = () => {
-    const cleanValues = { ...initialValues, ...postRecord };
+    const cleanValues = postRecord
+      ? { ...initialValues, ...postRecord }
+      : initialValues;
     setTitle(cleanValues.title);
     setContent(cleanValues.content);
     setIsFeatured(cleanValues.isFeatured);
@@ -58,11 +59,11 @@ export default function PostUpdateForm(props) {
   const [postRecord, setPostRecord] = React.useState(post);
   React.useEffect(() => {
     const queryData = async () => {
-      const record = id ? await DataStore.query(Post, id) : post;
+      const record = idProp ? await DataStore.query(Post, idProp) : post;
       setPostRecord(record);
     };
     queryData();
-  }, [id, post]);
+  }, [idProp, post]);
   React.useEffect(resetStateValues, [postRecord]);
   const validations = {
     title: [],
@@ -72,7 +73,14 @@ export default function PostUpdateForm(props) {
     category: [],
     tags: [],
   };
-  const runValidationTasks = async (fieldName, value) => {
+  const runValidationTasks = async (
+    fieldName,
+    currentValue,
+    getDisplayValue
+  ) => {
+    const value = getDisplayValue
+      ? getDisplayValue(currentValue)
+      : currentValue;
     let validationResponse = validateField(value, validations[fieldName]);
     const customValidator = fetchByPath(onValidate, fieldName);
     if (customValidator) {
@@ -93,7 +101,7 @@ export default function PostUpdateForm(props) {
           title,
           content,
           isFeatured,
-          image: image || undefined,
+          image,
           category,
           tags,
         };
@@ -120,6 +128,11 @@ export default function PostUpdateForm(props) {
           modelFields = onSubmit(modelFields);
         }
         try {
+          Object.entries(modelFields).forEach(([key, value]) => {
+            if (typeof value === "string" && value.trim() === "") {
+              modelFields[key] = undefined;
+            }
+          });
           await DataStore.save(
             Post.copyOf(postRecord, (updated) => {
               Object.assign(updated, modelFields);
@@ -134,14 +147,14 @@ export default function PostUpdateForm(props) {
           }
         }
       }}
-      {...rest}
       {...getOverrideProps(overrides, "PostUpdateForm")}
+      {...rest}
     >
       <TextField
         label="Title"
         isRequired={false}
         isReadOnly={false}
-        defaultValue={title}
+        value={title}
         onChange={(e) => {
           let { value } = e.target;
           if (onChange) {
@@ -170,7 +183,7 @@ export default function PostUpdateForm(props) {
         label="Content"
         isRequired={false}
         isReadOnly={false}
-        defaultValue={content}
+        value={content}
         onChange={(e) => {
           let { value } = e.target;
           if (onChange) {
@@ -228,7 +241,7 @@ export default function PostUpdateForm(props) {
         label="Image"
         isRequired={false}
         isReadOnly={false}
-        defaultValue={image}
+        value={image}
         onChange={(e) => {
           let { value } = e.target;
           if (onChange) {
@@ -257,7 +270,7 @@ export default function PostUpdateForm(props) {
         label="Category"
         isRequired={false}
         isReadOnly={false}
-        defaultValue={category}
+        value={category}
         onChange={(e) => {
           let { value } = e.target;
           if (onChange) {
@@ -286,7 +299,7 @@ export default function PostUpdateForm(props) {
         label="Tags"
         isRequired={false}
         isReadOnly={false}
-        defaultValue={tags}
+        value={tags}
         onChange={(e) => {
           let { value } = e.target;
           if (onChange) {
@@ -318,7 +331,11 @@ export default function PostUpdateForm(props) {
         <Button
           children="Reset"
           type="reset"
-          onClick={resetStateValues}
+          onClick={(event) => {
+            event.preventDefault();
+            resetStateValues();
+          }}
+          isDisabled={!(idProp || post)}
           {...getOverrideProps(overrides, "ResetButton")}
         ></Button>
         <Flex
@@ -326,18 +343,13 @@ export default function PostUpdateForm(props) {
           {...getOverrideProps(overrides, "RightAlignCTASubFlex")}
         >
           <Button
-            children="Cancel"
-            type="button"
-            onClick={() => {
-              onCancel && onCancel();
-            }}
-            {...getOverrideProps(overrides, "CancelButton")}
-          ></Button>
-          <Button
             children="Submit"
             type="submit"
             variation="primary"
-            isDisabled={Object.values(errors).some((e) => e?.hasError)}
+            isDisabled={
+              !(idProp || post) ||
+              Object.values(errors).some((e) => e?.hasError)
+            }
             {...getOverrideProps(overrides, "SubmitButton")}
           ></Button>
         </Flex>

@@ -6,10 +6,10 @@
 
 /* eslint-disable */
 import * as React from "react";
-import { fetchByPath, validateField } from "./utils";
-import { Hero } from "../models";
-import { getOverrideProps } from "@aws-amplify/ui-react/internal";
 import { Button, Flex, Grid, TextField } from "@aws-amplify/ui-react";
+import { getOverrideProps } from "@aws-amplify/ui-react/internal";
+import { Hero } from "../models";
+import { fetchByPath, validateField } from "./utils";
 import { DataStore } from "aws-amplify";
 export default function HeroCreateForm(props) {
   const {
@@ -17,18 +17,17 @@ export default function HeroCreateForm(props) {
     onSuccess,
     onError,
     onSubmit,
-    onCancel,
     onValidate,
     onChange,
     overrides,
     ...rest
   } = props;
   const initialValues = {
-    image: undefined,
-    smallText: undefined,
-    mediumText: undefined,
-    largeText: undefined,
-    buttonText: undefined,
+    image: "",
+    smallText: "",
+    mediumText: "",
+    largeText: "",
+    buttonText: "",
   };
   const [image, setImage] = React.useState(initialValues.image);
   const [smallText, setSmallText] = React.useState(initialValues.smallText);
@@ -51,7 +50,14 @@ export default function HeroCreateForm(props) {
     largeText: [],
     buttonText: [],
   };
-  const runValidationTasks = async (fieldName, value) => {
+  const runValidationTasks = async (
+    fieldName,
+    currentValue,
+    getDisplayValue
+  ) => {
+    const value = getDisplayValue
+      ? getDisplayValue(currentValue)
+      : currentValue;
     let validationResponse = validateField(value, validations[fieldName]);
     const customValidator = fetchByPath(onValidate, fieldName);
     if (customValidator) {
@@ -98,6 +104,11 @@ export default function HeroCreateForm(props) {
           modelFields = onSubmit(modelFields);
         }
         try {
+          Object.entries(modelFields).forEach(([key, value]) => {
+            if (typeof value === "string" && value.trim() === "") {
+              modelFields[key] = undefined;
+            }
+          });
           await DataStore.save(new Hero(modelFields));
           if (onSuccess) {
             onSuccess(modelFields);
@@ -111,13 +122,14 @@ export default function HeroCreateForm(props) {
           }
         }
       }}
-      {...rest}
       {...getOverrideProps(overrides, "HeroCreateForm")}
+      {...rest}
     >
       <TextField
         label="Image"
         isRequired={false}
         isReadOnly={false}
+        value={image}
         onChange={(e) => {
           let { value } = e.target;
           if (onChange) {
@@ -145,6 +157,7 @@ export default function HeroCreateForm(props) {
         label="Small text"
         isRequired={false}
         isReadOnly={false}
+        value={smallText}
         onChange={(e) => {
           let { value } = e.target;
           if (onChange) {
@@ -172,6 +185,7 @@ export default function HeroCreateForm(props) {
         label="Medium text"
         isRequired={false}
         isReadOnly={false}
+        value={mediumText}
         onChange={(e) => {
           let { value } = e.target;
           if (onChange) {
@@ -199,6 +213,7 @@ export default function HeroCreateForm(props) {
         label="Large text"
         isRequired={false}
         isReadOnly={false}
+        value={largeText}
         onChange={(e) => {
           let { value } = e.target;
           if (onChange) {
@@ -226,6 +241,7 @@ export default function HeroCreateForm(props) {
         label="Button text"
         isRequired={false}
         isReadOnly={false}
+        value={buttonText}
         onChange={(e) => {
           let { value } = e.target;
           if (onChange) {
@@ -256,21 +272,16 @@ export default function HeroCreateForm(props) {
         <Button
           children="Clear"
           type="reset"
-          onClick={resetStateValues}
+          onClick={(event) => {
+            event.preventDefault();
+            resetStateValues();
+          }}
           {...getOverrideProps(overrides, "ClearButton")}
         ></Button>
         <Flex
           gap="15px"
           {...getOverrideProps(overrides, "RightAlignCTASubFlex")}
         >
-          <Button
-            children="Cancel"
-            type="button"
-            onClick={() => {
-              onCancel && onCancel();
-            }}
-            {...getOverrideProps(overrides, "CancelButton")}
-          ></Button>
           <Button
             children="Submit"
             type="submit"

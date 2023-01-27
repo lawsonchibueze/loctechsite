@@ -6,9 +6,6 @@
 
 /* eslint-disable */
 import * as React from "react";
-import { fetchByPath, validateField } from "./utils";
-import { Post } from "../models";
-import { getOverrideProps } from "@aws-amplify/ui-react/internal";
 import {
   Button,
   Flex,
@@ -16,6 +13,9 @@ import {
   SwitchField,
   TextField,
 } from "@aws-amplify/ui-react";
+import { getOverrideProps } from "@aws-amplify/ui-react/internal";
+import { Post } from "../models";
+import { fetchByPath, validateField } from "./utils";
 import { DataStore } from "aws-amplify";
 export default function PostCreateForm(props) {
   const {
@@ -23,19 +23,18 @@ export default function PostCreateForm(props) {
     onSuccess,
     onError,
     onSubmit,
-    onCancel,
     onValidate,
     onChange,
     overrides,
     ...rest
   } = props;
   const initialValues = {
-    title: undefined,
-    content: undefined,
+    title: "",
+    content: "",
     isFeatured: false,
-    image: undefined,
-    category: undefined,
-    tags: undefined,
+    image: "",
+    category: "",
+    tags: "",
   };
   const [title, setTitle] = React.useState(initialValues.title);
   const [content, setContent] = React.useState(initialValues.content);
@@ -61,7 +60,14 @@ export default function PostCreateForm(props) {
     category: [],
     tags: [],
   };
-  const runValidationTasks = async (fieldName, value) => {
+  const runValidationTasks = async (
+    fieldName,
+    currentValue,
+    getDisplayValue
+  ) => {
+    const value = getDisplayValue
+      ? getDisplayValue(currentValue)
+      : currentValue;
     let validationResponse = validateField(value, validations[fieldName]);
     const customValidator = fetchByPath(onValidate, fieldName);
     if (customValidator) {
@@ -82,7 +88,7 @@ export default function PostCreateForm(props) {
           title,
           content,
           isFeatured,
-          image: image || undefined,
+          image,
           category,
           tags,
         };
@@ -109,6 +115,11 @@ export default function PostCreateForm(props) {
           modelFields = onSubmit(modelFields);
         }
         try {
+          Object.entries(modelFields).forEach(([key, value]) => {
+            if (typeof value === "string" && value.trim() === "") {
+              modelFields[key] = undefined;
+            }
+          });
           await DataStore.save(new Post(modelFields));
           if (onSuccess) {
             onSuccess(modelFields);
@@ -122,13 +133,14 @@ export default function PostCreateForm(props) {
           }
         }
       }}
-      {...rest}
       {...getOverrideProps(overrides, "PostCreateForm")}
+      {...rest}
     >
       <TextField
         label="Title"
         isRequired={false}
         isReadOnly={false}
+        value={title}
         onChange={(e) => {
           let { value } = e.target;
           if (onChange) {
@@ -157,6 +169,7 @@ export default function PostCreateForm(props) {
         label="Content"
         isRequired={false}
         isReadOnly={false}
+        value={content}
         onChange={(e) => {
           let { value } = e.target;
           if (onChange) {
@@ -214,6 +227,7 @@ export default function PostCreateForm(props) {
         label="Image"
         isRequired={false}
         isReadOnly={false}
+        value={image}
         onChange={(e) => {
           let { value } = e.target;
           if (onChange) {
@@ -242,6 +256,7 @@ export default function PostCreateForm(props) {
         label="Category"
         isRequired={false}
         isReadOnly={false}
+        value={category}
         onChange={(e) => {
           let { value } = e.target;
           if (onChange) {
@@ -270,6 +285,7 @@ export default function PostCreateForm(props) {
         label="Tags"
         isRequired={false}
         isReadOnly={false}
+        value={tags}
         onChange={(e) => {
           let { value } = e.target;
           if (onChange) {
@@ -301,21 +317,16 @@ export default function PostCreateForm(props) {
         <Button
           children="Clear"
           type="reset"
-          onClick={resetStateValues}
+          onClick={(event) => {
+            event.preventDefault();
+            resetStateValues();
+          }}
           {...getOverrideProps(overrides, "ClearButton")}
         ></Button>
         <Flex
           gap="15px"
           {...getOverrideProps(overrides, "RightAlignCTASubFlex")}
         >
-          <Button
-            children="Cancel"
-            type="button"
-            onClick={() => {
-              onCancel && onCancel();
-            }}
-            {...getOverrideProps(overrides, "CancelButton")}
-          ></Button>
           <Button
             children="Submit"
             type="submit"

@@ -8,6 +8,10 @@ import { Course } from "../models";
 import { useState, useEffect } from "react";
 
 import FeaturedCourses from "./components/FeaturedCourses";
+import Views from "./components/views";
+import Testimonial from "./components/Testimonial";
+import Events from "./components/Events";
+import Blog from "./components/Blog";
 
 export default function Home() {
   const [courses, setCourses] = useState([]);
@@ -23,7 +27,7 @@ export default function Home() {
       fetchCourse();
       console.log("Just Updated my Course Data");
     });
-  }, []);
+  }, [courses]);
   return (
     <div>
       <Head>
@@ -35,7 +39,10 @@ export default function Home() {
       <div>
         <Hero />
         <Features />
-        <FeaturedCourses />
+        <Views />
+        <Events />
+        <Blog />
+        <Testimonial />
       </div>
     </div>
   );

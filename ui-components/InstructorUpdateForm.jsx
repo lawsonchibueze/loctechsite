@@ -6,31 +6,30 @@
 
 /* eslint-disable */
 import * as React from "react";
-import { fetchByPath, validateField } from "./utils";
-import { Instructor } from "../models";
-import { getOverrideProps } from "@aws-amplify/ui-react/internal";
 import { Button, Flex, Grid, TextField } from "@aws-amplify/ui-react";
+import { getOverrideProps } from "@aws-amplify/ui-react/internal";
+import { Instructor } from "../models";
+import { fetchByPath, validateField } from "./utils";
 import { DataStore } from "aws-amplify";
 export default function InstructorUpdateForm(props) {
   const {
-    id,
+    id: idProp,
     instructor,
     onSuccess,
     onError,
     onSubmit,
-    onCancel,
     onValidate,
     onChange,
     overrides,
     ...rest
   } = props;
   const initialValues = {
-    name: undefined,
-    image: undefined,
-    facebook: undefined,
-    linkedin: undefined,
-    rating: undefined,
-    review: undefined,
+    name: "",
+    image: "",
+    facebook: "",
+    linkedin: "",
+    rating: "",
+    review: "",
   };
   const [name, setName] = React.useState(initialValues.name);
   const [image, setImage] = React.useState(initialValues.image);
@@ -40,7 +39,9 @@ export default function InstructorUpdateForm(props) {
   const [review, setReview] = React.useState(initialValues.review);
   const [errors, setErrors] = React.useState({});
   const resetStateValues = () => {
-    const cleanValues = { ...initialValues, ...instructorRecord };
+    const cleanValues = instructorRecord
+      ? { ...initialValues, ...instructorRecord }
+      : initialValues;
     setName(cleanValues.name);
     setImage(cleanValues.image);
     setFacebook(cleanValues.facebook);
@@ -52,11 +53,13 @@ export default function InstructorUpdateForm(props) {
   const [instructorRecord, setInstructorRecord] = React.useState(instructor);
   React.useEffect(() => {
     const queryData = async () => {
-      const record = id ? await DataStore.query(Instructor, id) : instructor;
+      const record = idProp
+        ? await DataStore.query(Instructor, idProp)
+        : instructor;
       setInstructorRecord(record);
     };
     queryData();
-  }, [id, instructor]);
+  }, [idProp, instructor]);
   React.useEffect(resetStateValues, [instructorRecord]);
   const validations = {
     name: [],
@@ -66,7 +69,14 @@ export default function InstructorUpdateForm(props) {
     rating: [],
     review: [],
   };
-  const runValidationTasks = async (fieldName, value) => {
+  const runValidationTasks = async (
+    fieldName,
+    currentValue,
+    getDisplayValue
+  ) => {
+    const value = getDisplayValue
+      ? getDisplayValue(currentValue)
+      : currentValue;
     let validationResponse = validateField(value, validations[fieldName]);
     const customValidator = fetchByPath(onValidate, fieldName);
     if (customValidator) {
@@ -85,9 +95,9 @@ export default function InstructorUpdateForm(props) {
         event.preventDefault();
         let modelFields = {
           name,
-          image: image || undefined,
-          facebook: facebook || undefined,
-          linkedin: linkedin || undefined,
+          image,
+          facebook,
+          linkedin,
           rating,
           review,
         };
@@ -114,6 +124,11 @@ export default function InstructorUpdateForm(props) {
           modelFields = onSubmit(modelFields);
         }
         try {
+          Object.entries(modelFields).forEach(([key, value]) => {
+            if (typeof value === "string" && value.trim() === "") {
+              modelFields[key] = undefined;
+            }
+          });
           await DataStore.save(
             Instructor.copyOf(instructorRecord, (updated) => {
               Object.assign(updated, modelFields);
@@ -128,14 +143,14 @@ export default function InstructorUpdateForm(props) {
           }
         }
       }}
-      {...rest}
       {...getOverrideProps(overrides, "InstructorUpdateForm")}
+      {...rest}
     >
       <TextField
         label="Name"
         isRequired={false}
         isReadOnly={false}
-        defaultValue={name}
+        value={name}
         onChange={(e) => {
           let { value } = e.target;
           if (onChange) {
@@ -164,7 +179,7 @@ export default function InstructorUpdateForm(props) {
         label="Image"
         isRequired={false}
         isReadOnly={false}
-        defaultValue={image}
+        value={image}
         onChange={(e) => {
           let { value } = e.target;
           if (onChange) {
@@ -193,7 +208,7 @@ export default function InstructorUpdateForm(props) {
         label="Facebook"
         isRequired={false}
         isReadOnly={false}
-        defaultValue={facebook}
+        value={facebook}
         onChange={(e) => {
           let { value } = e.target;
           if (onChange) {
@@ -222,7 +237,7 @@ export default function InstructorUpdateForm(props) {
         label="Linkedin"
         isRequired={false}
         isReadOnly={false}
-        defaultValue={linkedin}
+        value={linkedin}
         onChange={(e) => {
           let { value } = e.target;
           if (onChange) {
@@ -251,7 +266,7 @@ export default function InstructorUpdateForm(props) {
         label="Rating"
         isRequired={false}
         isReadOnly={false}
-        defaultValue={rating}
+        value={rating}
         onChange={(e) => {
           let { value } = e.target;
           if (onChange) {
@@ -280,7 +295,7 @@ export default function InstructorUpdateForm(props) {
         label="Review"
         isRequired={false}
         isReadOnly={false}
-        defaultValue={review}
+        value={review}
         onChange={(e) => {
           let { value } = e.target;
           if (onChange) {
@@ -312,7 +327,11 @@ export default function InstructorUpdateForm(props) {
         <Button
           children="Reset"
           type="reset"
-          onClick={resetStateValues}
+          onClick={(event) => {
+            event.preventDefault();
+            resetStateValues();
+          }}
+          isDisabled={!(idProp || instructor)}
           {...getOverrideProps(overrides, "ResetButton")}
         ></Button>
         <Flex
@@ -320,18 +339,13 @@ export default function InstructorUpdateForm(props) {
           {...getOverrideProps(overrides, "RightAlignCTASubFlex")}
         >
           <Button
-            children="Cancel"
-            type="button"
-            onClick={() => {
-              onCancel && onCancel();
-            }}
-            {...getOverrideProps(overrides, "CancelButton")}
-          ></Button>
-          <Button
             children="Submit"
             type="submit"
             variation="primary"
-            isDisabled={Object.values(errors).some((e) => e?.hasError)}
+            isDisabled={
+              !(idProp || instructor) ||
+              Object.values(errors).some((e) => e?.hasError)
+            }
             {...getOverrideProps(overrides, "SubmitButton")}
           ></Button>
         </Flex>

@@ -1,8 +1,7 @@
 import "../styles/globals.css";
 import { Amplify } from "aws-amplify";
-import Navbar from "./components/Navbar";
-import Footer from "./components/Footer";
 import config from "../aws-exports";
+import Layout from "./components/layout";
 
 Amplify.configure({
   ...config,
@@ -11,11 +10,9 @@ Amplify.configure({
 
 function MyApp({ Component, pageProps }) {
   return (
-    <div>
-      <Navbar />
+    <Layout>
       <Component {...pageProps} />
-      <Footer />
-    </div>
+    </Layout>
   );
 }
 
