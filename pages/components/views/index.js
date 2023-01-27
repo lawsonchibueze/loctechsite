@@ -33,7 +33,6 @@ export default function Views() {
         async function fetchCourses() {
             const courseData = await DataStore.query(Course);
             setCourses(courseData);
-            // console.log(courseData);
         }
         DataStore.observe(Course).subscribe((msg) => {
             console.log(msg.Course, msg.opType, msg.element);
