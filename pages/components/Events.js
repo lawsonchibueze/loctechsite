@@ -26,24 +26,25 @@ export default function Events() {
 
     return (
         <div className='mt-20 lg:p-32 px-4'>
-            <div className="flex flex-row gap-12 ">
-                <div className='flex flex-col gap-6 items-center'>
-                    <h1 className='text-base font-semibold text-violet-700 borde leading-snug self-start'>TESTIMONIALS</h1>
-                    <h2 className='text-[#181818] text-3xl font-semibold'>Upcoming Events</h2>
+            <div className="flex lg:flex-row flex-col gap-12 flex-1">
+                <div className='flex flex-col gap-4 items-center lg:w-[30%] w-full'>
+                    <h1 className='text-base font-semibold text-violet-700 borde leading-snug self-start'>EVENTS</h1>
+                    <h2 className='text-[#181818] text-3xl font-semibold lg:text-start text-center self-start'>Upcoming Events</h2>
                     <p>You can show all events here to let people take the chance to get involved</p>
-                    <button className="px-6 py-3 text-violet-800 font-semibold bg-violet-50 hover:shadow-xl transition-shadow duration-500 ease-in-out self-start">View all</button>
+                    <button className="px-6 py-3 text-violet-800 font-semibold bg-violet-50 hover:shadow-xl transition-shadow duration-500 ease-in-out lg:self-start self-center">View all</button>
                 </div>
                 <div className='grid lg:grid-cols-3 grid-flow-row gap-8'>
                     {data.map((item, index) => {
                         return (
-                            <Link href='/' key={index} className='flex flex-col justify-between bg-violet-50'>
+                            <Link href='/' key={index} className='flex flex-col gap-2 bg-violet-50'>
                                 <Image
                                     src={item.image}
                                     alt=''
+                                    className='w-full'
                                 />
-                                <div className='p-3 flex flex-col justify-between items-center'>
+                                <div className='p-3 flex flex-col justify-between'>
                                     <h1 className='text-gray-600 text-sm'>{item.date}</h1>
-                                    <p className='text-center font-semibold'>{item.desc}</p>
+                                    <p className='font-semibold'>{item.desc}</p>
                                 </div>
 
                             </Link>

@@ -69,7 +69,7 @@ export default function Footer() {
             </div>
           </div>
         </div>
-        <div className="flex lg:flex-row flex-col justify-center gap-6 lg:gap-0 items-center lg:justify-between lg:mt-24 my-10 mb-10">
+        <div className="flex lg:flex-row flex-col justify-center gap-6 lg:gap-0 items-center lg:justify-between lg:mt-24 py-10 pb-10">
           <div>
             © {date} Loctech. All Rights Reserved
           </div>

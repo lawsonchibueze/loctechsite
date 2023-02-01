@@ -1,3 +1,4 @@
+import { CheckCircleIcon } from "@heroicons/react/24/outline";
 import { withSSRContext } from "aws-amplify";
 import Head from "next/head";
 import Image from "next/image";
@@ -31,21 +32,19 @@ export default function CourseComponent({ course }) {
                 <link rel="icon" href="/favicon.ico" />
             </Head>
             <div className="relative">
-                <div className="bg-violet-50 h-60">
-                    <div className="flex lg:px-40 px-4 py-6">
-                        <div>
-                            <div className="text-gray-800 flex flex-col gap-6">
-                                <h1 className="font-semibold text-3xl">
-                                    {course.name}
-                                </h1>
-                                <div className="flex flex-row gap-6 items-center">
-                                    <h2 className="flex flex-row gap-2 items-center">
-                                        <BsDot className="w-6 h-6 text-violet-700" /> {course.tutor}
-                                    </h2>
-                                    <h3 className="flex flex-row gap-2 items-center">
-                                        <BsDot className="w-6 h-6 text-violet-700" /> {course.level}
-                                    </h3>
-                                </div>
+                <div className="bg-violet-50 h-80">
+                    <div className="flex lg:px-40 px-4 py-28">
+                        <div className="flex flex-col gap-6">
+                            <h1 className="font-semibold text-4xl">
+                                {course.name}
+                            </h1>
+                            <div className="flex flex-row gap-6 items-center">
+                                <h2 className="flex flex-row gap-2 items-center">
+                                    <BsDot className="w-6 h-6 text-violet-700" /> {course.tutor}
+                                </h2>
+                                <h3 className="flex flex-row gap-2 items-center">
+                                    <BsDot className="w-6 h-6 text-violet-700" /> {course.level}
+                                </h3>
                             </div>
                         </div>
                     </div>
@@ -70,13 +69,15 @@ export default function CourseComponent({ course }) {
                         </div> */}
                     </div>
                     <div>
-                        <h1 className="font-semibold text-2xl my-6">Who should learn this course</h1>
-                        <div className="flex flex-row flex-wrap w-[70%] gap-4">
+                        <h1 className="font-semibold text-2xl my-6">Learning Objectives</h1>
+                        <div className="grid grid-cols-2 grid-flow-row w-[70%] gap-4">
                             {course.learningObjective
                                 .map((item, index) => {
                                     return (
-                                        <div key={index} className='bg-[#f3f3f3] text-[#51565e] font-semibold text-base px-5 py-2 rounded-3xl'>
-                                            {item}
+                                        <div key={index} className='text-[#51565e] font-semibold text-base flex flex-row gap-2 items-start justify-center'>
+                                            <CheckCircleIcon className="h-6 w-6 text-violet-900" />
+                                            <div className="flex-1">{item}</div>
+
                                         </div>
                                     )
                                 })}
@@ -129,9 +130,9 @@ export default function CourseComponent({ course }) {
                         </div>
                     </div>
                 </div>
-                <div className="lg:absolute lg:right-40 lg:top-10 h-fit lg:z-10 bg-white rounded-md shadow-lg flex flex-col gap-4 px-4 lg:px-0">
-                    <div className="lg:w-80 relative">
-                        <video alt="" className='w-full h-fit rounded-t-md' src={course.video} controls />
+                <div className="lg:absolute lg:right-40 lg:top-28 h-fit lg:z-10 bg-white rounded-md shadow-lg flex flex-col gap-4 px-4 lg:px-0">
+                    <div className="lg:w-[20rem] relative">
+                        <video alt="" className='w-full h-52 rounded-t-md' src={course.video} controls />
                         {/* <div className="absolute inset-0 bg-gradient-to-b from-white to-black mix-blend-multiply" aria-hidden="true" />
                         <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
                             <div className="w-16 h-16 rounded-full border border-violet-700 flex items-center justify-center cursor-pointer p-4 m-4">
@@ -140,7 +141,7 @@ export default function CourseComponent({ course }) {
                             </div>
                         </div> */}
                     </div>
-                    <div className="lg:px-4 px-2 py-3 flex flex-col gap-2">
+                    <div className="lg:px-6 px-2 py-3 flex flex-col gap-2">
                         <div className="text-3xl text-gray-800 font-bold">
                             {formatter.format(course.price)}
                             <span className="text-[15px]">{course.priceSm}</span>
@@ -149,16 +150,16 @@ export default function CourseComponent({ course }) {
                             {course.level}
                         </div>
                         <div className="flex flex-col gap-6 my-6">
-                            <div className="flex flex-row justify-between items-center">
-                                <BiTime className="w-6 h-6 text-gray-800" />
+                            <div className="flex flex-row justify-between items-center border-b border-gray-200 pb-3">
+                                <BiTime className="w-6 h-6 text-gray-700" />
                                 <span className="text-gray-600">{course.duration} Hour(s)</span>
                             </div>
-                            <div className="flex flex-row justify-between items-center">
-                                <BsPeople className="w-6 h-6 text-gray-800" />
+                            <div className="flex flex-row justify-between items-center border-b border-gray-200 pb-3">
+                                <BsPeople className="w-6 h-6 text-gray-700" />
                                 <span className="text-gray-600">20+ Sudents</span>
                             </div>
-                            <div className="flex flex-row justify-between items-center">
-                                <AiOutlineStar className="w-6 h-6 text-gray-800" />
+                            <div className="flex flex-row justify-between items-center border-b border-gray-200 pb-3">
+                                <AiOutlineStar className="w-6 h-6 text-gray-700" />
                                 <span className="text-gray-600">0 Reviews</span>
                             </div>
                         </div>

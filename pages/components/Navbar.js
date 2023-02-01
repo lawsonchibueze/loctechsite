@@ -32,8 +32,9 @@ export default function Navbar() {
   const [showLinks, setShowLinks] = useState(false)
   const [isOpen, setIsOpen] = useState(false);
   const genericHamburgerLine = `w-8 h-[2px] bg-black transition ease transform duration-300`;
-  const { asPath } = useRouter()
-  console.log(asPath);
+  const router = useRouter()
+  const path = router.pathname.split('/')[1]
+  console.log(path);
 
   const handleClick = () => {
     setIsOpen(!isOpen)
@@ -92,7 +93,7 @@ export default function Navbar() {
         <div className='flex items-center gap-8 font-semibold'>
           {links.map((link, index) => {
             return (
-              <Link key={index} href={link.href} className={asPath === link.href && 'text-violet-700'}>
+              <Link key={index} href={link.href} className={path === link.href && 'text-violet-700'}>
                 {link.name}
               </Link>
             )

@@ -14,20 +14,20 @@ import Events from "./components/Events";
 import Blog from "./components/Blog";
 
 export default function Home() {
-  const [courses, setCourses] = useState([]);
-  useEffect(() => {
-    fetchCourse();
+  // const [courses, setCourses] = useState([]);
+  // useEffect(() => {
+  //   fetchCourse();
 
-    async function fetchCourse() {
-      const courseData = await DataStore.query(Course);
-      setCourses(courseData);
-      console.log(courses);
-    }
-    DataStore.observe(Course).subscribe((msg) => {
-      fetchCourse();
-      console.log("Just Updated my Course Data");
-    });
-  }, [courses]);
+  //   async function fetchCourse() {
+  //     const courseData = await DataStore.query(Course);
+  //     setCourses(courseData);
+  //     console.log(courses);
+  //   }
+  //   DataStore.observe(Course).subscribe((msg) => {
+  //     fetchCourse();
+  //     console.log("Just Updated my Course Data");
+  //   });
+  // }, [courses]);
   return (
     <div>
       <Head>

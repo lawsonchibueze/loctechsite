@@ -1,0 +1,71 @@
+type Post @model @auth(rules: [{allow: public, operations: [create, read]}]) {
+  id: ID!
+  title: String
+  content: String
+  isFeatured: Boolean
+  image: AWSURL
+  category: String
+  tags: String
+}
+
+type HeroData @model @auth(rules: [{allow: public}]) {
+  id: ID!
+  image: String
+  smallText: String
+  mediumText: String
+  largeText: String
+  buttonText: String
+}
+
+type Instructor @model @auth(rules: [{allow: public}]) {
+  id: ID!
+  name: String
+  image: AWSURL
+  facebook: AWSURL
+  linkedin: AWSURL
+  rating: String
+  review: String
+  Courses: [Course] @manyToMany(relationName: "InstructorCourse")
+}
+
+enum Category {
+  AUTOCAD
+  DATA_SCIENCE
+  WEB_DEVELOPMENT
+  CREATIVE_GRAPHICS_DESIGN
+  OFFICE_PRODUCTIVITY
+  SECURITY
+  CLOUD_COMPUTING
+  PROJECT_MANAGEMENT
+  NETWORKING
+  PROGRAMMING
+  DIGITAL_MARKETING
+  FINANCE_ACCOUNTING
+}
+
+enum Level {
+  FOUNDATION
+  INTERMEDIATE
+  ADVANCE
+}
+
+type Course @model @auth(rules: [{allow: public}]) {
+  id: ID!
+  name: String!
+  descriptions: String!
+  price: Float!
+  excerpt: String!
+  image: AWSURL
+  video: AWSURL
+  category: Category!
+  duration: Int
+  learningObjective: [String]
+  level: Level
+  curriculum: [String]
+  isFeatured: Boolean!
+  instructors: [Instructor] @manyToMany(relationName: "InstructorCourse")
+  headDescription: String
+  headTitle: String
+  headContent: String
+}
+ 

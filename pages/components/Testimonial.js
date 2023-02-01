@@ -18,7 +18,7 @@ export default function Testimonial(props) {
 
     return (
         <div className='bg-[#f8f8f8]'>
-            <div className='flex flex-col gap-12 mt-36 lg:p-32 px-4 relative'>
+            <div className='flex flex-col gap-12 mt-36 lg:p-32 px-4 py-32 relative'>
                 <div className='flex flex-col gap-6 items-center'>
                     <h1 className='text-base font-semibold text-violet-700 borde leading-snugr'>TESTIMONIALS</h1>
                     <p className='text-[#181818] text-3xl font-semibold'>See What Our Students Have To Say</p>

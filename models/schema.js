@@ -92,8 +92,8 @@ export const schema = {
                 }
             ]
         },
-        "Hero": {
-            "name": "Hero",
+        "HeroData": {
+            "name": "HeroData",
             "fields": {
                 "id": {
                     "name": "id",
@@ -155,7 +155,7 @@ export const schema = {
                 }
             },
             "syncable": true,
-            "pluralName": "Heroes",
+            "pluralName": "HeroData",
             "attributes": [
                 {
                     "type": "model",
@@ -596,5 +596,5 @@ export const schema = {
     },
     "nonModels": {},
     "codegenVersion": "3.3.5",
-    "version": "d5c0ac14152ae045f43144f3fe566c72"
+    "version": "9b63b6b599af389471a054f8a9a22127"
 };

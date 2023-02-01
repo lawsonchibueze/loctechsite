@@ -48,8 +48,8 @@ export default function Views() {
                         {courses.map((course, index) => {
                             return (
                                 <div
-                                    className={"py-2 px-4 flex items-center cursor-pointer font-semibold transition-all duration-500 ease-in-out text-lg " +
-                                        (openTab === index ? 'bg-white text-violet-900 drop-shadow-xl rounded-sm' : 'bg-gray-100')
+                                    className={"py-2 px-4 flex items-center cursor-pointer font-semibold transition-all duration-300 ease-in-out text-lg " +
+                                        (openTab === index ? 'bg-white text-violet-900 border-l-4 border-violet-700 rounded-sm' : 'bg-gray-100')
                                     }
                                     onClick={(e) => setOpenTab(index)}
                                     key={index}

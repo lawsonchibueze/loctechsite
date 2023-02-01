@@ -63,9 +63,9 @@ export declare const Post: (new (init: ModelInit<Post>) => Post) & {
   copyOf(source: Post, mutator: (draft: MutableModel<Post>) => MutableModel<Post> | void): Post;
 }
 
-type EagerHero = {
+type EagerHeroData = {
   readonly [__modelMeta__]: {
-    identifier: ManagedIdentifier<Hero, 'id'>;
+    identifier: ManagedIdentifier<HeroData, 'id'>;
     readOnlyFields: 'createdAt' | 'updatedAt';
   };
   readonly id: string;
@@ -78,9 +78,9 @@ type EagerHero = {
   readonly updatedAt?: string | null;
 }
 
-type LazyHero = {
+type LazyHeroData = {
   readonly [__modelMeta__]: {
-    identifier: ManagedIdentifier<Hero, 'id'>;
+    identifier: ManagedIdentifier<HeroData, 'id'>;
     readOnlyFields: 'createdAt' | 'updatedAt';
   };
   readonly id: string;
@@ -93,10 +93,10 @@ type LazyHero = {
   readonly updatedAt?: string | null;
 }
 
-export declare type Hero = LazyLoading extends LazyLoadingDisabled ? EagerHero : LazyHero
+export declare type HeroData = LazyLoading extends LazyLoadingDisabled ? EagerHeroData : LazyHeroData
 
-export declare const Hero: (new (init: ModelInit<Hero>) => Hero) & {
-  copyOf(source: Hero, mutator: (draft: MutableModel<Hero>) => MutableModel<Hero> | void): Hero;
+export declare const HeroData: (new (init: ModelInit<HeroData>) => HeroData) & {
+  copyOf(source: HeroData, mutator: (draft: MutableModel<HeroData>) => MutableModel<HeroData> | void): HeroData;
 }
 
 type EagerInstructor = {

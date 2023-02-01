@@ -44,18 +44,18 @@ const blogs = [
 export default function Blog() {
     return (
         <div className="mt-20 lg:p-32 px-4">
-            <div className="grid grid-cols-4 gap-12 ">
+            <div className="grid lg:grid-cols-4 grid-flow-row gap-12 ">
                 <div className='flex flex-col gap-6 items-center h-fit'>
-                    <h1 className='text-base font-semibold text-violet-700 borde leading-snug self-start'>Article Update</h1>
+                    <h1 className='text-base font-semibold text-violet-700 borde leading-snug lg:self-start text-center md:text-xl'>Article Update</h1>
                     <h2 className='text-[#181818] text-3xl font-semibold'>Loctech News and Article</h2>
                     <div className='flex flex-col gap-5'>
                         {blogs.map((blog, index) => {
                             return (
                                 <div key={index} className='flex flex-row items-start justify-start gap-2'>
-                                    <div className='w-5 h-5'>
+                                    <div className='lg:w-5 lg:h-5 w-8 h-8'>
                                         {blog.icons}
                                     </div>
-                                    <Link href='/' className='text-sm flex-1 hover:text-violet-700 transition-colors duration-500 ease-in-out'>
+                                    <Link href='/' className='lg:text-sm text-xl flex-1 hover:text-violet-700 transition-colors duration-500 ease-in-out min-w-max lg:min-w-0'>
                                         {blog.title}
                                     </Link>
                                 </div>
@@ -70,6 +70,7 @@ export default function Blog() {
                                 <Image
                                     src={item.image}
                                     alt=''
+                                    className='w-full'
                                 />
                                 <div className='p-3 flex flex-col gap-1'>
                                     <h1 className='text-gray-600 text-sm text-center'>{item.date}</h1>
@@ -77,7 +78,9 @@ export default function Blog() {
                                     <p className='text-sm text-gray-500'>{item.desc.substring(0, 70) + '...'}</p>
                                 </div>
                                 <Link href='/'>
-                                    <button className='self-start px-6 py-3 bg-violet-50 text-violet-900 font-semibold'>Read More</button>
+                                    <button className='self-start px-6 py-3 bg-violet-50 text-violet-900 font-semibold hover:bg-white hover:shadow-xl transition duration-500 ease-in-out group'>
+                                        Read More
+                                    </button>
                                 </Link>
                             </div>
                         )
