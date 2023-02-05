@@ -1,9 +1,11 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap');
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
 body {
   /* background-image: url("../img/bg-tablet-pattern.svg"); */
+  font-family: 'Poppins', sans-serif;
   background-repeat: no-repeat;
   background-size: 800px;
   background-position: 90% -25%;

@@ -1,8 +1,9 @@
-import Image from "next/image";
-import Link from "next/link";
 import { DataStore } from "@aws-amplify/datastore";
+// import { motion } from "framer-motion";
+import Link from "next/link";
+import { useEffect, useState } from "react";
 import { Course } from "../../models";
-import { useState, useEffect } from "react";
+import { motion } from "framer-motion";
 
 export default function Card({ course }) {
     const formatter = new Intl.NumberFormat("en-US", {
@@ -24,36 +25,45 @@ export default function Card({ course }) {
     }, []);
 
     return (
-        <div>
-            <Link href={`/courses/${course.id}`} className='flex flex-col gap-2 hover:shadow-lg h-full transition-shadow duration-500 ease-in-out rounded-md border border-gray-200'>
+        <motion.div
+            initial={{ opacity: 0, y: -180 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{
+                ease: 'easeInOut',
+                duration: 1,
+                delay: 0.6
+            }}
+        >
+            <Link href={`/courses/${course.id}`} className='flex flex-col gap-2 rounded-md w-64'>
                 <div className="relative group overflow-hidden">
                     <img
                         src={course.image}
                         alt=''
                         // width={100}
                         // height={100}
-                        className="rounded-t-md h-full w-full ease-in-out duration-500 group-hover:scale-110 object-contain"
+                        className="rounded-md ease-in-out duration-500 group-hover:scale-110 w-full h-40 object-cover"
                     />
                     {course.discount && (
-                        <div className="absolute text-white bg-[#0071dc] top-2 left-3 px-2 font-semibold rounded-sm text-sm">
+                        <div className="absolute text-white bg-[#0071dc] top-2 left-3 px-2 font-medium rounded-sm text-sm">
                             {course.discountPercent}
                         </div>
                     )}
-                    {course.free && (
-                        <div className="absolute text-white bg-[#6CBD7E] top-2 left-3 px-2 font-semibold rounded-sm text-sm">
-                            FREE
+                    {course.online && (
+                        <div className="absolute text-white bg-[#6CBD7E] top-2 left-3 px-2 font-medium rounded-sm text-sm">
+                            Online
                         </div>
                     )}
                 </div>
-                <div className="flex flex-col gap-2 p-3 ">
+                <div className="flex flex-col gap-2 text-start h-full">
                     {course.level === 'FOUNDATION' && (
-                        <span className='font-semibold px-2 text-[#17b8c1] bg-[#17b8c126] self-start'>Foundation</span>
+                        <span className='font-medium px-2 text-[#17b8c1] bg-[#17b8c126] self-start'>Foundation</span>
                     )}
                     {course.level === 'ADVANCE' && (
-                        <span className='font-semibold px-2 text-[#5b63fe] bg-[#5b63fe26] self-start'>Advance</span>
+                        <span className='font-medium px-2 text-[#5b63fe] bg-[#5b63fe26] self-start'>Advance</span>
                     )}
-                    <p className="font-semibold">{course.name}</p>
+                    <p className="font-medium text-[15px] text-black">{course.name}</p>
                     <h3 className="text-[#0071dc]">{course.tutor}</h3>
+                    <span className="text-[15px]">{course.descriptions.substring(0, 70) + '...'}</span>
                     {course.free && (
                         <h4 className="font-bold flex flex-row items-center text-lg text-[#696969]">Free</h4>
                     )}
@@ -63,10 +73,10 @@ export default function Card({ course }) {
                             <h4 className="font-bold flex flex-row items-center text-lg line-through text-[#ababab]">{course.oldPrice} <span className="text-xs">{course.oldPriceSm}</span></h4>
                         </div>
                     ) : (
-                        <h4 className="font-bold flex flex-row items-center text-base">{formatter.format(course.price)} <span className="text-xs">{course.priceSm}</span></h4>
+                        <h4 className="font-semibold flex flex-row items-center text-lg">₦ {course.price} <span className="text-xs">{course.priceSm}</span></h4>
                     )}
                 </div>
             </Link>
-        </div>
+        </motion.div>
     )
 }

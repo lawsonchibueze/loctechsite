@@ -1,3 +1,36 @@
+enum TestimonialCategory {
+  STUDY_ENVIRONMENT
+  TRAINING_STANDARD
+  INSTRUCTOR
+  JOB_PLACEMENT
+}
+
+type Testimonial @model @auth(rules: [{allow: public}]) {
+  id: ID!
+  image: AWSURL
+  category: TestimonialCategory
+  Featured: Boolean
+  Feedback: String
+  name: String
+}
+
+type Events @model @auth(rules: [{allow: public}]) {
+  id: ID!
+  topic: String
+  content: String
+  Image: AWSURL
+  totalSlot: Int
+  facebook: AWSURL
+  email: AWSEmail
+  cost: Int
+  buttonText: String
+  speakers: [AWSURL]
+  date: AWSDate
+  time: AWSDateTime
+  locationMap: String
+  location: String
+}
+
 type Post @model @auth(rules: [{allow: public, operations: [create, read]}]) {
   id: ID!
   title: String
@@ -6,6 +39,8 @@ type Post @model @auth(rules: [{allow: public, operations: [create, read]}]) {
   image: AWSURL
   category: String
   tags: String
+  author: String
+  date: AWSDate
 }
 
 type HeroData @model @auth(rules: [{allow: public}]) {
@@ -29,24 +64,12 @@ type Instructor @model @auth(rules: [{allow: public}]) {
 }
 
 enum Category {
-  AUTOCAD
-  DATA_SCIENCE
+  ALL
   WEB_DEVELOPMENT
-  CREATIVE_GRAPHICS_DESIGN
+  DATA_SCIENCE
+  NETWORKING_SECURITY
+  GRAPHICS_MEDIA
   OFFICE_PRODUCTIVITY
-  SECURITY
-  CLOUD_COMPUTING
-  PROJECT_MANAGEMENT
-  NETWORKING
-  PROGRAMMING
-  DIGITAL_MARKETING
-  FINANCE_ACCOUNTING
-}
-
-enum Level {
-  FOUNDATION
-  INTERMEDIATE
-  ADVANCE
 }
 
 type Course @model @auth(rules: [{allow: public}]) {
@@ -54,18 +77,17 @@ type Course @model @auth(rules: [{allow: public}]) {
   name: String!
   descriptions: String!
   price: Float!
-  excerpt: String!
   image: AWSURL
   video: AWSURL
   category: Category!
   duration: Int
   learningObjective: [String]
-  level: Level
-  curriculum: [String]
   isFeatured: Boolean!
   instructors: [Instructor] @manyToMany(relationName: "InstructorCourse")
-  headDescription: String
+  online: Boolean
+  curriculum: AWSURL
   headTitle: String
+  headMeta: String
   headContent: String
 }
  

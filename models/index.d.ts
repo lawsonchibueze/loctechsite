@@ -2,28 +2,111 @@ import { ModelInit, MutableModel, __modelMeta__, ManagedIdentifier } from "@aws-
 // @ts-ignore
 import { LazyLoading, LazyLoadingDisabled, AsyncCollection, AsyncItem } from "@aws-amplify/datastore";
 
+export enum TestimonialCategory {
+  STUDY_ENVIRONMENT = "STUDY_ENVIRONMENT",
+  TRAINING_STANDARD = "TRAINING_STANDARD",
+  INSTRUCTOR = "INSTRUCTOR",
+  JOB_PLACEMENT = "JOB_PLACEMENT"
+}
+
 export enum Category {
-  AUTOCAD = "AUTOCAD",
-  DATA_SCIENCE = "DATA_SCIENCE",
+  ALL = "ALL",
   WEB_DEVELOPMENT = "WEB_DEVELOPMENT",
-  CREATIVE_GRAPHICS_DESIGN = "CREATIVE_GRAPHICS_DESIGN",
-  OFFICE_PRODUCTIVITY = "OFFICE_PRODUCTIVITY",
-  SECURITY = "SECURITY",
-  CLOUD_COMPUTING = "CLOUD_COMPUTING",
-  PROJECT_MANAGEMENT = "PROJECT_MANAGEMENT",
-  NETWORKING = "NETWORKING",
-  PROGRAMMING = "PROGRAMMING",
-  DIGITAL_MARKETING = "DIGITAL_MARKETING",
-  FINANCE_ACCOUNTING = "FINANCE_ACCOUNTING"
-}
-
-export enum Level {
-  FOUNDATION = "FOUNDATION",
-  INTERMEDIATE = "INTERMEDIATE",
-  ADVANCE = "ADVANCE"
+  DATA_SCIENCE = "DATA_SCIENCE",
+  NETWORKING_SECURITY = "NETWORKING_SECURITY",
+  GRAPHICS_MEDIA = "GRAPHICS_MEDIA",
+  OFFICE_PRODUCTIVITY = "OFFICE_PRODUCTIVITY"
 }
 
 
+
+type EagerTestimonial = {
+  readonly [__modelMeta__]: {
+    identifier: ManagedIdentifier<Testimonial, 'id'>;
+    readOnlyFields: 'createdAt' | 'updatedAt';
+  };
+  readonly id: string;
+  readonly image?: string | null;
+  readonly category?: TestimonialCategory | keyof typeof TestimonialCategory | null;
+  readonly Featured?: boolean | null;
+  readonly Feedback?: string | null;
+  readonly name?: string | null;
+  readonly createdAt?: string | null;
+  readonly updatedAt?: string | null;
+}
+
+type LazyTestimonial = {
+  readonly [__modelMeta__]: {
+    identifier: ManagedIdentifier<Testimonial, 'id'>;
+    readOnlyFields: 'createdAt' | 'updatedAt';
+  };
+  readonly id: string;
+  readonly image?: string | null;
+  readonly category?: TestimonialCategory | keyof typeof TestimonialCategory | null;
+  readonly Featured?: boolean | null;
+  readonly Feedback?: string | null;
+  readonly name?: string | null;
+  readonly createdAt?: string | null;
+  readonly updatedAt?: string | null;
+}
+
+export declare type Testimonial = LazyLoading extends LazyLoadingDisabled ? EagerTestimonial : LazyTestimonial
+
+export declare const Testimonial: (new (init: ModelInit<Testimonial>) => Testimonial) & {
+  copyOf(source: Testimonial, mutator: (draft: MutableModel<Testimonial>) => MutableModel<Testimonial> | void): Testimonial;
+}
+
+type EagerEvents = {
+  readonly [__modelMeta__]: {
+    identifier: ManagedIdentifier<Events, 'id'>;
+    readOnlyFields: 'createdAt' | 'updatedAt';
+  };
+  readonly id: string;
+  readonly topic?: string | null;
+  readonly content?: string | null;
+  readonly Image?: string | null;
+  readonly totalSlot?: number | null;
+  readonly facebook?: string | null;
+  readonly email?: string | null;
+  readonly cost?: number | null;
+  readonly buttonText?: string | null;
+  readonly speakers?: (string | null)[] | null;
+  readonly date?: string | null;
+  readonly time?: string | null;
+  readonly locationMap?: string | null;
+  readonly location?: string | null;
+  readonly createdAt?: string | null;
+  readonly updatedAt?: string | null;
+}
+
+type LazyEvents = {
+  readonly [__modelMeta__]: {
+    identifier: ManagedIdentifier<Events, 'id'>;
+    readOnlyFields: 'createdAt' | 'updatedAt';
+  };
+  readonly id: string;
+  readonly topic?: string | null;
+  readonly content?: string | null;
+  readonly Image?: string | null;
+  readonly totalSlot?: number | null;
+  readonly facebook?: string | null;
+  readonly email?: string | null;
+  readonly cost?: number | null;
+  readonly buttonText?: string | null;
+  readonly speakers?: (string | null)[] | null;
+  readonly date?: string | null;
+  readonly time?: string | null;
+  readonly locationMap?: string | null;
+  readonly location?: string | null;
+  readonly createdAt?: string | null;
+  readonly updatedAt?: string | null;
+}
+
+export declare type Events = LazyLoading extends LazyLoadingDisabled ? EagerEvents : LazyEvents
+
+export declare const Events: (new (init: ModelInit<Events>) => Events) & {
+  copyOf(source: Events, mutator: (draft: MutableModel<Events>) => MutableModel<Events> | void): Events;
+}
 
 type EagerPost = {
   readonly [__modelMeta__]: {
@@ -37,6 +120,8 @@ type EagerPost = {
   readonly image?: string | null;
   readonly category?: string | null;
   readonly tags?: string | null;
+  readonly author?: string | null;
+  readonly date?: string | null;
   readonly createdAt?: string | null;
   readonly updatedAt?: string | null;
 }
@@ -53,6 +138,8 @@ type LazyPost = {
   readonly image?: string | null;
   readonly category?: string | null;
   readonly tags?: string | null;
+  readonly author?: string | null;
+  readonly date?: string | null;
   readonly createdAt?: string | null;
   readonly updatedAt?: string | null;
 }
@@ -148,18 +235,17 @@ type EagerCourse = {
   readonly name: string;
   readonly descriptions: string;
   readonly price: number;
-  readonly excerpt: string;
   readonly image?: string | null;
   readonly video?: string | null;
   readonly category: Category | keyof typeof Category;
   readonly duration?: number | null;
   readonly learningObjective?: (string | null)[] | null;
-  readonly level?: Level | keyof typeof Level | null;
-  readonly curriculum?: (string | null)[] | null;
   readonly isFeatured: boolean;
   readonly instructors?: (InstructorCourse | null)[] | null;
-  readonly headDescription?: string | null;
+  readonly online?: boolean | null;
+  readonly curriculum?: string | null;
   readonly headTitle?: string | null;
+  readonly headMeta?: string | null;
   readonly headContent?: string | null;
   readonly createdAt?: string | null;
   readonly updatedAt?: string | null;
@@ -174,18 +260,17 @@ type LazyCourse = {
   readonly name: string;
   readonly descriptions: string;
   readonly price: number;
-  readonly excerpt: string;
   readonly image?: string | null;
   readonly video?: string | null;
   readonly category: Category | keyof typeof Category;
   readonly duration?: number | null;
   readonly learningObjective?: (string | null)[] | null;
-  readonly level?: Level | keyof typeof Level | null;
-  readonly curriculum?: (string | null)[] | null;
   readonly isFeatured: boolean;
   readonly instructors: AsyncCollection<InstructorCourse>;
-  readonly headDescription?: string | null;
+  readonly online?: boolean | null;
+  readonly curriculum?: string | null;
   readonly headTitle?: string | null;
+  readonly headMeta?: string | null;
   readonly headContent?: string | null;
   readonly createdAt?: string | null;
   readonly updatedAt?: string | null;

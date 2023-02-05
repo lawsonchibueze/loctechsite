@@ -27,8 +27,8 @@ export default function CourseComponent({ course }) {
     return (
         <div>
             <Head>
-                <title>{course.name}</title>
-                <meta name="description" content={course.name} />
+                <title>{course.headTitle}</title>
+                <meta name={course.headMeta} content={course.headContent} />
                 <link rel="icon" href="/favicon.ico" />
             </Head>
             <div className="relative">

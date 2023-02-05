@@ -4,8 +4,8 @@ import { FiFacebook, FiLinkedin, FiTwitter, FiYoutube } from "react-icons/fi";
 export default function Footer() {
   const date = new Date().getFullYear()
   return (
-    <div className="bg-[#f7f7f7]">
-      <div className="lg:px-32 px-4 pt-40">
+    <div className="bg-[#ffffff]">
+      <div className="lg:px-20 px-4 pt-12">
         <div className="flex justify-between items-start lg:flex-row flex-col lg:gap-0 gap-8">
           <div className="flex flex-col gap-4">
             <h1 className='text-4xl font-bold flex items-center text-[#0a0a0a] gap-2'>
@@ -69,7 +69,7 @@ export default function Footer() {
             </div>
           </div>
         </div>
-        <div className="flex lg:flex-row flex-col justify-center gap-6 lg:gap-0 items-center lg:justify-between lg:mt-24 py-10 pb-10">
+        <div className="flex lg:flex-row flex-col justify-center gap-6 lg:gap-0 items-center lg:justify-between lg:mt-24 py-10 pb-10 border-t pt-4">
           <div>
             © {date} Loctech. All Rights Reserved
           </div>

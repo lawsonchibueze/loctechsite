@@ -40,18 +40,18 @@ export default function Views() {
     }, []);
 
     return (
-        <div className='lg:px-32 px-4 mt-20'>
+        <div className='lg:px-20 px-4 mt-20'>
             <h1 className='text-3xl font-semibold text-gray-900 mb-10'>Explore Our Courses</h1>
-            <div className="flex lg:flex-row flex-col gap-20">
-                <div className="flex justify-between h-fit p-2 sticky top-10">
-                    <div className="lg:flex gap-4 hidden flex-col justify-center">
+            <div className="flex flex-col gap-10">
+                <div className="flex justify-between h-fit p-2">
+                    <div className="lg:flex gap-2 hidden flex-row justify-center items-center">
                         {courses.map((course, index) => {
                             return (
                                 <div
-                                    className={"py-2 px-4 flex items-center cursor-pointer font-semibold transition-all duration-300 ease-in-out text-lg " +
-                                        (openTab === index ? 'bg-white text-violet-900 border-l-4 border-violet-700 rounded-sm' : 'bg-gray-100')
+                                    className={"py-2 px-4 flex items-center cursor-pointer transition-all duration-300 ease-in-out text-sm min-w-fit " +
+                                        (openTab === index && 'bg-white text-violet-900 border-l-4 border-violet-700 rounded-sm shadow-lg')
                                     }
-                                    onClick={(e) => setOpenTab(index)}
+                                    onClick={() => setOpenTab(index)}
                                     key={index}
                                 >
                                     {course.category.replaceAll("_", " ")}
@@ -60,7 +60,7 @@ export default function Views() {
                         })}
                     </div>
                 </div>
-                <div className="flex-1">
+                <div className="">
                     {allTabs.map((item, index) => {
                         return (
                             <div

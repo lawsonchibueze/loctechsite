@@ -10,6 +10,14 @@
       "StackName": "amplify-amplify628b805112a44-staging-111646",
       "StackId": "arn:aws:cloudformation:us-west-2:484645543282:stack/amplify-amplify628b805112a44-staging-111646/9a19bc80-926a-11ed-b18c-027572b4f05b",
       "AmplifyAppId": "d1b3auu8c4bkoh"
+    },
+    "categories": {
+      "auth": {
+        "loctechsite": {}
+      },
+      "storage": {
+        "s3loctechsitestoragef79d8bac": {}
+      }
     }
   }
 }

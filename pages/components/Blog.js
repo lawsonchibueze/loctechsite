@@ -43,7 +43,7 @@ const blogs = [
 
 export default function Blog() {
     return (
-        <div className="mt-20 lg:p-32 px-4">
+        <div className="mt-20 lg:p-20 px-4">
             <div className="grid lg:grid-cols-4 grid-flow-row gap-12 ">
                 <div className='flex flex-col gap-6 items-center h-fit'>
                     <h1 className='text-base font-semibold text-violet-700 borde leading-snug lg:self-start text-center md:text-xl'>Article Update</h1>
@@ -55,7 +55,7 @@ export default function Blog() {
                                     <div className='lg:w-5 lg:h-5 w-8 h-8'>
                                         {blog.icons}
                                     </div>
-                                    <Link href='/' className='lg:text-sm text-xl flex-1 hover:text-violet-700 transition-colors duration-500 ease-in-out min-w-max lg:min-w-0'>
+                                    <Link href='/' className='lg:text-base font-semibold text-xl flex-1 hover:text-violet-700 transition-colors duration-500 ease-in-out min-w-max lg:min-w-0'>
                                         {blog.title}
                                     </Link>
                                 </div>

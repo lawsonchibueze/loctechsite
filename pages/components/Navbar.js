@@ -47,7 +47,7 @@ export default function Navbar() {
   }
 
   return (
-    <div className='lg:px-32 px-4 shadow-md lg:h-20 h-16 flex items-center justify-between bg-white sticky top-0 z-20 bg-opacity-60 backdrop-filter backdrop-blur-lg'>
+    <div className='lg:px-20 px-4 shadow-md lg:h-24 h-16 flex items-center justify-between bg-white sticky top-0 z-20 bg-opacity-60 backdrop-filter backdrop-blur-lg'>
       <div className='flex gap-4 items-center justify-between lg:justify-start w-full lg:w-fit'>
         <Link href='/' className='text-4xl font-bold flex items-center gap-2'>
           <Image
@@ -85,12 +85,12 @@ export default function Navbar() {
         <input
           type="text"
           placeholder='Search...'
-          className='bg-transparent w-full outline-none p-1 text-base font-semibold'
+          className='bg-transparent w-full outline-none p-1 text-base font-medium'
         />
         <MagnifyingGlassIcon className='w-6 h-6 text-violet-700 font-bold cursor-pointer' />
       </div>
       <div className='lg:flex gap-8 items-center hidden'>
-        <div className='flex items-center gap-8 font-semibold'>
+        <div className='flex items-center gap-8 font-medium'>
           {links.map((link, index) => {
             return (
               <Link key={index} href={link.href} className={path === link.href && 'text-violet-700'}>

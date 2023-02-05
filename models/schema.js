@@ -1,5 +1,238 @@
 export const schema = {
     "models": {
+        "Testimonial": {
+            "name": "Testimonial",
+            "fields": {
+                "id": {
+                    "name": "id",
+                    "isArray": false,
+                    "type": "ID",
+                    "isRequired": true,
+                    "attributes": []
+                },
+                "image": {
+                    "name": "image",
+                    "isArray": false,
+                    "type": "AWSURL",
+                    "isRequired": false,
+                    "attributes": []
+                },
+                "category": {
+                    "name": "category",
+                    "isArray": false,
+                    "type": {
+                        "enum": "TestimonialCategory"
+                    },
+                    "isRequired": false,
+                    "attributes": []
+                },
+                "Featured": {
+                    "name": "Featured",
+                    "isArray": false,
+                    "type": "Boolean",
+                    "isRequired": false,
+                    "attributes": []
+                },
+                "Feedback": {
+                    "name": "Feedback",
+                    "isArray": false,
+                    "type": "String",
+                    "isRequired": false,
+                    "attributes": []
+                },
+                "name": {
+                    "name": "name",
+                    "isArray": false,
+                    "type": "String",
+                    "isRequired": false,
+                    "attributes": []
+                },
+                "createdAt": {
+                    "name": "createdAt",
+                    "isArray": false,
+                    "type": "AWSDateTime",
+                    "isRequired": false,
+                    "attributes": [],
+                    "isReadOnly": true
+                },
+                "updatedAt": {
+                    "name": "updatedAt",
+                    "isArray": false,
+                    "type": "AWSDateTime",
+                    "isRequired": false,
+                    "attributes": [],
+                    "isReadOnly": true
+                }
+            },
+            "syncable": true,
+            "pluralName": "Testimonials",
+            "attributes": [
+                {
+                    "type": "model",
+                    "properties": {}
+                },
+                {
+                    "type": "auth",
+                    "properties": {
+                        "rules": [
+                            {
+                                "allow": "public",
+                                "operations": [
+                                    "create",
+                                    "update",
+                                    "delete",
+                                    "read"
+                                ]
+                            }
+                        ]
+                    }
+                }
+            ]
+        },
+        "Events": {
+            "name": "Events",
+            "fields": {
+                "id": {
+                    "name": "id",
+                    "isArray": false,
+                    "type": "ID",
+                    "isRequired": true,
+                    "attributes": []
+                },
+                "topic": {
+                    "name": "topic",
+                    "isArray": false,
+                    "type": "String",
+                    "isRequired": false,
+                    "attributes": []
+                },
+                "content": {
+                    "name": "content",
+                    "isArray": false,
+                    "type": "String",
+                    "isRequired": false,
+                    "attributes": []
+                },
+                "Image": {
+                    "name": "Image",
+                    "isArray": false,
+                    "type": "AWSURL",
+                    "isRequired": false,
+                    "attributes": []
+                },
+                "totalSlot": {
+                    "name": "totalSlot",
+                    "isArray": false,
+                    "type": "Int",
+                    "isRequired": false,
+                    "attributes": []
+                },
+                "facebook": {
+                    "name": "facebook",
+                    "isArray": false,
+                    "type": "AWSURL",
+                    "isRequired": false,
+                    "attributes": []
+                },
+                "email": {
+                    "name": "email",
+                    "isArray": false,
+                    "type": "AWSEmail",
+                    "isRequired": false,
+                    "attributes": []
+                },
+                "cost": {
+                    "name": "cost",
+                    "isArray": false,
+                    "type": "Int",
+                    "isRequired": false,
+                    "attributes": []
+                },
+                "buttonText": {
+                    "name": "buttonText",
+                    "isArray": false,
+                    "type": "String",
+                    "isRequired": false,
+                    "attributes": []
+                },
+                "speakers": {
+                    "name": "speakers",
+                    "isArray": true,
+                    "type": "AWSURL",
+                    "isRequired": false,
+                    "attributes": [],
+                    "isArrayNullable": true
+                },
+                "date": {
+                    "name": "date",
+                    "isArray": false,
+                    "type": "AWSDate",
+                    "isRequired": false,
+                    "attributes": []
+                },
+                "time": {
+                    "name": "time",
+                    "isArray": false,
+                    "type": "AWSDateTime",
+                    "isRequired": false,
+                    "attributes": []
+                },
+                "locationMap": {
+                    "name": "locationMap",
+                    "isArray": false,
+                    "type": "String",
+                    "isRequired": false,
+                    "attributes": []
+                },
+                "location": {
+                    "name": "location",
+                    "isArray": false,
+                    "type": "String",
+                    "isRequired": false,
+                    "attributes": []
+                },
+                "createdAt": {
+                    "name": "createdAt",
+                    "isArray": false,
+                    "type": "AWSDateTime",
+                    "isRequired": false,
+                    "attributes": [],
+                    "isReadOnly": true
+                },
+                "updatedAt": {
+                    "name": "updatedAt",
+                    "isArray": false,
+                    "type": "AWSDateTime",
+                    "isRequired": false,
+                    "attributes": [],
+                    "isReadOnly": true
+                }
+            },
+            "syncable": true,
+            "pluralName": "Events",
+            "attributes": [
+                {
+                    "type": "model",
+                    "properties": {}
+                },
+                {
+                    "type": "auth",
+                    "properties": {
+                        "rules": [
+                            {
+                                "allow": "public",
+                                "operations": [
+                                    "create",
+                                    "update",
+                                    "delete",
+                                    "read"
+                                ]
+                            }
+                        ]
+                    }
+                }
+            ]
+        },
         "Post": {
             "name": "Post",
             "fields": {
@@ -49,6 +282,20 @@ export const schema = {
                     "name": "tags",
                     "isArray": false,
                     "type": "String",
+                    "isRequired": false,
+                    "attributes": []
+                },
+                "author": {
+                    "name": "author",
+                    "isArray": false,
+                    "type": "String",
+                    "isRequired": false,
+                    "attributes": []
+                },
+                "date": {
+                    "name": "date",
+                    "isArray": false,
+                    "type": "AWSDate",
                     "isRequired": false,
                     "attributes": []
                 },
@@ -320,13 +567,6 @@ export const schema = {
                     "isRequired": true,
                     "attributes": []
                 },
-                "excerpt": {
-                    "name": "excerpt",
-                    "isArray": false,
-                    "type": "String",
-                    "isRequired": true,
-                    "attributes": []
-                },
                 "image": {
                     "name": "image",
                     "isArray": false,
@@ -365,23 +605,6 @@ export const schema = {
                     "attributes": [],
                     "isArrayNullable": true
                 },
-                "level": {
-                    "name": "level",
-                    "isArray": false,
-                    "type": {
-                        "enum": "Level"
-                    },
-                    "isRequired": false,
-                    "attributes": []
-                },
-                "curriculum": {
-                    "name": "curriculum",
-                    "isArray": true,
-                    "type": "String",
-                    "isRequired": false,
-                    "attributes": [],
-                    "isArrayNullable": true
-                },
                 "isFeatured": {
                     "name": "isFeatured",
                     "isArray": false,
@@ -405,15 +628,29 @@ export const schema = {
                         ]
                     }
                 },
-                "headDescription": {
-                    "name": "headDescription",
+                "online": {
+                    "name": "online",
                     "isArray": false,
-                    "type": "String",
+                    "type": "Boolean",
+                    "isRequired": false,
+                    "attributes": []
+                },
+                "curriculum": {
+                    "name": "curriculum",
+                    "isArray": false,
+                    "type": "AWSURL",
                     "isRequired": false,
                     "attributes": []
                 },
                 "headTitle": {
                     "name": "headTitle",
+                    "isArray": false,
+                    "type": "String",
+                    "isRequired": false,
+                    "attributes": []
+                },
+                "headMeta": {
+                    "name": "headMeta",
                     "isArray": false,
                     "type": "String",
                     "isRequired": false,
@@ -568,33 +805,28 @@ export const schema = {
         }
     },
     "enums": {
+        "TestimonialCategory": {
+            "name": "TestimonialCategory",
+            "values": [
+                "STUDY_ENVIRONMENT",
+                "TRAINING_STANDARD",
+                "INSTRUCTOR",
+                "JOB_PLACEMENT"
+            ]
+        },
         "Category": {
             "name": "Category",
             "values": [
-                "AUTOCAD",
-                "DATA_SCIENCE",
+                "ALL",
                 "WEB_DEVELOPMENT",
-                "CREATIVE_GRAPHICS_DESIGN",
-                "OFFICE_PRODUCTIVITY",
-                "SECURITY",
-                "CLOUD_COMPUTING",
-                "PROJECT_MANAGEMENT",
-                "NETWORKING",
-                "PROGRAMMING",
-                "DIGITAL_MARKETING",
-                "FINANCE_ACCOUNTING"
-            ]
-        },
-        "Level": {
-            "name": "Level",
-            "values": [
-                "FOUNDATION",
-                "INTERMEDIATE",
-                "ADVANCE"
+                "DATA_SCIENCE",
+                "NETWORKING_SECURITY",
+                "GRAPHICS_MEDIA",
+                "OFFICE_PRODUCTIVITY"
             ]
         }
     },
     "nonModels": {},
     "codegenVersion": "3.3.5",
-    "version": "9b63b6b599af389471a054f8a9a22127"
+    "version": "292808aaa8e9512241ba85d7fc4f7148"
 };

@@ -7,8 +7,8 @@ export default function Accordion({ course }) {
 
     return (
         <div className='flex flex-col gap-3'>
-            {course.curriculum
-                .map((lesson, index) => {
+            {/* {course.curriculum
+                .map(( index) => {
                     return (
                         <AccordionLayout
                             key={index}
@@ -19,11 +19,11 @@ export default function Accordion({ course }) {
                         >
                             <div className="flex flex-row items-center gap-2">
                                 <BsDot className="w-6 h-6 text-violet-700" />
-                                {lesson}
+                                {}
                             </div>
                         </AccordionLayout>
                     )
-                })}
+                })} */}
         </div>
     )
 }

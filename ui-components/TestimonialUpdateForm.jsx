@@ -10,17 +10,18 @@ import {
   Button,
   Flex,
   Grid,
+  SelectField,
   SwitchField,
   TextField,
 } from "@aws-amplify/ui-react";
 import { getOverrideProps } from "@aws-amplify/ui-react/internal";
-import { Post } from "../models";
+import { Testimonial } from "../models";
 import { fetchByPath, validateField } from "./utils";
 import { DataStore } from "aws-amplify";
-export default function PostUpdateForm(props) {
+export default function TestimonialUpdateForm(props) {
   const {
     id: idProp,
-    post,
+    testimonial,
     onSuccess,
     onError,
     onSubmit,
@@ -30,56 +31,46 @@ export default function PostUpdateForm(props) {
     ...rest
   } = props;
   const initialValues = {
-    title: "",
-    content: "",
-    isFeatured: false,
     image: "",
-    category: "",
-    tags: "",
-    author: "",
-    date: "",
+    category: undefined,
+    Featured: false,
+    Feedback: "",
+    name: "",
   };
-  const [title, setTitle] = React.useState(initialValues.title);
-  const [content, setContent] = React.useState(initialValues.content);
-  const [isFeatured, setIsFeatured] = React.useState(initialValues.isFeatured);
   const [image, setImage] = React.useState(initialValues.image);
   const [category, setCategory] = React.useState(initialValues.category);
-  const [tags, setTags] = React.useState(initialValues.tags);
-  const [author, setAuthor] = React.useState(initialValues.author);
-  const [date, setDate] = React.useState(initialValues.date);
+  const [Featured, setFeatured] = React.useState(initialValues.Featured);
+  const [Feedback, setFeedback] = React.useState(initialValues.Feedback);
+  const [name, setName] = React.useState(initialValues.name);
   const [errors, setErrors] = React.useState({});
   const resetStateValues = () => {
-    const cleanValues = postRecord
-      ? { ...initialValues, ...postRecord }
+    const cleanValues = testimonialRecord
+      ? { ...initialValues, ...testimonialRecord }
       : initialValues;
-    setTitle(cleanValues.title);
-    setContent(cleanValues.content);
-    setIsFeatured(cleanValues.isFeatured);
     setImage(cleanValues.image);
     setCategory(cleanValues.category);
-    setTags(cleanValues.tags);
-    setAuthor(cleanValues.author);
-    setDate(cleanValues.date);
+    setFeatured(cleanValues.Featured);
+    setFeedback(cleanValues.Feedback);
+    setName(cleanValues.name);
     setErrors({});
   };
-  const [postRecord, setPostRecord] = React.useState(post);
+  const [testimonialRecord, setTestimonialRecord] = React.useState(testimonial);
   React.useEffect(() => {
     const queryData = async () => {
-      const record = idProp ? await DataStore.query(Post, idProp) : post;
-      setPostRecord(record);
+      const record = idProp
+        ? await DataStore.query(Testimonial, idProp)
+        : testimonial;
+      setTestimonialRecord(record);
     };
     queryData();
-  }, [idProp, post]);
-  React.useEffect(resetStateValues, [postRecord]);
+  }, [idProp, testimonial]);
+  React.useEffect(resetStateValues, [testimonialRecord]);
   const validations = {
-    title: [],
-    content: [],
-    isFeatured: [],
     image: [{ type: "URL" }],
     category: [],
-    tags: [],
-    author: [],
-    date: [],
+    Featured: [],
+    Feedback: [],
+    name: [],
   };
   const runValidationTasks = async (
     fieldName,
@@ -106,14 +97,11 @@ export default function PostUpdateForm(props) {
       onSubmit={async (event) => {
         event.preventDefault();
         let modelFields = {
-          title,
-          content,
-          isFeatured,
           image,
           category,
-          tags,
-          author,
-          date,
+          Featured,
+          Feedback,
+          name,
         };
         const validationResponses = await Promise.all(
           Object.keys(validations).reduce((promises, fieldName) => {
@@ -144,7 +132,7 @@ export default function PostUpdateForm(props) {
             }
           });
           await DataStore.save(
-            Post.copyOf(postRecord, (updated) => {
+            Testimonial.copyOf(testimonialRecord, (updated) => {
               Object.assign(updated, modelFields);
             })
           );
@@ -157,102 +145,9 @@ export default function PostUpdateForm(props) {
           }
         }
       }}
-      {...getOverrideProps(overrides, "PostUpdateForm")}
+      {...getOverrideProps(overrides, "TestimonialUpdateForm")}
       {...rest}
     >
-      <TextField
-        label="Title"
-        isRequired={false}
-        isReadOnly={false}
-        value={title}
-        onChange={(e) => {
-          let { value } = e.target;
-          if (onChange) {
-            const modelFields = {
-              title: value,
-              content,
-              isFeatured,
-              image,
-              category,
-              tags,
-              author,
-              date,
-            };
-            const result = onChange(modelFields);
-            value = result?.title ?? value;
-          }
-          if (errors.title?.hasError) {
-            runValidationTasks("title", value);
-          }
-          setTitle(value);
-        }}
-        onBlur={() => runValidationTasks("title", title)}
-        errorMessage={errors.title?.errorMessage}
-        hasError={errors.title?.hasError}
-        {...getOverrideProps(overrides, "title")}
-      ></TextField>
-      <TextField
-        label="Content"
-        isRequired={false}
-        isReadOnly={false}
-        value={content}
-        onChange={(e) => {
-          let { value } = e.target;
-          if (onChange) {
-            const modelFields = {
-              title,
-              content: value,
-              isFeatured,
-              image,
-              category,
-              tags,
-              author,
-              date,
-            };
-            const result = onChange(modelFields);
-            value = result?.content ?? value;
-          }
-          if (errors.content?.hasError) {
-            runValidationTasks("content", value);
-          }
-          setContent(value);
-        }}
-        onBlur={() => runValidationTasks("content", content)}
-        errorMessage={errors.content?.errorMessage}
-        hasError={errors.content?.hasError}
-        {...getOverrideProps(overrides, "content")}
-      ></TextField>
-      <SwitchField
-        label="Is featured"
-        defaultChecked={false}
-        isDisabled={false}
-        isChecked={isFeatured}
-        onChange={(e) => {
-          let value = e.target.checked;
-          if (onChange) {
-            const modelFields = {
-              title,
-              content,
-              isFeatured: value,
-              image,
-              category,
-              tags,
-              author,
-              date,
-            };
-            const result = onChange(modelFields);
-            value = result?.isFeatured ?? value;
-          }
-          if (errors.isFeatured?.hasError) {
-            runValidationTasks("isFeatured", value);
-          }
-          setIsFeatured(value);
-        }}
-        onBlur={() => runValidationTasks("isFeatured", isFeatured)}
-        errorMessage={errors.isFeatured?.errorMessage}
-        hasError={errors.isFeatured?.hasError}
-        {...getOverrideProps(overrides, "isFeatured")}
-      ></SwitchField>
       <TextField
         label="Image"
         isRequired={false}
@@ -262,14 +157,11 @@ export default function PostUpdateForm(props) {
           let { value } = e.target;
           if (onChange) {
             const modelFields = {
-              title,
-              content,
-              isFeatured,
               image: value,
               category,
-              tags,
-              author,
-              date,
+              Featured,
+              Feedback,
+              name,
             };
             const result = onChange(modelFields);
             value = result?.image ?? value;
@@ -284,23 +176,20 @@ export default function PostUpdateForm(props) {
         hasError={errors.image?.hasError}
         {...getOverrideProps(overrides, "image")}
       ></TextField>
-      <TextField
+      <SelectField
         label="Category"
-        isRequired={false}
-        isReadOnly={false}
+        placeholder="Please select an option"
+        isDisabled={false}
         value={category}
         onChange={(e) => {
           let { value } = e.target;
           if (onChange) {
             const modelFields = {
-              title,
-              content,
-              isFeatured,
               image,
               category: value,
-              tags,
-              author,
-              date,
+              Featured,
+              Feedback,
+              name,
             };
             const result = onChange(modelFields);
             value = result?.category ?? value;
@@ -314,100 +203,111 @@ export default function PostUpdateForm(props) {
         errorMessage={errors.category?.errorMessage}
         hasError={errors.category?.hasError}
         {...getOverrideProps(overrides, "category")}
-      ></TextField>
+      >
+        <option
+          children="Study environment"
+          value="STUDY_ENVIRONMENT"
+          {...getOverrideProps(overrides, "categoryoption0")}
+        ></option>
+        <option
+          children="Training standard"
+          value="TRAINING_STANDARD"
+          {...getOverrideProps(overrides, "categoryoption1")}
+        ></option>
+        <option
+          children="Instructor"
+          value="INSTRUCTOR"
+          {...getOverrideProps(overrides, "categoryoption2")}
+        ></option>
+        <option
+          children="Job placement"
+          value="JOB_PLACEMENT"
+          {...getOverrideProps(overrides, "categoryoption3")}
+        ></option>
+      </SelectField>
+      <SwitchField
+        label="Featured"
+        defaultChecked={false}
+        isDisabled={false}
+        isChecked={Featured}
+        onChange={(e) => {
+          let value = e.target.checked;
+          if (onChange) {
+            const modelFields = {
+              image,
+              category,
+              Featured: value,
+              Feedback,
+              name,
+            };
+            const result = onChange(modelFields);
+            value = result?.Featured ?? value;
+          }
+          if (errors.Featured?.hasError) {
+            runValidationTasks("Featured", value);
+          }
+          setFeatured(value);
+        }}
+        onBlur={() => runValidationTasks("Featured", Featured)}
+        errorMessage={errors.Featured?.errorMessage}
+        hasError={errors.Featured?.hasError}
+        {...getOverrideProps(overrides, "Featured")}
+      ></SwitchField>
       <TextField
-        label="Tags"
+        label="Feedback"
         isRequired={false}
         isReadOnly={false}
-        value={tags}
+        value={Feedback}
         onChange={(e) => {
           let { value } = e.target;
           if (onChange) {
             const modelFields = {
-              title,
-              content,
-              isFeatured,
               image,
               category,
-              tags: value,
-              author,
-              date,
+              Featured,
+              Feedback: value,
+              name,
             };
             const result = onChange(modelFields);
-            value = result?.tags ?? value;
+            value = result?.Feedback ?? value;
           }
-          if (errors.tags?.hasError) {
-            runValidationTasks("tags", value);
+          if (errors.Feedback?.hasError) {
+            runValidationTasks("Feedback", value);
           }
-          setTags(value);
+          setFeedback(value);
         }}
-        onBlur={() => runValidationTasks("tags", tags)}
-        errorMessage={errors.tags?.errorMessage}
-        hasError={errors.tags?.hasError}
-        {...getOverrideProps(overrides, "tags")}
+        onBlur={() => runValidationTasks("Feedback", Feedback)}
+        errorMessage={errors.Feedback?.errorMessage}
+        hasError={errors.Feedback?.hasError}
+        {...getOverrideProps(overrides, "Feedback")}
       ></TextField>
       <TextField
-        label="Author"
+        label="Name"
         isRequired={false}
         isReadOnly={false}
-        value={author}
+        value={name}
         onChange={(e) => {
           let { value } = e.target;
           if (onChange) {
             const modelFields = {
-              title,
-              content,
-              isFeatured,
               image,
               category,
-              tags,
-              author: value,
-              date,
+              Featured,
+              Feedback,
+              name: value,
             };
             const result = onChange(modelFields);
-            value = result?.author ?? value;
+            value = result?.name ?? value;
           }
-          if (errors.author?.hasError) {
-            runValidationTasks("author", value);
+          if (errors.name?.hasError) {
+            runValidationTasks("name", value);
           }
-          setAuthor(value);
+          setName(value);
         }}
-        onBlur={() => runValidationTasks("author", author)}
-        errorMessage={errors.author?.errorMessage}
-        hasError={errors.author?.hasError}
-        {...getOverrideProps(overrides, "author")}
-      ></TextField>
-      <TextField
-        label="Date"
-        isRequired={false}
-        isReadOnly={false}
-        type="date"
-        value={date}
-        onChange={(e) => {
-          let { value } = e.target;
-          if (onChange) {
-            const modelFields = {
-              title,
-              content,
-              isFeatured,
-              image,
-              category,
-              tags,
-              author,
-              date: value,
-            };
-            const result = onChange(modelFields);
-            value = result?.date ?? value;
-          }
-          if (errors.date?.hasError) {
-            runValidationTasks("date", value);
-          }
-          setDate(value);
-        }}
-        onBlur={() => runValidationTasks("date", date)}
-        errorMessage={errors.date?.errorMessage}
-        hasError={errors.date?.hasError}
-        {...getOverrideProps(overrides, "date")}
+        onBlur={() => runValidationTasks("name", name)}
+        errorMessage={errors.name?.errorMessage}
+        hasError={errors.name?.hasError}
+        {...getOverrideProps(overrides, "name")}
       ></TextField>
       <Flex
         justifyContent="space-between"
@@ -420,7 +320,7 @@ export default function PostUpdateForm(props) {
             event.preventDefault();
             resetStateValues();
           }}
-          isDisabled={!(idProp || post)}
+          isDisabled={!(idProp || testimonial)}
           {...getOverrideProps(overrides, "ResetButton")}
         ></Button>
         <Flex
@@ -432,7 +332,7 @@ export default function PostUpdateForm(props) {
             type="submit"
             variation="primary"
             isDisabled={
-              !(idProp || post) ||
+              !(idProp || testimonial) ||
               Object.values(errors).some((e) => e?.hasError)
             }
             {...getOverrideProps(overrides, "SubmitButton")}

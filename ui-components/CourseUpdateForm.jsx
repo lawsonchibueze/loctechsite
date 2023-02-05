@@ -187,17 +187,16 @@ export default function CourseUpdateForm(props) {
     name: "",
     descriptions: "",
     price: "",
-    excerpt: "",
     image: "",
     video: "",
     category: undefined,
     duration: "",
     learningObjective: [],
-    level: undefined,
-    curriculum: [],
     isFeatured: false,
-    headDescription: "",
+    online: false,
+    curriculum: "",
     headTitle: "",
+    headMeta: "",
     headContent: "",
   };
   const [name, setName] = React.useState(initialValues.name);
@@ -205,7 +204,6 @@ export default function CourseUpdateForm(props) {
     initialValues.descriptions
   );
   const [price, setPrice] = React.useState(initialValues.price);
-  const [excerpt, setExcerpt] = React.useState(initialValues.excerpt);
   const [image, setImage] = React.useState(initialValues.image);
   const [video, setVideo] = React.useState(initialValues.video);
   const [category, setCategory] = React.useState(initialValues.category);
@@ -213,13 +211,11 @@ export default function CourseUpdateForm(props) {
   const [learningObjective, setLearningObjective] = React.useState(
     initialValues.learningObjective
   );
-  const [level, setLevel] = React.useState(initialValues.level);
-  const [curriculum, setCurriculum] = React.useState(initialValues.curriculum);
   const [isFeatured, setIsFeatured] = React.useState(initialValues.isFeatured);
-  const [headDescription, setHeadDescription] = React.useState(
-    initialValues.headDescription
-  );
+  const [online, setOnline] = React.useState(initialValues.online);
+  const [curriculum, setCurriculum] = React.useState(initialValues.curriculum);
   const [headTitle, setHeadTitle] = React.useState(initialValues.headTitle);
+  const [headMeta, setHeadMeta] = React.useState(initialValues.headMeta);
   const [headContent, setHeadContent] = React.useState(
     initialValues.headContent
   );
@@ -231,19 +227,17 @@ export default function CourseUpdateForm(props) {
     setName(cleanValues.name);
     setDescriptions(cleanValues.descriptions);
     setPrice(cleanValues.price);
-    setExcerpt(cleanValues.excerpt);
     setImage(cleanValues.image);
     setVideo(cleanValues.video);
     setCategory(cleanValues.category);
     setDuration(cleanValues.duration);
     setLearningObjective(cleanValues.learningObjective ?? []);
     setCurrentLearningObjectiveValue("");
-    setLevel(cleanValues.level);
-    setCurriculum(cleanValues.curriculum ?? []);
-    setCurrentCurriculumValue("");
     setIsFeatured(cleanValues.isFeatured);
-    setHeadDescription(cleanValues.headDescription);
+    setOnline(cleanValues.online);
+    setCurriculum(cleanValues.curriculum);
     setHeadTitle(cleanValues.headTitle);
+    setHeadMeta(cleanValues.headMeta);
     setHeadContent(cleanValues.headContent);
     setErrors({});
   };
@@ -259,24 +253,20 @@ export default function CourseUpdateForm(props) {
   const [currentLearningObjectiveValue, setCurrentLearningObjectiveValue] =
     React.useState("");
   const learningObjectiveRef = React.createRef();
-  const [currentCurriculumValue, setCurrentCurriculumValue] =
-    React.useState("");
-  const curriculumRef = React.createRef();
   const validations = {
     name: [{ type: "Required" }],
     descriptions: [{ type: "Required" }],
     price: [{ type: "Required" }],
-    excerpt: [{ type: "Required" }],
     image: [{ type: "URL" }],
     video: [{ type: "URL" }],
     category: [{ type: "Required" }],
     duration: [],
     learningObjective: [],
-    level: [],
-    curriculum: [],
     isFeatured: [{ type: "Required" }],
-    headDescription: [],
+    online: [],
+    curriculum: [{ type: "URL" }],
     headTitle: [],
+    headMeta: [],
     headContent: [],
   };
   const runValidationTasks = async (
@@ -307,17 +297,16 @@ export default function CourseUpdateForm(props) {
           name,
           descriptions,
           price,
-          excerpt,
           image,
           video,
           category,
           duration,
           learningObjective,
-          level,
-          curriculum,
           isFeatured,
-          headDescription,
+          online,
+          curriculum,
           headTitle,
+          headMeta,
           headContent,
         };
         const validationResponses = await Promise.all(
@@ -377,17 +366,16 @@ export default function CourseUpdateForm(props) {
               name: value,
               descriptions,
               price,
-              excerpt,
               image,
               video,
               category,
               duration,
               learningObjective,
-              level,
-              curriculum,
               isFeatured,
-              headDescription,
+              online,
+              curriculum,
               headTitle,
+              headMeta,
               headContent,
             };
             const result = onChange(modelFields);
@@ -415,17 +403,16 @@ export default function CourseUpdateForm(props) {
               name,
               descriptions: value,
               price,
-              excerpt,
               image,
               video,
               category,
               duration,
               learningObjective,
-              level,
-              curriculum,
               isFeatured,
-              headDescription,
+              online,
+              curriculum,
               headTitle,
+              headMeta,
               headContent,
             };
             const result = onChange(modelFields);
@@ -457,17 +444,16 @@ export default function CourseUpdateForm(props) {
               name,
               descriptions,
               price: value,
-              excerpt,
               image,
               video,
               category,
               duration,
               learningObjective,
-              level,
-              curriculum,
               isFeatured,
-              headDescription,
+              online,
+              curriculum,
               headTitle,
+              headMeta,
               headContent,
             };
             const result = onChange(modelFields);
@@ -484,44 +470,6 @@ export default function CourseUpdateForm(props) {
         {...getOverrideProps(overrides, "price")}
       ></TextField>
       <TextField
-        label="Excerpt"
-        isRequired={true}
-        isReadOnly={false}
-        value={excerpt}
-        onChange={(e) => {
-          let { value } = e.target;
-          if (onChange) {
-            const modelFields = {
-              name,
-              descriptions,
-              price,
-              excerpt: value,
-              image,
-              video,
-              category,
-              duration,
-              learningObjective,
-              level,
-              curriculum,
-              isFeatured,
-              headDescription,
-              headTitle,
-              headContent,
-            };
-            const result = onChange(modelFields);
-            value = result?.excerpt ?? value;
-          }
-          if (errors.excerpt?.hasError) {
-            runValidationTasks("excerpt", value);
-          }
-          setExcerpt(value);
-        }}
-        onBlur={() => runValidationTasks("excerpt", excerpt)}
-        errorMessage={errors.excerpt?.errorMessage}
-        hasError={errors.excerpt?.hasError}
-        {...getOverrideProps(overrides, "excerpt")}
-      ></TextField>
-      <TextField
         label="Image"
         isRequired={false}
         isReadOnly={false}
@@ -533,17 +481,16 @@ export default function CourseUpdateForm(props) {
               name,
               descriptions,
               price,
-              excerpt,
               image: value,
               video,
               category,
               duration,
               learningObjective,
-              level,
-              curriculum,
               isFeatured,
-              headDescription,
+              online,
+              curriculum,
               headTitle,
+              headMeta,
               headContent,
             };
             const result = onChange(modelFields);
@@ -571,17 +518,16 @@ export default function CourseUpdateForm(props) {
               name,
               descriptions,
               price,
-              excerpt,
               image,
               video: value,
               category,
               duration,
               learningObjective,
-              level,
-              curriculum,
               isFeatured,
-              headDescription,
+              online,
+              curriculum,
               headTitle,
+              headMeta,
               headContent,
             };
             const result = onChange(modelFields);
@@ -609,17 +555,16 @@ export default function CourseUpdateForm(props) {
               name,
               descriptions,
               price,
-              excerpt,
               image,
               video,
               category: value,
               duration,
               learningObjective,
-              level,
-              curriculum,
               isFeatured,
-              headDescription,
+              online,
+              curriculum,
               headTitle,
+              headMeta,
               headContent,
             };
             const result = onChange(modelFields);
@@ -636,64 +581,34 @@ export default function CourseUpdateForm(props) {
         {...getOverrideProps(overrides, "category")}
       >
         <option
-          children="Autocad"
-          value="AUTOCAD"
+          children="All"
+          value="ALL"
           {...getOverrideProps(overrides, "categoryoption0")}
-        ></option>
-        <option
-          children="Data science"
-          value="DATA_SCIENCE"
-          {...getOverrideProps(overrides, "categoryoption1")}
         ></option>
         <option
           children="Web development"
           value="WEB_DEVELOPMENT"
+          {...getOverrideProps(overrides, "categoryoption1")}
+        ></option>
+        <option
+          children="Data science"
+          value="DATA_SCIENCE"
           {...getOverrideProps(overrides, "categoryoption2")}
         ></option>
         <option
-          children="Creative graphics design"
-          value="CREATIVE_GRAPHICS_DESIGN"
+          children="Networking security"
+          value="NETWORKING_SECURITY"
           {...getOverrideProps(overrides, "categoryoption3")}
+        ></option>
+        <option
+          children="Graphics media"
+          value="GRAPHICS_MEDIA"
+          {...getOverrideProps(overrides, "categoryoption4")}
         ></option>
         <option
           children="Office productivity"
           value="OFFICE_PRODUCTIVITY"
-          {...getOverrideProps(overrides, "categoryoption4")}
-        ></option>
-        <option
-          children="Security"
-          value="SECURITY"
           {...getOverrideProps(overrides, "categoryoption5")}
-        ></option>
-        <option
-          children="Cloud computing"
-          value="CLOUD_COMPUTING"
-          {...getOverrideProps(overrides, "categoryoption6")}
-        ></option>
-        <option
-          children="Project management"
-          value="PROJECT_MANAGEMENT"
-          {...getOverrideProps(overrides, "categoryoption7")}
-        ></option>
-        <option
-          children="Networking"
-          value="NETWORKING"
-          {...getOverrideProps(overrides, "categoryoption8")}
-        ></option>
-        <option
-          children="Programming"
-          value="PROGRAMMING"
-          {...getOverrideProps(overrides, "categoryoption9")}
-        ></option>
-        <option
-          children="Digital marketing"
-          value="DIGITAL_MARKETING"
-          {...getOverrideProps(overrides, "categoryoption10")}
-        ></option>
-        <option
-          children="Finance accounting"
-          value="FINANCE_ACCOUNTING"
-          {...getOverrideProps(overrides, "categoryoption11")}
         ></option>
       </SelectField>
       <TextField
@@ -712,17 +627,16 @@ export default function CourseUpdateForm(props) {
               name,
               descriptions,
               price,
-              excerpt,
               image,
               video,
               category,
               duration: value,
               learningObjective,
-              level,
-              curriculum,
               isFeatured,
-              headDescription,
+              online,
+              curriculum,
               headTitle,
+              headMeta,
               headContent,
             };
             const result = onChange(modelFields);
@@ -746,17 +660,16 @@ export default function CourseUpdateForm(props) {
               name,
               descriptions,
               price,
-              excerpt,
               image,
               video,
               category,
               duration,
               learningObjective: values,
-              level,
-              curriculum,
               isFeatured,
-              headDescription,
+              online,
+              curriculum,
               headTitle,
+              headMeta,
               headContent,
             };
             const result = onChange(modelFields);
@@ -798,117 +711,6 @@ export default function CourseUpdateForm(props) {
           {...getOverrideProps(overrides, "learningObjective")}
         ></TextField>
       </ArrayField>
-      <SelectField
-        label="Level"
-        placeholder="Please select an option"
-        isDisabled={false}
-        value={level}
-        onChange={(e) => {
-          let { value } = e.target;
-          if (onChange) {
-            const modelFields = {
-              name,
-              descriptions,
-              price,
-              excerpt,
-              image,
-              video,
-              category,
-              duration,
-              learningObjective,
-              level: value,
-              curriculum,
-              isFeatured,
-              headDescription,
-              headTitle,
-              headContent,
-            };
-            const result = onChange(modelFields);
-            value = result?.level ?? value;
-          }
-          if (errors.level?.hasError) {
-            runValidationTasks("level", value);
-          }
-          setLevel(value);
-        }}
-        onBlur={() => runValidationTasks("level", level)}
-        errorMessage={errors.level?.errorMessage}
-        hasError={errors.level?.hasError}
-        {...getOverrideProps(overrides, "level")}
-      >
-        <option
-          children="Foundation"
-          value="FOUNDATION"
-          {...getOverrideProps(overrides, "leveloption0")}
-        ></option>
-        <option
-          children="Intermediate"
-          value="INTERMEDIATE"
-          {...getOverrideProps(overrides, "leveloption1")}
-        ></option>
-        <option
-          children="Advance"
-          value="ADVANCE"
-          {...getOverrideProps(overrides, "leveloption2")}
-        ></option>
-      </SelectField>
-      <ArrayField
-        onChange={async (items) => {
-          let values = items;
-          if (onChange) {
-            const modelFields = {
-              name,
-              descriptions,
-              price,
-              excerpt,
-              image,
-              video,
-              category,
-              duration,
-              learningObjective,
-              level,
-              curriculum: values,
-              isFeatured,
-              headDescription,
-              headTitle,
-              headContent,
-            };
-            const result = onChange(modelFields);
-            values = result?.curriculum ?? values;
-          }
-          setCurriculum(values);
-          setCurrentCurriculumValue("");
-        }}
-        currentFieldValue={currentCurriculumValue}
-        label={"Curriculum"}
-        items={curriculum}
-        hasError={errors.curriculum?.hasError}
-        setFieldValue={setCurrentCurriculumValue}
-        inputFieldRef={curriculumRef}
-        defaultFieldValue={""}
-      >
-        <TextField
-          label="Curriculum"
-          isRequired={false}
-          isReadOnly={false}
-          value={currentCurriculumValue}
-          onChange={(e) => {
-            let { value } = e.target;
-            if (errors.curriculum?.hasError) {
-              runValidationTasks("curriculum", value);
-            }
-            setCurrentCurriculumValue(value);
-          }}
-          onBlur={() =>
-            runValidationTasks("curriculum", currentCurriculumValue)
-          }
-          errorMessage={errors.curriculum?.errorMessage}
-          hasError={errors.curriculum?.hasError}
-          ref={curriculumRef}
-          labelHidden={true}
-          {...getOverrideProps(overrides, "curriculum")}
-        ></TextField>
-      </ArrayField>
       <SwitchField
         label="Is featured"
         defaultChecked={false}
@@ -921,17 +723,16 @@ export default function CourseUpdateForm(props) {
               name,
               descriptions,
               price,
-              excerpt,
               image,
               video,
               category,
               duration,
               learningObjective,
-              level,
-              curriculum,
               isFeatured: value,
-              headDescription,
+              online,
+              curriculum,
               headTitle,
+              headMeta,
               headContent,
             };
             const result = onChange(modelFields);
@@ -947,11 +748,48 @@ export default function CourseUpdateForm(props) {
         hasError={errors.isFeatured?.hasError}
         {...getOverrideProps(overrides, "isFeatured")}
       ></SwitchField>
+      <SwitchField
+        label="Online"
+        defaultChecked={false}
+        isDisabled={false}
+        isChecked={online}
+        onChange={(e) => {
+          let value = e.target.checked;
+          if (onChange) {
+            const modelFields = {
+              name,
+              descriptions,
+              price,
+              image,
+              video,
+              category,
+              duration,
+              learningObjective,
+              isFeatured,
+              online: value,
+              curriculum,
+              headTitle,
+              headMeta,
+              headContent,
+            };
+            const result = onChange(modelFields);
+            value = result?.online ?? value;
+          }
+          if (errors.online?.hasError) {
+            runValidationTasks("online", value);
+          }
+          setOnline(value);
+        }}
+        onBlur={() => runValidationTasks("online", online)}
+        errorMessage={errors.online?.errorMessage}
+        hasError={errors.online?.hasError}
+        {...getOverrideProps(overrides, "online")}
+      ></SwitchField>
       <TextField
-        label="Head description"
+        label="Curriculum"
         isRequired={false}
         isReadOnly={false}
-        value={headDescription}
+        value={curriculum}
         onChange={(e) => {
           let { value } = e.target;
           if (onChange) {
@@ -959,31 +797,30 @@ export default function CourseUpdateForm(props) {
               name,
               descriptions,
               price,
-              excerpt,
               image,
               video,
               category,
               duration,
               learningObjective,
-              level,
-              curriculum,
               isFeatured,
-              headDescription: value,
+              online,
+              curriculum: value,
               headTitle,
+              headMeta,
               headContent,
             };
             const result = onChange(modelFields);
-            value = result?.headDescription ?? value;
+            value = result?.curriculum ?? value;
           }
-          if (errors.headDescription?.hasError) {
-            runValidationTasks("headDescription", value);
+          if (errors.curriculum?.hasError) {
+            runValidationTasks("curriculum", value);
           }
-          setHeadDescription(value);
+          setCurriculum(value);
         }}
-        onBlur={() => runValidationTasks("headDescription", headDescription)}
-        errorMessage={errors.headDescription?.errorMessage}
-        hasError={errors.headDescription?.hasError}
-        {...getOverrideProps(overrides, "headDescription")}
+        onBlur={() => runValidationTasks("curriculum", curriculum)}
+        errorMessage={errors.curriculum?.errorMessage}
+        hasError={errors.curriculum?.hasError}
+        {...getOverrideProps(overrides, "curriculum")}
       ></TextField>
       <TextField
         label="Head title"
@@ -997,17 +834,16 @@ export default function CourseUpdateForm(props) {
               name,
               descriptions,
               price,
-              excerpt,
               image,
               video,
               category,
               duration,
               learningObjective,
-              level,
-              curriculum,
               isFeatured,
-              headDescription,
+              online,
+              curriculum,
               headTitle: value,
+              headMeta,
               headContent,
             };
             const result = onChange(modelFields);
@@ -1024,6 +860,43 @@ export default function CourseUpdateForm(props) {
         {...getOverrideProps(overrides, "headTitle")}
       ></TextField>
       <TextField
+        label="Head meta"
+        isRequired={false}
+        isReadOnly={false}
+        value={headMeta}
+        onChange={(e) => {
+          let { value } = e.target;
+          if (onChange) {
+            const modelFields = {
+              name,
+              descriptions,
+              price,
+              image,
+              video,
+              category,
+              duration,
+              learningObjective,
+              isFeatured,
+              online,
+              curriculum,
+              headTitle,
+              headMeta: value,
+              headContent,
+            };
+            const result = onChange(modelFields);
+            value = result?.headMeta ?? value;
+          }
+          if (errors.headMeta?.hasError) {
+            runValidationTasks("headMeta", value);
+          }
+          setHeadMeta(value);
+        }}
+        onBlur={() => runValidationTasks("headMeta", headMeta)}
+        errorMessage={errors.headMeta?.errorMessage}
+        hasError={errors.headMeta?.hasError}
+        {...getOverrideProps(overrides, "headMeta")}
+      ></TextField>
+      <TextField
         label="Head content"
         isRequired={false}
         isReadOnly={false}
@@ -1035,17 +908,16 @@ export default function CourseUpdateForm(props) {
               name,
               descriptions,
               price,
-              excerpt,
               image,
               video,
               category,
               duration,
               learningObjective,
-              level,
-              curriculum,
               isFeatured,
-              headDescription,
+              online,
+              curriculum,
               headTitle,
+              headMeta,
               headContent: value,
             };
             const result = onChange(modelFields);

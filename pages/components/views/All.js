@@ -19,7 +19,7 @@ export default function All() {
 
     return (
         <div>
-            <div className='grid lg:grid-cols-4 grid-flow-row gap-6'>
+            <div className='grid lg:grid-cols-5 grid-flow-row gap-10'>
                 {courses.map((course, index) => {
                     if (course.isFeatured === true) {
                         return (

@@ -5,6 +5,10 @@
  **************************************************************************/
 
 export { default as studioTheme } from "./studioTheme";
+export { default as TestimonialCreateForm } from "./TestimonialCreateForm";
+export { default as TestimonialUpdateForm } from "./TestimonialUpdateForm";
+export { default as EventsCreateForm } from "./EventsCreateForm";
+export { default as EventsUpdateForm } from "./EventsUpdateForm";
 export { default as PostCreateForm } from "./PostCreateForm";
 export { default as PostUpdateForm } from "./PostUpdateForm";
 export { default as HeroDataCreateForm } from "./HeroDataCreateForm";

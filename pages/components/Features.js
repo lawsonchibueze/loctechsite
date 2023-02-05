@@ -65,8 +65,8 @@ const categories = [
 
 export default function Features() {
   return (
-    <div className='lg:px-32 px-4 py-20 bg-white'>
-      <h1 className='text-3xl font-semibold text-gray-900 mb-10'>Top Category</h1>
+    <div className='lg:px-20 px-4 py-20 bg-white'>
+      <h1 className='text-3xl font-medium text-gray-900 mb-10'>Top Category</h1>
       <div className='grid lg:grid-cols-4 grid-flow-row gap-8'>
         {categories.map((cat, index) => {
           return (
@@ -75,7 +75,7 @@ export default function Features() {
               key={index}
             >
               <Image src={cat.icon} alt='' className='w-10 h-10 text-white' />
-              <span className='font-semibold text-lg text-[#252525]'>{cat.category}</span>
+              <span className='font-normal text-lg text-[#252525]'>{cat.category}</span>
             </div>
           )
         })}
