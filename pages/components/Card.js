@@ -1,3 +1,4 @@
+/* eslint-disable @next/next/no-img-element */
 import { DataStore } from "@aws-amplify/datastore";
 // import { motion } from "framer-motion";
 import Link from "next/link";

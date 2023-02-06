@@ -1,3 +1,4 @@
+/* eslint-disable @next/next/no-img-element */
 import React, { useEffect, useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
@@ -76,7 +77,7 @@ const Hero = () => {
               // width={400}
               // height={400}
               />
-              <div className="absolute bg-white w-[50%]  px-8 py-5 rounded-lg drop-shadow-xl bottom-12 lg:-left-20 left-1 animate-bounce">
+              <div className="absolute bg-white w-[50%]  px-8 py-5 rounded-lg drop-shadow-xl bottom-12 lg:-left-20 left-1 animate-bounce bg-opacity-60 backdrop-filter backdrop-blur-lg">
                 <div className="">Tomorrow is our <span className="font-semibold">&quot;When I Grow Up&quot; Spirit Day!</span>
                   <div className="absolute bg-[#FFC221] p-1 h-14 w-14 rounded-full flex justify-center items-center -top-7 -left-5">
                     <MdOutlineNotificationsActive className="w-10 h-10 text-white" />

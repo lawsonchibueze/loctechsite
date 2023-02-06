@@ -1,6 +1,9 @@
-import { ArrowLongRightIcon } from '@heroicons/react/24/outline'
-import Image from 'next/image'
+/* eslint-disable @next/next/no-img-element */
+import { ArrowLongRightIcon, CalendarIcon } from '@heroicons/react/24/outline'
+import { DataStore } from 'aws-amplify'
 import Link from 'next/link'
+import { useEffect, useState } from 'react'
+import { Post } from '../../models'
 import about1 from '/public/images/about1.jpg'
 import about2 from '/public/images/about2.jpg'
 import about3 from '/public/images/about3.jpg'
@@ -42,12 +45,26 @@ const blogs = [
 ]
 
 export default function Blog() {
+    const [posts, setPosts] = useState([])
+
+    useEffect(() => {
+        fetchPosts();
+        async function fetchPosts() {
+            const postData = await DataStore.query(Post);
+            setPosts(postData);
+        }
+        DataStore.observe(Post).subscribe((msg) => {
+            console.log(msg.Post, msg.opType, msg.element);
+        });
+    }, []);
+
+
     return (
         <div className="mt-20 lg:p-20 px-4">
             <div className="grid lg:grid-cols-4 grid-flow-row gap-12 ">
                 <div className='flex flex-col gap-6 items-center h-fit'>
-                    <h1 className='text-base font-semibold text-violet-700 borde leading-snug lg:self-start text-center md:text-xl'>Article Update</h1>
-                    <h2 className='text-[#181818] text-3xl font-semibold'>Loctech News and Article</h2>
+                    <h1 className='text-base font-medium text-violet-700 borde leading-snug lg:self-start text-center md:text-xl uppercase'>Article Update</h1>
+                    <h2 className='text-[#181818] text-3xl font-medium'>Loctech News and Article</h2>
                     <div className='flex flex-col gap-5'>
                         {blogs.map((blog, index) => {
                             return (
@@ -55,7 +72,7 @@ export default function Blog() {
                                     <div className='lg:w-5 lg:h-5 w-8 h-8'>
                                         {blog.icons}
                                     </div>
-                                    <Link href='/' className='lg:text-base font-semibold text-xl flex-1 hover:text-violet-700 transition-colors duration-500 ease-in-out min-w-max lg:min-w-0'>
+                                    <Link href='/' className='lg:text-base font-medium text-xl flex-1 hover:text-violet-700 transition-colors duration-500 ease-in-out min-w-max lg:min-w-0'>
                                         {blog.title}
                                     </Link>
                                 </div>
@@ -64,27 +81,30 @@ export default function Blog() {
                     </div>
                 </div>
                 <div className='grid lg:grid-cols-3 grid-flow-row gap-8 col-span-3'>
-                    {data.map((item, index) => {
+                    {posts.map((post, index) => {
                         return (
-                            <div key={index} className='flex flex-col justify-between'>
-                                <Image
-                                    src={item.image}
+                            <div key={index} className='flex flex-col justify-between group overflow-hidden'>
+                                <img
+                                    src={post.image}
                                     alt=''
-                                    className='w-full'
+                                    className='w-full h-44 object-cover ease-in-out duration-500 group-hover:scale-110'
                                 />
-                                <div className='p-3 flex flex-col gap-1'>
-                                    <h1 className='text-gray-600 text-sm text-center'>{item.date}</h1>
-                                    <h2 className='font-semibold'>{item.topic}</h2>
-                                    <p className='text-sm text-gray-500'>{item.desc.substring(0, 70) + '...'}</p>
+                                <div className='flex flex-col gap-1 mt-3'>
+                                    <h1 className='text-gray-600 text-[14px] flex flex-row gap-2 items-center'>
+                                        <CalendarIcon className='w-5 h-5' />
+                                        {post.date}August 10, 2020
+                                    </h1>
+                                    <Link href={`/articles/${post.id}`} className='font-medium hover:text-violet-700 transition-colors duration-500 ease-in-out'>{post.title}</Link>
+                                    <p className='text-sm text-gray-500'>{post.content.substring(0, 70) + '...'}</p>
                                 </div>
-                                <Link href='/'>
-                                    <button className='self-start px-6 py-3 bg-violet-50 text-violet-900 font-semibold hover:bg-white hover:shadow-xl transition duration-500 ease-in-out group'>
+                                <Link href={`/articles/${post.id}`} className='mt-8'>
+                                    <button className='self-start px-6 py-2 bg-violet-50 text-violet-900 text-sm font-medium hover:bg-white hover:shadow-xl transition duration-500 ease-in-out group'>
                                         Read More
                                     </button>
                                 </Link>
                             </div>
                         )
-                    })}
+                    }).slice(0, 3)}
                 </div>
             </div>
         </div>

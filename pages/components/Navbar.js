@@ -2,7 +2,7 @@ import { MagnifyingGlassIcon, ShoppingBagIcon } from '@heroicons/react/24/outlin
 import Image from 'next/image'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 
 
 const links = [
@@ -31,6 +31,7 @@ const links = [
 export default function Navbar() {
   const [showLinks, setShowLinks] = useState(false)
   const [isOpen, setIsOpen] = useState(false);
+  const [sticky, setSticky] = useState(false);
   const genericHamburgerLine = `w-8 h-[2px] bg-black transition ease transform duration-300`;
   const router = useRouter()
   const path = router.pathname.split('/')[1]
@@ -45,6 +46,21 @@ export default function Navbar() {
     setShowLinks(false)
     setIsOpen(false)
   }
+
+  useEffect(() => {
+    window.addEventListener("scroll", handleScroll);
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+    };
+  }, []);
+
+  const handleScroll = () => {
+    if (window.pageYOffset > 50) {
+      setSticky(true);
+    } else {
+      setSticky(false);
+    }
+  };
 
   return (
     <div className='lg:px-20 px-4 shadow-md lg:h-24 h-16 flex items-center justify-between bg-white sticky top-0 z-20 bg-opacity-60 backdrop-filter backdrop-blur-lg'>

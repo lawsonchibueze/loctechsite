@@ -1,7 +1,8 @@
-export default function Text() {
+export default function Text({ post }) {
     return (
-        <div className="max-w-4xl text-gray-700 leading-relaxed">
-            As our elementary students head back to school in person,
+        <div className="max-w-4xl text-[#696969] leading-relaxed text-[14px] font-light">
+            {post.content}
+            {/* As our elementary students head back to school in person,
             in this very new way, there will be many emotions stirred up in them. Alarm. Frustration. Worry. Excitement.
             <br />
             <br />
@@ -67,7 +68,7 @@ export default function Text() {
                     <br />
                     In the meantime, let’s be patient with our students and ourselves. We are all in this together.
                 </div>
-            </div>
+            </div> */}
         </div>
     )
 }

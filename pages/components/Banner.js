@@ -20,7 +20,7 @@ export default function Banner() {
                         <FiMail className='text-[#FFC221] w-5 h-5' /> career@loctech.ng
                     </div>
                 </div>
-                <div className='lg:flex items-center gap-4 hidden font-semibold'>
+                <div className='lg:flex items-center gap-4 hidden font-medium'>
                     <div>Log in</div>
                     <div className='h-5 w-[1px] bg-gray-400'></div>
                     <div>Register</div>

@@ -27,6 +27,26 @@ body {
   }
 }
 
+.navbar {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 6rem;
+  padding: 20px;
+  transition: height 0.3s, padding 1s;
+}
+
+.sticky_navbar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 4rem;
+  padding: 10px;
+  background-color: white;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
 /* Hamburger Menu */
 .hamburger {
   cursor: pointer;

@@ -1,3 +1,4 @@
+/* eslint-disable @next/next/no-img-element */
 import { DataStore } from 'aws-amplify'
 import Image from 'next/image'
 import Link from 'next/link'
@@ -43,23 +44,23 @@ export default function Event() {
         <div className='my-32 lg:px-20 px-4'>
             <div className="flex lg:flex-row flex-col gap-12 flex-1">
                 <div className='flex flex-col gap-4 items-center lg:w-[30%] w-full'>
-                    <h1 className='text-base font-semibold text-violet-700 borde leading-snug self-start'>EVENTS</h1>
-                    <h2 className='text-[#181818] text-3xl font-semibold lg:text-start text-center self-start'>Upcoming Events</h2>
+                    <h1 className='text-base font-medium text-violet-700 borde leading-snug self-start'>EVENTS</h1>
+                    <h2 className='text-[#181818] text-3xl font-medium lg:text-start text-center self-start'>Upcoming Events</h2>
                     <p>You can show all events here to let people take the chance to get involved</p>
-                    <button className="px-6 py-3 text-violet-800 font-semibold bg-violet-50 hover:shadow-xl transition-shadow duration-500 ease-in-out lg:self-start self-center">View all</button>
+                    <button className="px-6 py-3 text-violet-800 font-medium bg-violet-50 hover:shadow-xl transition-shadow duration-500 ease-in-out lg:self-start self-center">View all</button>
                 </div>
                 <div className='grid lg:grid-cols-3 grid-flow-row gap-8'>
                     {events.map((event, index) => {
                         return (
-                            <Link href='/' key={index} className='flex flex-col gap-2 bg-violet-50'>
+                            <Link href={`events/${event.id}`} key={index} className='flex flex-col gap-2 bg-violet-50 group overflow-hidden hover:bg-white hover:shadow-xl transition-all ease-in-out duration-500 rounded-b-lg'>
                                 <img
                                     src={event.Image}
                                     alt=''
-                                    className='w-full'
+                                    className='w-full h-44 object-cover ease-in-out duration-500 group-hover:scale-110 rounded-t-lg'
                                 />
-                                <div className='p-3 flex flex-col justify-between'>
-                                    <h1 className='text-gray-600 text-sm'>{event.date}</h1>
-                                    <p className='font-semibold'>{event.topic}</p>
+                                <div className='p-3 flex flex-col gap-4 items-center justify-center'>
+                                    <h1 className='text-[#ababab] text-[14px]'>November 9, 2020</h1>
+                                    <Link href={`events/${event.id}`} className='font-medium text-[17px] text-center hover:text-violet-700 transition-colors duration-500 ease-in-out'>{event.topic}</Link>
                                 </div>
 
                             </Link>

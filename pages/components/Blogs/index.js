@@ -1,3 +1,4 @@
+/* eslint-disable @next/next/no-img-element */
 import { CalendarIcon, ChatBubbleBottomCenterTextIcon, EyeIcon } from '@heroicons/react/24/outline'
 import Image from 'next/image'
 import CommentField from './CommentField'
@@ -12,10 +13,10 @@ export default function Blogs({ post }) {
                 <div className="bg-violet-50 px-2 rounded-sm self-center hover:text-white hover:bg-violet-700 cursor-pointer uppercase text-sm font-semibold transition-colors duration-500 ease-in-out">
                     Business
                 </div>
-                <div className="font-semibold lg:text-5xl text-2xl text-center lg:w-2/3 leading-snug text-gray-800">
-                    Back To School Social-Emotional Basics: Relationship, Rhythm, Release
+                <div className="font-medium lg:text-[40px] text-[22px] text-center lg:w-2/3 leading-snug text-[#252525]">
+                    {post.title}
                 </div>
-                <div className='grid lg:grid-cols-4 grid-cols-2 gap-5'>
+                <div className='grid lg:grid-cols-4 grid-cols-2 gap-5 text-[13px]'>
                     <div className='flex flex-row gap-3 items-center'>
                         <Image
                             src={author}
@@ -38,13 +39,13 @@ export default function Blogs({ post }) {
                     </div>
                 </div>
                 <div>
-                    <Image
-                        src={blog}
+                    <img
+                        src={post.image}
                         alt='blog Image'
-                        className='rounded-md'
+                        className='rounded-md w-full'
                     />
                 </div>
-                <Text />
+                <Text post={post} />
                 <CommentField />
             </div>
         </div>

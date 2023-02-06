@@ -27,15 +27,15 @@ export default function CourseComponent({ course }) {
     return (
         <div>
             <Head>
-                <title>{course.headTitle}</title>
+                <title>{course.name}</title>
                 <meta name={course.headMeta} content={course.headContent} />
                 <link rel="icon" href="/favicon.ico" />
             </Head>
             <div className="relative">
-                <div className="bg-violet-50 h-80">
-                    <div className="flex lg:px-40 px-4 py-28">
+                <div className="bg-violet-50 lg:h-80">
+                    <div className="flex lg:px-40 px-4 lg:py-28 py-10">
                         <div className="flex flex-col gap-6">
-                            <h1 className="font-semibold text-4xl">
+                            <h1 className="font-medium lg:text-[32px] text-[22px]">
                                 {course.name}
                             </h1>
                             <div className="flex flex-row gap-6 items-center">
@@ -50,31 +50,31 @@ export default function CourseComponent({ course }) {
                     </div>
                 </div>
                 <div className="flex flex-col gap-10 bg-white lg:px-40 px-4 py-10">
-                    <h1 className="font-semibold text-2xl">About This Course</h1>
-                    <div className="text-gray-600 flex flex-col gap-10 lg:w-3/5">
+                    <h1 className="font-medium text-[20px] text-[#252525]">About This Course</h1>
+                    <div className="text-[#696969] text-[14px] flex flex-col gap-10 lg:w-3/5 leading-loose">
                         {course.descriptions}
                         <span>{course.description2}</span>
                     </div>
                     <div className="lg:w-3/5">
-                        <h1 className="font-semibold text-2xl my-6">Skills you will learn</h1>
+                        <h1 className="font-medium text-2xl my-6">Skills you will learn</h1>
                         {/* <div className='grid lg:grid-cols-2 gap-7'>
                             {course.skills.map((skill, index) => {
                                 return (
                                     <div key={index} className="flex flex-row gap-2 items-center">
                                         <BsCheck2 className="text-violet-700 w-4 h-4 font-bold" />
-                                        <span className="text-gray-800 font-semibold">{skill}</span>
+                                        <span className="text-gray-800 font-medium">{skill}</span>
                                     </div>
                                 )
                             })}
                         </div> */}
                     </div>
                     <div>
-                        <h1 className="font-semibold text-2xl my-6">Learning Objectives</h1>
-                        <div className="grid grid-cols-2 grid-flow-row w-[70%] gap-4">
+                        <h1 className="font-medium text-2xl my-6">Learning Objectives</h1>
+                        <div className="grid lg:grid-cols-2 grid-flow-row lg:w-[70%] gap-4 lg:border lg:p-4 lg:rounded-md">
                             {course.learningObjective
                                 .map((item, index) => {
                                     return (
-                                        <div key={index} className='text-[#51565e] font-semibold text-base flex flex-row gap-2 items-start justify-center'>
+                                        <div key={index} className='text-[#696969] font-light text-[14px] flex flex-row gap-2 items-start justify-center'>
                                             <CheckCircleIcon className="h-6 w-6 text-violet-900" />
                                             <div className="flex-1">{item}</div>
 
@@ -84,7 +84,7 @@ export default function CourseComponent({ course }) {
                         </div>
                     </div>
                     <div>
-                        <h1 className="font-semibold text-2xl my-6">Curriculum</h1>
+                        <h1 className="font-medium text-2xl my-6">Curriculum</h1>
                         <div className="lg:w-[65%]">
                             <Accordion
                                 course={course}
@@ -92,7 +92,7 @@ export default function CourseComponent({ course }) {
                         </div>
                     </div>
                     <div>
-                        <h1 className="font-semibold text-2xl my-6">Course Instructor</h1>
+                        <h1 className="font-medium text-2xl my-6">Course Instructor</h1>
                         <div className="flex lg:flex-row flex-col gap-7">
                             <Link href='/instructor' className="group overflow-hidden">
                                 <Image
@@ -102,19 +102,19 @@ export default function CourseComponent({ course }) {
                                 />
                             </Link>
                             <div className="flex flex-col gap-2  flex-1">
-                                <Link href='/instructor' className="text-2xl font-semibold">{course.tutor}</Link>
+                                <Link href='/instructor' className="text-2xl font-medium">{course.tutor}</Link>
                                 <div>Web Developer</div>
                                 {/* <div>{course.rating} Ratings</div> */}
                                 <div className="flex flex-row gap-4 lg:gap-7">
-                                    <span className="flex flex-row gap-1 items-center text-gray-500 font-semibold">
+                                    <span className="flex flex-row gap-1 items-center text-gray-500 font-medium">
                                         <BsPlayCircle className="w-5 h-5" />
                                         5 Courses
                                     </span>
-                                    <span className="flex flex-row gap-1 items-center text-gray-500 font-semibold">
+                                    <span className="flex flex-row gap-1 items-center text-gray-500 font-medium">
                                         <FiMessageSquare className="w-5 h-5" />
                                         4 Reviews
                                     </span>
-                                    <span className="flex flex-row gap-1 items-center text-gray-500 font-semibold">
+                                    <span className="flex flex-row gap-1 items-center text-gray-500 font-medium">
                                         <BsPerson className="w-5 h-5" />
                                         85 Students
                                     </span>
@@ -142,14 +142,14 @@ export default function CourseComponent({ course }) {
                         </div> */}
                     </div>
                     <div className="lg:px-6 px-2 py-3 flex flex-col gap-2">
-                        <div className="text-3xl text-gray-800 font-bold">
+                        <div className="text-[34px] text-gray-800 font-bold">
                             {formatter.format(course.price)}
                             <span className="text-[15px]">{course.priceSm}</span>
                         </div>
                         <div className={course.level === 'All Levels' ? 'text-[#17b8c1] bg-[#17b8c128] self-start py-0.5 px-2 rounded-md' : ''}>
                             {course.level}
                         </div>
-                        <div className="flex flex-col gap-6 my-6">
+                        <div className="flex flex-col gap-6 my-6 text-[14px]">
                             <div className="flex flex-row justify-between items-center border-b border-gray-200 pb-3">
                                 <BiTime className="w-6 h-6 text-gray-700" />
                                 <span className="text-gray-600">{course.duration} Hour(s)</span>
@@ -163,7 +163,7 @@ export default function CourseComponent({ course }) {
                                 <span className="text-gray-600">0 Reviews</span>
                             </div>
                         </div>
-                        <button className="bg-violet-700 w-full py-3 font-semibold text-white rounded-md text-lg hover:shadow-xl duration-300 ease-in-out">Start Learning</button>
+                        <button className="bg-violet-700 w-full py-3 font-medium text-white rounded-md text-lg hover:shadow-xl duration-300 ease-in-out">Start Learning</button>
                     </div>
                 </div>
 

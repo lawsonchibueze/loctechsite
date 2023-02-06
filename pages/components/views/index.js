@@ -40,26 +40,26 @@ export default function Views() {
     }, []);
 
     return (
-        <div className='lg:px-20 px-4 mt-20'>
-            <h1 className='text-3xl font-semibold text-gray-900 mb-10'>Explore Our Courses</h1>
+        <div className='lg:px-20 px-4 mt-20 flex flex-col justify-center items-center'>
+            <h1 className='text-3xl font-medium text-[#252525] mb-10'>Explore Our Courses</h1>
             <div className="flex flex-col gap-10">
-                <div className="flex justify-between h-fit p-2">
-                    <div className="lg:flex gap-2 hidden flex-row justify-center items-center">
-                        {courses.map((course, index) => {
-                            return (
-                                <div
-                                    className={"py-2 px-4 flex items-center cursor-pointer transition-all duration-300 ease-in-out text-sm min-w-fit " +
-                                        (openTab === index && 'bg-white text-violet-900 border-l-4 border-violet-700 rounded-sm shadow-lg')
-                                    }
-                                    onClick={() => setOpenTab(index)}
-                                    key={index}
-                                >
-                                    {course.category.replaceAll("_", " ")}
-                                </div>
-                            )
-                        })}
-                    </div>
+                {/* <div className="flex justify-between h-fit p-2"> */}
+                <div className="lg:flex gap-2 hidden flex-row justify-center items-center">
+                    {courses.map((course, index) => {
+                        return (
+                            <div
+                                className={"py-2 px-4 flex justify-center items-center cursor-pointer transition-all duration-300 ease-in-out text-base " +
+                                    (openTab === index && 'bg-white text-violet-900 border-l-4 border-violet-700 rounded-sm shadow-lg')
+                                }
+                                onClick={() => setOpenTab(index)}
+                                key={index}
+                            >
+                                {course.category.replaceAll("_", " ")}
+                            </div>
+                        )
+                    })}
                 </div>
+                {/* </div> */}
                 <div className="">
                     {allTabs.map((item, index) => {
                         return (
