@@ -3,7 +3,7 @@ import { DataStore } from "@aws-amplify/datastore";
 import { Course } from "../../../models";
 import { useState, useEffect } from "react";
 
-export default function Popularity() {
+export default function Office() {
     const [courses, setCourses] = useState([]);
     useEffect(() => {
         fetchCourses();
@@ -19,9 +19,9 @@ export default function Popularity() {
 
     return (
         <div>
-            <div className='grid lg:grid-cols-4 grid-flow-row gap-6'>
+            <div className='grid lg:grid-cols-5 grid-flow-row gap-10'>
                 {courses.map((course, index) => {
-                    if (course.category === 'AUTOCAD') {
+                    if (course.category === 'OFFICE_PRODUCTIVITY') {
                         return (
                             <Card key={index} course={course} />
                         )

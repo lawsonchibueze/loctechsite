@@ -180,7 +180,7 @@ export const schema = {
                 "locationMap": {
                     "name": "locationMap",
                     "isArray": false,
-                    "type": "String",
+                    "type": "AWSURL",
                     "isRequired": false,
                     "attributes": []
                 },
@@ -828,5 +828,5 @@ export const schema = {
     },
     "nonModels": {},
     "codegenVersion": "3.3.5",
-    "version": "292808aaa8e9512241ba85d7fc4f7148"
+    "version": "b3449d5a3f7696fdd1e9782af51c141e"
 };

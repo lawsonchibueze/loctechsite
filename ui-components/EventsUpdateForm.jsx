@@ -255,7 +255,7 @@ export default function EventsUpdateForm(props) {
     speakers: [{ type: "URL" }],
     date: [],
     time: [],
-    locationMap: [],
+    locationMap: [{ type: "URL" }],
     location: [],
   };
   const runValidationTasks = async (

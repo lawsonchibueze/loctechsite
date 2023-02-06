@@ -1,9 +1,10 @@
 import { useEffect, useState } from "react"
 import All from "./All"
-import Art from "./Art&Design"
-import Featured from "./Featured"
-import Popularity from "./Popularity"
-import Trending from "./Trending"
+import Web from "./Web Development"
+import Data from "./Data Science"
+import Graphics from "./Graphics Media"
+import Networking from "./Networking Security"
+import Office from "./Office Productivity"
 import { Course } from "../../../models"
 import { DataStore } from "@aws-amplify/datastore";
 
@@ -12,17 +13,29 @@ const allTabs = [
         component: <All />
     },
     {
-        component: <Popularity />
+        component: <Graphics />
     },
     {
-        component: <Trending />
+        component: <Networking />
     },
     {
-        component: <Featured />
+        component: <Data />
     },
     {
-        component: <Art />
+        component: <Web />
     },
+    {
+        component: <Office />
+    },
+]
+
+const tabs = [
+    'All',
+    'Web Development',
+    'Data Science',
+    'Networking Security',
+    'Graphics Media',
+    'Office Productivity'
 ]
 
 export default function Views() {
@@ -45,16 +58,16 @@ export default function Views() {
             <div className="flex flex-col gap-10">
                 {/* <div className="flex justify-between h-fit p-2"> */}
                 <div className="lg:flex gap-2 hidden flex-row justify-center items-center">
-                    {courses.map((course, index) => {
+                    {tabs.map((tab, index) => {
                         return (
                             <div
-                                className={"py-2 px-4 flex justify-center items-center cursor-pointer transition-all duration-300 ease-in-out text-base " +
-                                    (openTab === index && 'bg-white text-violet-900 border-l-4 border-violet-700 rounded-sm shadow-lg')
+                                className={"py-2 px-4 flex justify-center items-center cursor-pointer transition-all duration-300 ease-in-out text-base hover:shadow-lg " +
+                                    (openTab === index && 'bg-white text-violet-900 rounded-sm shadow-lg')
                                 }
                                 onClick={() => setOpenTab(index)}
                                 key={index}
                             >
-                                {course.category.replaceAll("_", " ")}
+                                {tab}
                             </div>
                         )
                     })}

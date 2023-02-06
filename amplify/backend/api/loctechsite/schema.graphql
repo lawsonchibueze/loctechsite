@@ -27,7 +27,7 @@ type Events @model @auth(rules: [{allow: public}]) {
   speakers: [AWSURL]
   date: AWSDate
   time: AWSDateTime
-  locationMap: String
+  locationMap: AWSURL
   location: String
 }
 

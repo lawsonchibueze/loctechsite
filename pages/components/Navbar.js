@@ -55,7 +55,7 @@ export default function Navbar() {
   }, []);
 
   const handleScroll = () => {
-    if (window.pageYOffset > 50) {
+    if (window.pageYOffset > 100) {
       setSticky(true);
     } else {
       setSticky(false);
@@ -63,7 +63,7 @@ export default function Navbar() {
   };
 
   return (
-    <div className='lg:px-20 px-4 shadow-md lg:h-24 h-16 flex items-center justify-between bg-white sticky top-0 z-20 bg-opacity-60 backdrop-filter backdrop-blur-lg'>
+    <div className={`navbar ${sticky ? 'sticky_navbar' : ''}`}>
       <div className='flex gap-4 items-center justify-between lg:justify-start w-full lg:w-fit'>
         <Link href='/' className='text-4xl font-bold flex items-center gap-2'>
           <Image

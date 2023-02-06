@@ -3,7 +3,7 @@ import { DataStore } from "@aws-amplify/datastore";
 import { Course } from "../../../models";
 import { useState, useEffect } from "react";
 
-export default function Trending() {
+export default function Data() {
     const [courses, setCourses] = useState([]);
     useEffect(() => {
         fetchCourses();
@@ -21,7 +21,7 @@ export default function Trending() {
         <div>
             <div className='grid lg:grid-cols-4 grid-flow-row gap-6'>
                 {courses.map((course, index) => {
-                    if (course.category === 'AUTOCAD') {
+                    if (course.category === 'DATA_SCIENCE') {
                         return (
                             <Card key={index} course={course} />
                         )

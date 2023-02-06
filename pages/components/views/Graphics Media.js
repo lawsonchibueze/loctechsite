@@ -3,7 +3,7 @@ import { DataStore } from "@aws-amplify/datastore";
 import { Course } from "../../../models";
 import { useState, useEffect } from "react";
 
-export default function Featured() {
+export default function Graphics() {
     const [courses, setCourses] = useState([]);
     useEffect(() => {
         fetchCourses();
@@ -21,7 +21,7 @@ export default function Featured() {
         <div>
             <div className='grid lg:grid-cols-4 grid-flow-row gap-6'>
                 {courses.map((course, index) => {
-                    if (course.category === 'AUTOCAD') {
+                    if (course.category === 'GRAPHICS_MEDIA') {
                         return (
                             <Card key={index} course={course} />
                         )

@@ -3,7 +3,7 @@ import { DataStore } from "@aws-amplify/datastore";
 import { Course } from "../../../models";
 import { useState, useEffect } from "react";
 
-export default function Art() {
+export default function Networking() {
     const [courses, setCourses] = useState([]);
     useEffect(() => {
         fetchCourses();
@@ -21,7 +21,7 @@ export default function Art() {
         <div>
             <div className='grid lg:grid-cols-4 grid-flow-row gap-6'>
                 {courses.map((course, index) => {
-                    if (course.category === 'AUTOCAD') {
+                    if (course.category === 'NETWORKING_SECURITY') {
                         return (
                             <Card key={index} course={course} />
                         )
