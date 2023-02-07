@@ -6,9 +6,9 @@ import React, { useEffect, useState } from "react";
 import { MdOutlineNotificationsActive } from "react-icons/md";
 import { HeroData } from "../../models";
 import brain from "/public/images/artificial-intelligence.png";
-import book from "/public/images/certificate.PNG";
-import cert from "/public/images/porfolio.PNG";
-import cur from "/public/images/user.PNG";
+import book from "/public/images/certificate.png";
+import cert from "/public/images/porfolio.png";
+import cur from "/public/images/user.png";
 
 const items = [
   {
