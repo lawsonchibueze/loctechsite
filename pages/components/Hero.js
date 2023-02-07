@@ -1,33 +1,33 @@
 /* eslint-disable @next/next/no-img-element */
-import React, { useEffect, useState } from "react";
-import Link from "next/link";
-import Image from "next/image";
-import brain from '/public/images/artificial-intelligence.png'
-import book from '/public/images/certificate.PNG'
-import cert from '/public/images/porfolio.PNG'
-import cur from '/public/images/user.PNG'
-import { MdOutlineNotificationsActive } from 'react-icons/md'
-import { HeroData } from "../../models";
 import { DataStore } from "@aws-amplify/datastore";
 import { motion } from "framer-motion";
-// const items = [
-//   {
-//     img: brain,
-//     text: 'Learn The Essential Skills'
-//   },
-//   {
-//     img: book,
-//     text: 'Earn Certificates And Degrees'
-//   },
-//   {
-//     img: cert,
-//     text: 'Get Ready for The Next Career'
-//   },
-//   {
-//     img: cur,
-//     text: 'Master at Different Areas'
-//   },
-// ]
+import Image from "next/image";
+import React, { useEffect, useState } from "react";
+import { MdOutlineNotificationsActive } from 'react-icons/md';
+import { HeroData } from "../../models";
+import brain from '/public/images/artificial-intelligence.png';
+import book from '/public/images/certificate.PNG';
+import cert from '/public/images/porfolio.PNG';
+import cur from '/public/images/user.PNG';
+
+const items = [
+  {
+    img: brain,
+    text: 'Learn The Essential Skills'
+  },
+  {
+    img: book,
+    text: 'Earn Certificates And Degrees'
+  },
+  {
+    img: cert,
+    text: 'Get Ready for The Next Career'
+  },
+  {
+    img: cur,
+    text: 'Master at Different Areas'
+  },
+]
 
 const Hero = () => {
   const [data, setData] = useState([]);
@@ -54,7 +54,7 @@ const Hero = () => {
           >
             <motion.div className="flex flex-col">
               <h2 className="text-violet-700 lg:text-xl lg:text-start text-center font-semibold tracking-widest mb-2">{hero.smallText}</h2>
-              <p className="font-medium lg:text-6xl text-4xl leading-snug lg:text-start text-center text-[#252525] mb-8">
+              <p className="font-semibold lg:text-6xl text-4xl leading-snug lg:text-start text-center text-red-700 mb-8">
                 {hero.largeText}
               </p>
               <h3 className="text-gray-900 text-2xl lg:text-start text-center mb-8 tracking-wider">{hero.mediumText}</h3>
@@ -75,18 +75,18 @@ const Hero = () => {
                 alt="hero 1"
                 className="object-cover lg:min-w-full lg:w-fit"
               />
-              <div className="absolute bg-white lg:w-[50%]  px-8 py-5 rounded-lg drop-shadow-xl bottom-12 lg:-left-20 left-1 animate-bounce bg-opacity-60 backdrop-filter backdrop-blur-lg">
+              {/* <div className="absolute bg-white lg:w-[50%]  px-8 py-5 rounded-lg drop-shadow-xl bottom-12 lg:-left-20 left-1 animate-bounce bg-opacity-60 backdrop-filter backdrop-blur-lg">
                 <div className="">Tomorrow is our <span className="font-semibold">&quot;When I Grow Up&quot; Spirit Day!</span>
                   <div className="absolute bg-[#FFC221] p-1 h-14 w-14 rounded-full flex justify-center items-center -top-7 -left-5">
                     <MdOutlineNotificationsActive className="w-10 h-10 text-white" />
                   </div>
                 </div>
-              </div>
+              </div> */}
             </div>
           </div>
         )
       })}
-      {/* <div className="bg-violet-900 lg:flex hidden flex-col lg:flex-row justify-between lg:px-32 px-4 py-6 mt-14 gap-8 lg:gap-0">
+      <div className="bg-violet-900 lg:flex hidden flex-col lg:flex-row justify-between lg:px-32 px-4 py-6 mt-14 gap-8 lg:gap-0">
         {items.map((item, index) => {
           return (
             <div key={index} className="flex items-center gap-4 flex-col lg:flex-row">
@@ -95,7 +95,7 @@ const Hero = () => {
             </div>
           )
         })}
-      </div> */}
+      </div>
     </div>
   );
 };

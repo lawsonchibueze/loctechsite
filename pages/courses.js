@@ -72,12 +72,7 @@ export default function Courses() {
                   )}
                 </div>
                 <div className="flex flex-col gap-2 text-start h-fit p-4">
-                  {course.category === 'DATA_SCIENCE' && (
-                    <span className='font-light px-2 text-[#17b8c1] bg-[#17b8c126] self-start capitalize'>DATA SCIENCE</span>
-                  )}
-                  {course.category === 'GRAPHICS_MEDIA' && (
-                    <span className='font-medium px-2 text-[#5b63fe] bg-[#5b63fe26] self-start capitalize'>GRAPHICS MEDIA</span>
-                  )}
+                  <span className='font-semibold text-[15px] text-red-700 self-start'>{course.category.replaceAll('_', ' ')}</span>
                   <p className="font-medium text-[15px] text-black">{course.name}</p>
                   <h3 className="text-[#0071dc]">{course.tutor}</h3>
                   <span className="text-[15px]">{course.descriptions.substring(0, 70) + '...'}</span>

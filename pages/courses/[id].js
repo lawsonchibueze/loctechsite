@@ -13,11 +13,6 @@ import { Course } from "../../models";
 import Accordion from "../components/Accordion";
 
 export default function CourseComponent({ course }) {
-    const formatter = new Intl.NumberFormat("en-US", {
-        style: "currency",
-        currency: "NGN",
-    });
-
     const router = useRouter();
     if (router.isFallback) {
         return <div>Loading...</div>;
@@ -37,7 +32,7 @@ export default function CourseComponent({ course }) {
                             <h3 className="flex flex-row gap-2 items-center font-semibold">
                                 {course.category.replaceAll('_', ' ')}
                             </h3>
-                            <h1 className="font-medium lg:text-[32px] text-[22px]">
+                            <h1 className="font-semibold lg:text-[32px] text-[22px]">
                                 {course.name}
                             </h1>
                             <div className="flex flex-row gap-6 items-center">
@@ -49,23 +44,9 @@ export default function CourseComponent({ course }) {
                     </div>
                 </div>
                 <div className="flex flex-col gap-10 bg-white lg:px-40 px-4 py-10">
-                    <h1 className="font-medium text-[20px] text-[#252525]">About This Course</h1>
-                    <div className="text-[#696969] text-[14px] flex flex-col gap-10 lg:w-3/5 leading-loose">
+                    <h1 className="font-semibold text-[20px] text-[#252525]">About This Course</h1>
+                    <div className="text-[#696969] text-[16px] flex flex-col gap-10 lg:w-3/5 leading-loose">
                         {course.descriptions}
-                        <span>{course.description2}</span>
-                    </div>
-                    <div className="lg:w-3/5">
-                        <h1 className="font-medium text-2xl my-6">Skills you will learn</h1>
-                        {/* <div className='grid lg:grid-cols-2 gap-7'>
-                            {course.skills.map((skill, index) => {
-                                return (
-                                    <div key={index} className="flex flex-row gap-2 items-center">
-                                        <BsCheck2 className="text-violet-700 w-4 h-4 font-bold" />
-                                        <span className="text-gray-800 font-medium">{skill}</span>
-                                    </div>
-                                )
-                            })}
-                        </div> */}
                     </div>
                     <div>
                         <h1 className="font-medium text-2xl my-6">Learning Objectives</h1>
@@ -85,7 +66,7 @@ export default function CourseComponent({ course }) {
                     <div>
                         <h1 className="font-medium text-2xl my-6">Curriculum</h1>
                         <a href={course.curriculum} target='_blank' rel='noreferrer' download>
-                            <button className="bg-violet-50 px-4 py-3 rounded-md">Download Curriculum</button>
+                            <button className="bg-red-700 text-white font-medium px-4 py-3 rounded-md">Download Curriculum</button>
                         </a>
                         <div className="lg:w-[65%]">
                             <Accordion
@@ -154,7 +135,7 @@ export default function CourseComponent({ course }) {
                         <div className="flex flex-col gap-6 my-6 text-[14px]">
                             <div className="flex flex-row justify-between items-center border-b border-gray-200 pb-3">
                                 <BiTime className="w-6 h-6 text-gray-700" />
-                                <span className="text-gray-600">{course.duration} Hour(s)</span>
+                                <span className="text-gray-600">{course.duration} Week(s)</span>
                             </div>
                             <div className="flex flex-row justify-between items-center border-b border-gray-200 pb-3">
                                 <BsPeople className="w-6 h-6 text-gray-700" />

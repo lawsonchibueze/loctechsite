@@ -13,6 +13,7 @@ export default function EventComponent({ event }) {
     if (router.isFallback) {
         return <div>Loading...</div>;
     }
+
     return (
         <div>
             <Head>
@@ -28,15 +29,15 @@ export default function EventComponent({ event }) {
                     <div className='flex lg:flex-row flex-col gap-5 font-light'>
                         <div className='flex flex-row items-center gap-2'>
                             <MapPinIcon className='w-5 h-5 text-gray-700' />
-                            Port Harcourt
+                            {event.location}
                         </div>
                         <div className='flex flex-row items-center gap-2'>
                             <CalendarIcon className='w-5 h-5' />
-                            August 18, 2020 - April 2, 2021
+                            {event.date}
                         </div>
                         <div className='flex flex-row items-center gap-2'>
                             <ClockIcon className='w-5 h-5' />
-                            9:30 am - 11:30 am
+                            {event.time}
                         </div>
                     </div>
                     <div>
@@ -59,7 +60,7 @@ export default function EventComponent({ event }) {
                                     <BanknotesIcon className="w-5 h-5" />
                                     Cost:
                                 </div>
-                                <span className="text-[24px] text-[#d31819] font-semibold">₦{event.cost}</span>
+                                <span className="text-[24px] text-[#d31819] font-semibold">₦{event.cost.toLocaleString()}</span>
                             </div>
                             <div className="flex flex-row justify-between border-b pb-3">
                                 <div className="flex flex-row gap-2 items-center">
@@ -82,15 +83,17 @@ export default function EventComponent({ event }) {
                     </div>
                     <div className="text-[#252525] text-[20px] font-medium flex flex-col gap-4">
                         Location
-                        <div className="lg:w-1/2 w-full h-96 bg-gray-200"></div>
+                        <div className="lg:w-1/2 w-full h-96 bg-gray-200">
+                            {/* {event.locationMap} */}
+                        </div>
                     </div>
                     <div className="text-[#252525] text-[20px] font-medium flex flex-col gap-4">
                         Our Speaker
                         <div>
                             <img
-                                src={event.Image}
+                                src={event.speakers}
                                 alt=""
-                                className="w-[170px] h-[170px] rounded-full"
+                                className="w-[170px] h-[170px] rounded-full object-cover"
                             />
                             <div className="mt-6 font-bold text-[15px]">Emerson Davidson</div>
                         </div>

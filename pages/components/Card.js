@@ -1,30 +1,11 @@
 /* eslint-disable @next/next/no-img-element */
 import { DataStore } from "@aws-amplify/datastore";
-// import { motion } from "framer-motion";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import { Course } from "../../models";
 import { motion } from "framer-motion";
 
 export default function Card({ course }) {
-    const formatter = new Intl.NumberFormat("en-US", {
-        style: "currency",
-        currency: "NGN",
-    });
-
-    const [courses, setCourses] = useState([]);
-    useEffect(() => {
-        fetchCourses();
-        async function fetchCourses() {
-            const courseData = await DataStore.query(Course);
-            setCourses(courseData);
-            console.log(courseData);
-        }
-        DataStore.observe(Course).subscribe((msg) => {
-            console.log(msg.Course, msg.opType, msg.element);
-        });
-    }, []);
-
     return (
         <motion.div
             initial={{ opacity: 0, y: -180 }}
@@ -40,8 +21,6 @@ export default function Card({ course }) {
                     <img
                         src={course.image}
                         alt=''
-                        // width={100}
-                        // height={100}
                         className="rounded-t-md ease-in-out duration-500 group-hover:scale-110 w-full h-72 object-cover"
                     />
                     {course.discount && (
@@ -56,10 +35,7 @@ export default function Card({ course }) {
                     )}
                 </div>
                 <div className="flex flex-col gap-2 text-start h-fit p-4">
-                    <span className='font-normal text-[14px] text-red-700 self-start'>{course.category.replaceAll('_', ' ')}</span>
-                    {/* {course.level === 'ADVANCE' && (
-                        <span className='font-medium px-2 text-[#5b63fe] bg-[#5b63fe26] self-start'>Advance</span>
-                    )} */}
+                    <span className='font-semibold text-[15px] text-red-700 self-start'>{course.category.replaceAll('_', ' ')}</span>
                     <p className="font-medium text-[15px] text-black">{course.name}</p>
                     <h3 className="text-violet-700">{course.instructorName}</h3>
                     <span className="text-[15px]">{course.descriptions.substring(0, 70) + '...'}</span>
