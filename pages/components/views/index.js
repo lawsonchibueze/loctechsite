@@ -32,8 +32,8 @@ const allTabs = [
 const tabs = [
     'All',
     'Web Development',
-    'Data Science',
     'Networking Security',
+    'Data Science',
     'Graphics Media',
     'Office Productivity'
 ]
