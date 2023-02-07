@@ -36,7 +36,7 @@ export default function Card({ course }) {
                 </div>
                 <div className="flex flex-col gap-2 text-start h-fit p-4">
                     <span className='font-semibold text-[15px] text-red-700 self-start'>{course.category.replaceAll('_', ' ')}</span>
-                    <p className="font-medium text-[15px] text-black">{course.name}</p>
+                    <p className="font-bold text-[15px] text-black">{course.name}</p>
                     <h3 className="text-violet-700">{course.instructorName}</h3>
                     <span className="text-[15px]">{course.descriptions.substring(0, 70) + '...'}</span>
                     {course.free && (

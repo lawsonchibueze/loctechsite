@@ -73,7 +73,7 @@ export default function Courses() {
                 </div>
                 <div className="flex flex-col gap-2 text-start h-fit p-4">
                   <span className='font-semibold text-[15px] text-red-700 self-start'>{course.category.replaceAll('_', ' ')}</span>
-                  <p className="font-medium text-[15px] text-black">{course.name}</p>
+                  <p className="font-bold text-[15px] text-black">{course.name}</p>
                   <h3 className="text-[#0071dc]">{course.tutor}</h3>
                   <span className="text-[15px]">{course.descriptions.substring(0, 70) + '...'}</span>
                   {course.free && (
