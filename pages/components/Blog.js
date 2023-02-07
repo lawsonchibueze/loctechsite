@@ -8,27 +8,6 @@ import about1 from '/public/images/about1.jpg'
 import about2 from '/public/images/about2.jpg'
 import about3 from '/public/images/about3.jpg'
 
-const data = [
-    {
-        image: about1,
-        date: 'AUGUST 18, 2021',
-        topic: 'Global Education Meeting for Everyone',
-        desc: 'As our elemntary students headlocks head back to school in person'
-    },
-    {
-        image: about2,
-        date: 'November 9, 2021',
-        topic: 'London International Conference on Education',
-        desc: 'Lorem ipsum dolor, sit amet consectetur adipisicing elit. Corrupti inventore quisquam qui,'
-    },
-    {
-        image: about3,
-        date: 'DECEMBER 31, 2021',
-        topic: 'Digital Skills: Using Information to Build Business',
-        desc: 'Lorem ipsum dolor, sit amet consectetur adipisicing elit. Corrupti inventore quisquam qui,'
-    },
-]
-
 const blogs = [
     {
         icons: <ArrowLongRightIcon />,
@@ -61,18 +40,18 @@ export default function Blog() {
 
     return (
         <div className="mt-20 lg:p-20 px-4">
-            <div className="grid lg:grid-cols-4 grid-flow-row gap-12 ">
+            <div className="lg:grid flex flex-col lg:grid-cols-4 lg:grid-flow-row gap-12 ">
                 <div className='flex flex-col gap-6 items-center h-fit'>
-                    <h1 className='text-base font-medium text-violet-700 borde leading-snug lg:self-start text-center md:text-xl uppercase'>Article Update</h1>
-                    <h2 className='text-[#181818] text-3xl font-medium'>Loctech News and Article</h2>
+                    <h1 className='text-xl font-medium text-violet-700 borde leading-snug lg:self-start text-center md:text-xl uppercase'>Article Update</h1>
+                    <h2 className='text-[#181818] text-3xl font-medium lg:text-start text-center'>Loctech News and Article</h2>
                     <div className='flex flex-col gap-5'>
                         {blogs.map((blog, index) => {
                             return (
-                                <div key={index} className='flex flex-row items-start justify-start gap-2'>
+                                <div key={index} className='flex flex-row lg:items-start lg:justify-start gap-2'>
                                     <div className='lg:w-5 lg:h-5 w-8 h-8'>
                                         {blog.icons}
                                     </div>
-                                    <Link href='/' className='lg:text-base font-medium text-xl flex-1 hover:text-violet-700 transition-colors duration-500 ease-in-out min-w-max lg:min-w-0'>
+                                    <Link href='/' className='lg:text-base font-medium flex-1 hover:text-violet-700 transition-colors duration-500 ease-in-out lg:min-w-0'>
                                         {blog.title}
                                     </Link>
                                 </div>
@@ -92,9 +71,9 @@ export default function Blog() {
                                 <div className='flex flex-col gap-1 mt-3'>
                                     <h1 className='text-gray-600 text-[14px] flex flex-row gap-2 items-center'>
                                         <CalendarIcon className='w-5 h-5' />
-                                        {post.date}August 10, 2020
+                                        {post.date}
                                     </h1>
-                                    <Link href={`/articles/${post.id}`} className='font-medium hover:text-violet-700 transition-colors duration-500 ease-in-out'>{post.title}</Link>
+                                    <Link href={`/articles/${post.id}`} className='font-semibold hover:text-violet-700 transition-colors duration-500 ease-in-out'>{post.title}</Link>
                                     <p className='text-sm text-gray-500'>{post.content.substring(0, 70) + '...'}</p>
                                 </div>
                                 <Link href={`/articles/${post.id}`} className='mt-8'>

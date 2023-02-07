@@ -35,12 +35,12 @@ const Hero = () => {
     async function fetchHeroData() {
       const heroData = await DataStore.query(HeroData);
       setData(heroData);
-      console.log(data);
+      // console.log(data);
     }
-    DataStore.observe(HeroData).subscribe((msg) => {
-      fetchHeroData();
-      console.log("Just Updated my hero Data");
-    });
+    // DataStore.observe(HeroData).subscribe((msg) => {
+    //   fetchHeroData();
+    //   console.log("Just Updated my hero Data");
+    // });
     fetchHeroData();
   }, [data]);
 
@@ -49,12 +49,12 @@ const Hero = () => {
       {data.map((hero, index) => {
         return (
           <div
-            className="grid grid-cols-2 gap-10 px-20 relative mt-32"
+            className="lg:grid flex flex-col lg:grid-cols-2 gap-10 lg:px-20 px-4 relative lg:mt-32 mt-10"
             key={index}
           >
             <motion.div className="flex flex-col">
-              <h2 className="text-violet-700 text-xl lg:text-start text-center font-mddium tracking-widest mb-2">{hero.smallText}</h2>
-              <p className="font-medium text-6xl leading-snug lg:text-start text-center text-[#252525] mb-8">
+              <h2 className="text-violet-700 lg:text-xl lg:text-start text-center font-semibold tracking-widest mb-2">{hero.smallText}</h2>
+              <p className="font-medium lg:text-6xl text-4xl leading-snug lg:text-start text-center text-[#252525] mb-8">
                 {hero.largeText}
               </p>
               <h3 className="text-gray-900 text-2xl lg:text-start text-center mb-8 tracking-wider">{hero.mediumText}</h3>
@@ -64,20 +64,18 @@ const Hero = () => {
                 rel='noreferrer'
                 className="lg:self-start self-center"
               >
-                <button className="bg-violet-700 text-white font-bold rounded-md lg:w-60 py-4 px-6 lg:px-0 text-base hover:shadow-lg transition-shadow duration-500 ease-linear">
+                <button className="bg-violet-700 text-white font-bold rounded-md lg:w-60 w-72 py-5 lg:py-4 px-6 lg:px-0 lg:text-base text-lg hover:shadow-lg transition-shadow duration-500 ease-linear">
                   {hero.buttonText}
                 </button>
               </a>
             </motion.div>
-            <div className="relative -mt-12">
+            <div className="relative lg:-mt-12">
               <img
                 src={hero.image}
                 alt="hero 1"
-                className="object-cover min-w-full w-fit"
-              // width={400}
-              // height={400}
+                className="object-cover lg:min-w-full lg:w-fit"
               />
-              <div className="absolute bg-white w-[50%]  px-8 py-5 rounded-lg drop-shadow-xl bottom-12 lg:-left-20 left-1 animate-bounce bg-opacity-60 backdrop-filter backdrop-blur-lg">
+              <div className="absolute bg-white lg:w-[50%]  px-8 py-5 rounded-lg drop-shadow-xl bottom-12 lg:-left-20 left-1 animate-bounce bg-opacity-60 backdrop-filter backdrop-blur-lg">
                 <div className="">Tomorrow is our <span className="font-semibold">&quot;When I Grow Up&quot; Spirit Day!</span>
                   <div className="absolute bg-[#FFC221] p-1 h-14 w-14 rounded-full flex justify-center items-center -top-7 -left-5">
                     <MdOutlineNotificationsActive className="w-10 h-10 text-white" />

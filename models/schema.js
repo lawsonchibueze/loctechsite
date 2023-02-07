@@ -663,6 +663,20 @@ export const schema = {
                     "isRequired": false,
                     "attributes": []
                 },
+                "instructorImage": {
+                    "name": "instructorImage",
+                    "isArray": false,
+                    "type": "AWSURL",
+                    "isRequired": false,
+                    "attributes": []
+                },
+                "instructorName": {
+                    "name": "instructorName",
+                    "isArray": false,
+                    "type": "String",
+                    "isRequired": false,
+                    "attributes": []
+                },
                 "createdAt": {
                     "name": "createdAt",
                     "isArray": false,
@@ -828,5 +842,5 @@ export const schema = {
     },
     "nonModels": {},
     "codegenVersion": "3.3.5",
-    "version": "b3449d5a3f7696fdd1e9782af51c141e"
+    "version": "7c9e2827eb1dc91b8572b38b3096c5f1"
 };

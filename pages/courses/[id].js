@@ -1,7 +1,7 @@
+/* eslint-disable @next/next/no-img-element */
 import { CheckCircleIcon } from "@heroicons/react/24/outline";
 import { withSSRContext } from "aws-amplify";
 import Head from "next/head";
-import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import { AiOutlineStar } from 'react-icons/ai';
@@ -11,7 +11,6 @@ import { FaFacebookF, FaInstagram, FaTwitter } from 'react-icons/fa';
 import { FiMessageSquare } from 'react-icons/fi';
 import { Course } from "../../models";
 import Accordion from "../components/Accordion";
-import tutor from "/public/images/tutor.jpeg";
 
 export default function CourseComponent({ course }) {
     const formatter = new Intl.NumberFormat("en-US", {
@@ -35,16 +34,16 @@ export default function CourseComponent({ course }) {
                 <div className="bg-violet-50 lg:h-80">
                     <div className="flex lg:px-40 px-4 lg:py-28 py-10">
                         <div className="flex flex-col gap-6">
+                            <h3 className="flex flex-row gap-2 items-center font-semibold">
+                                {course.category.replaceAll('_', ' ')}
+                            </h3>
                             <h1 className="font-medium lg:text-[32px] text-[22px]">
                                 {course.name}
                             </h1>
                             <div className="flex flex-row gap-6 items-center">
                                 <h2 className="flex flex-row gap-2 items-center">
-                                    <BsDot className="w-6 h-6 text-violet-700" /> {course.tutor}
+                                    <BsDot className="w-6 h-6 text-violet-700" /> {course.instructorName}
                                 </h2>
-                                <h3 className="flex flex-row gap-2 items-center">
-                                    <BsDot className="w-6 h-6 text-violet-700" /> {course.level}
-                                </h3>
                             </div>
                         </div>
                     </div>
@@ -85,6 +84,9 @@ export default function CourseComponent({ course }) {
                     </div>
                     <div>
                         <h1 className="font-medium text-2xl my-6">Curriculum</h1>
+                        <a href={course.curriculum} target='_blank' rel='noreferrer' download>
+                            <button className="bg-violet-50 px-4 py-3 rounded-md">Download Curriculum</button>
+                        </a>
                         <div className="lg:w-[65%]">
                             <Accordion
                                 course={course}
@@ -95,14 +97,14 @@ export default function CourseComponent({ course }) {
                         <h1 className="font-medium text-2xl my-6">Course Instructor</h1>
                         <div className="flex lg:flex-row flex-col gap-7">
                             <Link href='/instructor' className="group overflow-hidden">
-                                <Image
+                                <img
                                     alt=""
                                     className='h-80 lg:w-72 object-cover rounded-md ease-in-out duration-500 group-hover:scale-110'
-                                    src={tutor}
+                                    src={course.instructorImage}
                                 />
                             </Link>
                             <div className="flex flex-col gap-2  flex-1">
-                                <Link href='/instructor' className="text-2xl font-medium">{course.tutor}</Link>
+                                <Link href='/instructor' className="text-2xl font-medium">{course.instructorName}</Link>
                                 <div>Web Developer</div>
                                 {/* <div>{course.rating} Ratings</div> */}
                                 <div className="flex flex-row gap-4 lg:gap-7">
@@ -143,7 +145,7 @@ export default function CourseComponent({ course }) {
                     </div>
                     <div className="lg:px-6 px-2 py-3 flex flex-col gap-2">
                         <div className="text-[34px] text-gray-800 font-bold">
-                            {formatter.format(course.price)}
+                            ₦ {course.price.toLocaleString()}
                             <span className="text-[15px]">{course.priceSm}</span>
                         </div>
                         <div className={course.level === 'All Levels' ? 'text-[#17b8c1] bg-[#17b8c128] self-start py-0.5 px-2 rounded-md' : ''}>

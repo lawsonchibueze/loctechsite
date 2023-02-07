@@ -198,6 +198,8 @@ export default function CourseUpdateForm(props) {
     headTitle: "",
     headMeta: "",
     headContent: "",
+    instructorImage: "",
+    instructorName: "",
   };
   const [name, setName] = React.useState(initialValues.name);
   const [descriptions, setDescriptions] = React.useState(
@@ -219,6 +221,12 @@ export default function CourseUpdateForm(props) {
   const [headContent, setHeadContent] = React.useState(
     initialValues.headContent
   );
+  const [instructorImage, setInstructorImage] = React.useState(
+    initialValues.instructorImage
+  );
+  const [instructorName, setInstructorName] = React.useState(
+    initialValues.instructorName
+  );
   const [errors, setErrors] = React.useState({});
   const resetStateValues = () => {
     const cleanValues = courseRecord
@@ -239,6 +247,8 @@ export default function CourseUpdateForm(props) {
     setHeadTitle(cleanValues.headTitle);
     setHeadMeta(cleanValues.headMeta);
     setHeadContent(cleanValues.headContent);
+    setInstructorImage(cleanValues.instructorImage);
+    setInstructorName(cleanValues.instructorName);
     setErrors({});
   };
   const [courseRecord, setCourseRecord] = React.useState(course);
@@ -268,6 +278,8 @@ export default function CourseUpdateForm(props) {
     headTitle: [],
     headMeta: [],
     headContent: [],
+    instructorImage: [{ type: "URL" }],
+    instructorName: [],
   };
   const runValidationTasks = async (
     fieldName,
@@ -308,6 +320,8 @@ export default function CourseUpdateForm(props) {
           headTitle,
           headMeta,
           headContent,
+          instructorImage,
+          instructorName,
         };
         const validationResponses = await Promise.all(
           Object.keys(validations).reduce((promises, fieldName) => {
@@ -377,6 +391,8 @@ export default function CourseUpdateForm(props) {
               headTitle,
               headMeta,
               headContent,
+              instructorImage,
+              instructorName,
             };
             const result = onChange(modelFields);
             value = result?.name ?? value;
@@ -414,6 +430,8 @@ export default function CourseUpdateForm(props) {
               headTitle,
               headMeta,
               headContent,
+              instructorImage,
+              instructorName,
             };
             const result = onChange(modelFields);
             value = result?.descriptions ?? value;
@@ -455,6 +473,8 @@ export default function CourseUpdateForm(props) {
               headTitle,
               headMeta,
               headContent,
+              instructorImage,
+              instructorName,
             };
             const result = onChange(modelFields);
             value = result?.price ?? value;
@@ -492,6 +512,8 @@ export default function CourseUpdateForm(props) {
               headTitle,
               headMeta,
               headContent,
+              instructorImage,
+              instructorName,
             };
             const result = onChange(modelFields);
             value = result?.image ?? value;
@@ -529,6 +551,8 @@ export default function CourseUpdateForm(props) {
               headTitle,
               headMeta,
               headContent,
+              instructorImage,
+              instructorName,
             };
             const result = onChange(modelFields);
             value = result?.video ?? value;
@@ -566,6 +590,8 @@ export default function CourseUpdateForm(props) {
               headTitle,
               headMeta,
               headContent,
+              instructorImage,
+              instructorName,
             };
             const result = onChange(modelFields);
             value = result?.category ?? value;
@@ -638,6 +664,8 @@ export default function CourseUpdateForm(props) {
               headTitle,
               headMeta,
               headContent,
+              instructorImage,
+              instructorName,
             };
             const result = onChange(modelFields);
             value = result?.duration ?? value;
@@ -671,6 +699,8 @@ export default function CourseUpdateForm(props) {
               headTitle,
               headMeta,
               headContent,
+              instructorImage,
+              instructorName,
             };
             const result = onChange(modelFields);
             values = result?.learningObjective ?? values;
@@ -734,6 +764,8 @@ export default function CourseUpdateForm(props) {
               headTitle,
               headMeta,
               headContent,
+              instructorImage,
+              instructorName,
             };
             const result = onChange(modelFields);
             value = result?.isFeatured ?? value;
@@ -771,6 +803,8 @@ export default function CourseUpdateForm(props) {
               headTitle,
               headMeta,
               headContent,
+              instructorImage,
+              instructorName,
             };
             const result = onChange(modelFields);
             value = result?.online ?? value;
@@ -808,6 +842,8 @@ export default function CourseUpdateForm(props) {
               headTitle,
               headMeta,
               headContent,
+              instructorImage,
+              instructorName,
             };
             const result = onChange(modelFields);
             value = result?.curriculum ?? value;
@@ -845,6 +881,8 @@ export default function CourseUpdateForm(props) {
               headTitle: value,
               headMeta,
               headContent,
+              instructorImage,
+              instructorName,
             };
             const result = onChange(modelFields);
             value = result?.headTitle ?? value;
@@ -882,6 +920,8 @@ export default function CourseUpdateForm(props) {
               headTitle,
               headMeta: value,
               headContent,
+              instructorImage,
+              instructorName,
             };
             const result = onChange(modelFields);
             value = result?.headMeta ?? value;
@@ -919,6 +959,8 @@ export default function CourseUpdateForm(props) {
               headTitle,
               headMeta,
               headContent: value,
+              instructorImage,
+              instructorName,
             };
             const result = onChange(modelFields);
             value = result?.headContent ?? value;
@@ -932,6 +974,84 @@ export default function CourseUpdateForm(props) {
         errorMessage={errors.headContent?.errorMessage}
         hasError={errors.headContent?.hasError}
         {...getOverrideProps(overrides, "headContent")}
+      ></TextField>
+      <TextField
+        label="Instructor image"
+        isRequired={false}
+        isReadOnly={false}
+        value={instructorImage}
+        onChange={(e) => {
+          let { value } = e.target;
+          if (onChange) {
+            const modelFields = {
+              name,
+              descriptions,
+              price,
+              image,
+              video,
+              category,
+              duration,
+              learningObjective,
+              isFeatured,
+              online,
+              curriculum,
+              headTitle,
+              headMeta,
+              headContent,
+              instructorImage: value,
+              instructorName,
+            };
+            const result = onChange(modelFields);
+            value = result?.instructorImage ?? value;
+          }
+          if (errors.instructorImage?.hasError) {
+            runValidationTasks("instructorImage", value);
+          }
+          setInstructorImage(value);
+        }}
+        onBlur={() => runValidationTasks("instructorImage", instructorImage)}
+        errorMessage={errors.instructorImage?.errorMessage}
+        hasError={errors.instructorImage?.hasError}
+        {...getOverrideProps(overrides, "instructorImage")}
+      ></TextField>
+      <TextField
+        label="Instructor name"
+        isRequired={false}
+        isReadOnly={false}
+        value={instructorName}
+        onChange={(e) => {
+          let { value } = e.target;
+          if (onChange) {
+            const modelFields = {
+              name,
+              descriptions,
+              price,
+              image,
+              video,
+              category,
+              duration,
+              learningObjective,
+              isFeatured,
+              online,
+              curriculum,
+              headTitle,
+              headMeta,
+              headContent,
+              instructorImage,
+              instructorName: value,
+            };
+            const result = onChange(modelFields);
+            value = result?.instructorName ?? value;
+          }
+          if (errors.instructorName?.hasError) {
+            runValidationTasks("instructorName", value);
+          }
+          setInstructorName(value);
+        }}
+        onBlur={() => runValidationTasks("instructorName", instructorName)}
+        errorMessage={errors.instructorName?.errorMessage}
+        hasError={errors.instructorName?.hasError}
+        {...getOverrideProps(overrides, "instructorName")}
       ></TextField>
       <Flex
         justifyContent="space-between"

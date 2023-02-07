@@ -89,5 +89,7 @@ type Course @model @auth(rules: [{allow: public}]) {
   headTitle: String
   headMeta: String
   headContent: String
+  instructorImage: AWSURL
+  instructorName: String
 }
  

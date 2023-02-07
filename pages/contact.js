@@ -29,11 +29,11 @@ export default function Contact() {
                     </div>
                     <div className="flex lg:flex-row flex-col lg:justify-start justify-center lg:items-start items-center gap-4">
                         <PhoneIcon className="w-8 h-8 text-violet-700" />
-                        <div className="flex flex-col gap-6 justify-center items-center">
+                        <div className="flex flex-col gap-6">
                             <h1 className="text-[18px] font-medium">Contact</h1>
                             <div className="flex flex-col gap-3 font-light lg:justify-start justify-center lg:items-start items-center">
-                                <span>Mobile: +234 703 888 5466</span>
-                                <span>Mail: info@loctechng.com</span>
+                                <span>Mobile: +2347038885466</span>
+                                <span>Mail: customercare@loctechng.com</span>
                             </div>
                         </div>
                     </div>
