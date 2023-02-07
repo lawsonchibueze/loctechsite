@@ -1,4 +1,5 @@
 /* eslint-disable @next/next/no-img-element */
+import { MapPinIcon } from '@heroicons/react/24/outline'
 import { DataStore } from 'aws-amplify'
 import Image from 'next/image'
 import Link from 'next/link'
@@ -42,8 +43,8 @@ export default function Event() {
 
     return (
         <div className='my-32 lg:px-20 px-4'>
-            <div className="flex lg:flex-row flex-col gap-12 flex-1">
-                <div className='flex flex-col gap-4 items-center lg:w-[30%] w-full'>
+            <div className="flex lg:flex-row flex-col gap-12">
+                <div className='flex flex-col gap-4 items-center lg:w-[30%] w-full flex-1'>
                     <h1 className='text-base font-medium text-violet-700 borde leading-snug self-start'>EVENTS</h1>
                     <h2 className='text-[#181818] text-3xl font-medium lg:text-start text-center self-start'>Upcoming Events</h2>
                     <p>You can show all events here to let people take the chance to get involved</p>
@@ -52,15 +53,19 @@ export default function Event() {
                 <div className='grid lg:grid-cols-3 grid-flow-row gap-8'>
                     {events.map((event, index) => {
                         return (
-                            <Link href={`events/${event.id}`} key={index} className='flex flex-col gap-2 bg-violet-50 group overflow-hidden hover:bg-white hover:shadow-xl transition-all ease-in-out duration-500 rounded-b-lg'>
+                            <Link href={`events/${event.id}`} key={index} className='flex flex-col gap-2 bg-gray-50 group overflow-hidden hover:bg-white hover:shadow-xl transition-all ease-in-out duration-500 rounded-b-lg pb-6'>
                                 <img
                                     src={event.Image}
                                     alt=''
                                     className='w-full h-44 object-cover ease-in-out duration-500 group-hover:scale-110 rounded-t-lg'
                                 />
                                 <div className='p-3 flex flex-col gap-4 items-center justify-center'>
-                                    <h1 className='text-[#ababab] text-[14px]'>November 9, 2020</h1>
-                                    <Link href={`events/${event.id}`} className='font-medium text-[17px] text-center hover:text-violet-700 transition-colors duration-500 ease-in-out'>{event.topic}</Link>
+                                    <h1 className='text-[#ababab] text-[16px]'>November 9, 2020</h1>
+                                    <Link href={`events/${event.id}`} className='font-semibold text-[16px] text-center hover:text-violet-700 transition-colors duration-500 ease-in-out'>{event.topic}</Link>
+                                    <div className='flex flex-row items-center text-[14px] font-light gap-2'>
+                                        <MapPinIcon className='w-5 h-5 text-gray-800' />
+                                        Port Harcourt
+                                    </div>
                                 </div>
 
                             </Link>

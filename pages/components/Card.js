@@ -56,9 +56,7 @@ export default function Card({ course }) {
                     )}
                 </div>
                 <div className="flex flex-col gap-2 text-start h-full">
-                    {course.level === 'FOUNDATION' && (
-                        <span className='font-medium px-2 text-[#17b8c1] bg-[#17b8c126] self-start'>Foundation</span>
-                    )}
+                    <span className='font-light px-2 text-[#17b8c1] bg-[#17b8c126] self-start'>{course.category.replaceAll('_', ' ')}</span>
                     {course.level === 'ADVANCE' && (
                         <span className='font-medium px-2 text-[#5b63fe] bg-[#5b63fe26] self-start'>Advance</span>
                     )}
