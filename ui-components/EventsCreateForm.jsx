@@ -6,6 +6,9 @@
 
 /* eslint-disable */
 import * as React from "react";
+import { fetchByPath, validateField } from "./utils";
+import { Events } from "../models";
+import { getOverrideProps } from "@aws-amplify/ui-react/internal";
 import {
   Badge,
   Button,
@@ -18,9 +21,6 @@ import {
   TextField,
   useTheme,
 } from "@aws-amplify/ui-react";
-import { getOverrideProps } from "@aws-amplify/ui-react/internal";
-import { Events } from "../models";
-import { fetchByPath, validateField } from "./utils";
 import { DataStore } from "aws-amplify";
 function ArrayField({
   items = [],
@@ -32,10 +32,7 @@ function ArrayField({
   setFieldValue,
   currentFieldValue,
   defaultFieldValue,
-  lengthLimit,
-  getBadgeText,
 }) {
-  const labelElement = <Text>{label}</Text>;
   const { tokens } = useTheme();
   const [selectedBadgeIndex, setSelectedBadgeIndex] = React.useState();
   const [isEditing, setIsEditing] = React.useState();
@@ -51,9 +48,9 @@ function ArrayField({
   };
   const addItem = async () => {
     if (
-      currentFieldValue !== undefined &&
-      currentFieldValue !== null &&
-      currentFieldValue !== "" &&
+      (currentFieldValue !== undefined ||
+        currentFieldValue !== null ||
+        currentFieldValue !== "") &&
       !hasError
     ) {
       const newItems = [...items];
@@ -67,71 +64,12 @@ function ArrayField({
       setIsEditing(false);
     }
   };
-  const arraySection = (
-    <React.Fragment>
-      {!!items?.length && (
-        <ScrollView height="inherit" width="inherit" maxHeight={"7rem"}>
-          {items.map((value, index) => {
-            return (
-              <Badge
-                key={index}
-                style={{
-                  cursor: "pointer",
-                  alignItems: "center",
-                  marginRight: 3,
-                  marginTop: 3,
-                  backgroundColor:
-                    index === selectedBadgeIndex ? "#B8CEF9" : "",
-                }}
-                onClick={() => {
-                  setSelectedBadgeIndex(index);
-                  setFieldValue(items[index]);
-                  setIsEditing(true);
-                }}
-              >
-                {getBadgeText ? getBadgeText(value) : value.toString()}
-                <Icon
-                  style={{
-                    cursor: "pointer",
-                    paddingLeft: 3,
-                    width: 20,
-                    height: 20,
-                  }}
-                  viewBox={{ width: 20, height: 20 }}
-                  paths={[
-                    {
-                      d: "M10 10l5.09-5.09L10 10l5.09 5.09L10 10zm0 0L4.91 4.91 10 10l-5.09 5.09L10 10z",
-                      stroke: "black",
-                    },
-                  ]}
-                  ariaLabel="button"
-                  onClick={(event) => {
-                    event.stopPropagation();
-                    removeItem(index);
-                  }}
-                />
-              </Badge>
-            );
-          })}
-        </ScrollView>
-      )}
-      <Divider orientation="horizontal" marginTop={5} />
-    </React.Fragment>
-  );
-  if (lengthLimit !== undefined && items.length >= lengthLimit && !isEditing) {
-    return (
-      <React.Fragment>
-        {labelElement}
-        {arraySection}
-      </React.Fragment>
-    );
-  }
   return (
     <React.Fragment>
-      {labelElement}
       {isEditing && children}
       {!isEditing ? (
         <>
+          <Text>{label}</Text>
           <Button
             onClick={() => {
               setIsEditing(true);
@@ -165,7 +103,53 @@ function ArrayField({
           </Button>
         </Flex>
       )}
-      {arraySection}
+      {!!items?.length && (
+        <ScrollView height="inherit" width="inherit" maxHeight={"7rem"}>
+          {items.map((value, index) => {
+            return (
+              <Badge
+                key={index}
+                style={{
+                  cursor: "pointer",
+                  alignItems: "center",
+                  marginRight: 3,
+                  marginTop: 3,
+                  backgroundColor:
+                    index === selectedBadgeIndex ? "#B8CEF9" : "",
+                }}
+                onClick={() => {
+                  setSelectedBadgeIndex(index);
+                  setFieldValue(items[index]);
+                  setIsEditing(true);
+                }}
+              >
+                {value.toString()}
+                <Icon
+                  style={{
+                    cursor: "pointer",
+                    paddingLeft: 3,
+                    width: 20,
+                    height: 20,
+                  }}
+                  viewBox={{ width: 20, height: 20 }}
+                  paths={[
+                    {
+                      d: "M10 10l5.09-5.09L10 10l5.09 5.09L10 10zm0 0L4.91 4.91 10 10l-5.09 5.09L10 10z",
+                      stroke: "black",
+                    },
+                  ]}
+                  ariaLabel="button"
+                  onClick={(event) => {
+                    event.stopPropagation();
+                    removeItem(index);
+                  }}
+                />
+              </Badge>
+            );
+          })}
+        </ScrollView>
+      )}
+      <Divider orientation="horizontal" marginTop={5} />
     </React.Fragment>
   );
 }
@@ -175,25 +159,26 @@ export default function EventsCreateForm(props) {
     onSuccess,
     onError,
     onSubmit,
+    onCancel,
     onValidate,
     onChange,
     overrides,
     ...rest
   } = props;
   const initialValues = {
-    topic: "",
-    content: "",
-    Image: "",
-    totalSlot: "",
-    facebook: "",
-    email: "",
-    cost: "",
-    buttonText: "",
+    topic: undefined,
+    content: undefined,
+    Image: undefined,
+    totalSlot: undefined,
+    facebook: undefined,
+    email: undefined,
+    cost: undefined,
+    buttonText: undefined,
     speakers: [],
-    date: "",
-    time: "",
-    locationMap: "",
-    location: "",
+    date: undefined,
+    time: undefined,
+    locationMap: undefined,
+    location: undefined,
   };
   const [topic, setTopic] = React.useState(initialValues.topic);
   const [content, setContent] = React.useState(initialValues.content);
@@ -221,14 +206,15 @@ export default function EventsCreateForm(props) {
     setCost(initialValues.cost);
     setButtonText(initialValues.buttonText);
     setSpeakers(initialValues.speakers);
-    setCurrentSpeakersValue("");
+    setCurrentSpeakersValue(undefined);
     setDate(initialValues.date);
     setTime(initialValues.time);
     setLocationMap(initialValues.locationMap);
     setLocation(initialValues.location);
     setErrors({});
   };
-  const [currentSpeakersValue, setCurrentSpeakersValue] = React.useState("");
+  const [currentSpeakersValue, setCurrentSpeakersValue] =
+    React.useState(undefined);
   const speakersRef = React.createRef();
   const validations = {
     topic: [],
@@ -245,14 +231,7 @@ export default function EventsCreateForm(props) {
     locationMap: [{ type: "URL" }],
     location: [],
   };
-  const runValidationTasks = async (
-    fieldName,
-    currentValue,
-    getDisplayValue
-  ) => {
-    const value = getDisplayValue
-      ? getDisplayValue(currentValue)
-      : currentValue;
+  const runValidationTasks = async (fieldName, value) => {
     let validationResponse = validateField(value, validations[fieldName]);
     const customValidator = fetchByPath(onValidate, fieldName);
     if (customValidator) {
@@ -260,23 +239,6 @@ export default function EventsCreateForm(props) {
     }
     setErrors((errors) => ({ ...errors, [fieldName]: validationResponse }));
     return validationResponse;
-  };
-  const convertToLocal = (date) => {
-    const df = new Intl.DateTimeFormat("default", {
-      year: "numeric",
-      month: "2-digit",
-      day: "2-digit",
-      hour: "2-digit",
-      minute: "2-digit",
-      calendar: "iso8601",
-      numberingSystem: "latn",
-      hour12: false,
-    });
-    const parts = df.formatToParts(date).reduce((acc, part) => {
-      acc[part.type] = part.value;
-      return acc;
-    }, {});
-    return `${parts.year}-${parts.month}-${parts.day}T${parts.hour}:${parts.minute}`;
   };
   return (
     <Grid
@@ -289,16 +251,16 @@ export default function EventsCreateForm(props) {
         let modelFields = {
           topic,
           content,
-          Image,
+          Image: Image || undefined,
           totalSlot,
-          facebook,
+          facebook: facebook || undefined,
           email,
           cost,
           buttonText,
-          speakers,
+          speakers: speakers || undefined,
           date,
           time,
-          locationMap,
+          locationMap: locationMap || undefined,
           location,
         };
         const validationResponses = await Promise.all(
@@ -324,11 +286,6 @@ export default function EventsCreateForm(props) {
           modelFields = onSubmit(modelFields);
         }
         try {
-          Object.entries(modelFields).forEach(([key, value]) => {
-            if (typeof value === "string" && value.trim() === "") {
-              modelFields[key] = undefined;
-            }
-          });
           await DataStore.save(new Events(modelFields));
           if (onSuccess) {
             onSuccess(modelFields);
@@ -342,14 +299,13 @@ export default function EventsCreateForm(props) {
           }
         }
       }}
-      {...getOverrideProps(overrides, "EventsCreateForm")}
       {...rest}
+      {...getOverrideProps(overrides, "EventsCreateForm")}
     >
       <TextField
         label="Topic"
         isRequired={false}
         isReadOnly={false}
-        value={topic}
         onChange={(e) => {
           let { value } = e.target;
           if (onChange) {
@@ -385,7 +341,6 @@ export default function EventsCreateForm(props) {
         label="Content"
         isRequired={false}
         isReadOnly={false}
-        value={content}
         onChange={(e) => {
           let { value } = e.target;
           if (onChange) {
@@ -421,7 +376,6 @@ export default function EventsCreateForm(props) {
         label="Image"
         isRequired={false}
         isReadOnly={false}
-        value={Image}
         onChange={(e) => {
           let { value } = e.target;
           if (onChange) {
@@ -459,11 +413,15 @@ export default function EventsCreateForm(props) {
         isReadOnly={false}
         type="number"
         step="any"
-        value={totalSlot}
         onChange={(e) => {
-          let value = isNaN(parseInt(e.target.value))
-            ? e.target.value
-            : parseInt(e.target.value);
+          let value = parseInt(e.target.value);
+          if (isNaN(value)) {
+            setErrors((errors) => ({
+              ...errors,
+              totalSlot: "Value must be a valid number",
+            }));
+            return;
+          }
           if (onChange) {
             const modelFields = {
               topic,
@@ -497,7 +455,6 @@ export default function EventsCreateForm(props) {
         label="Facebook"
         isRequired={false}
         isReadOnly={false}
-        value={facebook}
         onChange={(e) => {
           let { value } = e.target;
           if (onChange) {
@@ -533,7 +490,6 @@ export default function EventsCreateForm(props) {
         label="Email"
         isRequired={false}
         isReadOnly={false}
-        value={email}
         onChange={(e) => {
           let { value } = e.target;
           if (onChange) {
@@ -571,11 +527,15 @@ export default function EventsCreateForm(props) {
         isReadOnly={false}
         type="number"
         step="any"
-        value={cost}
         onChange={(e) => {
-          let value = isNaN(parseInt(e.target.value))
-            ? e.target.value
-            : parseInt(e.target.value);
+          let value = parseInt(e.target.value);
+          if (isNaN(value)) {
+            setErrors((errors) => ({
+              ...errors,
+              cost: "Value must be a valid number",
+            }));
+            return;
+          }
           if (onChange) {
             const modelFields = {
               topic,
@@ -609,7 +569,6 @@ export default function EventsCreateForm(props) {
         label="Button text"
         isRequired={false}
         isReadOnly={false}
-        value={buttonText}
         onChange={(e) => {
           let { value } = e.target;
           if (onChange) {
@@ -664,7 +623,7 @@ export default function EventsCreateForm(props) {
             values = result?.speakers ?? values;
           }
           setSpeakers(values);
-          setCurrentSpeakersValue("");
+          setCurrentSpeakersValue(undefined);
         }}
         currentFieldValue={currentSpeakersValue}
         label={"Speakers"}
@@ -672,7 +631,7 @@ export default function EventsCreateForm(props) {
         hasError={errors.speakers?.hasError}
         setFieldValue={setCurrentSpeakersValue}
         inputFieldRef={speakersRef}
-        defaultFieldValue={""}
+        defaultFieldValue={undefined}
       >
         <TextField
           label="Speakers"
@@ -690,7 +649,6 @@ export default function EventsCreateForm(props) {
           errorMessage={errors.speakers?.errorMessage}
           hasError={errors.speakers?.hasError}
           ref={speakersRef}
-          labelHidden={true}
           {...getOverrideProps(overrides, "speakers")}
         ></TextField>
       </ArrayField>
@@ -699,7 +657,6 @@ export default function EventsCreateForm(props) {
         isRequired={false}
         isReadOnly={false}
         type="date"
-        value={date}
         onChange={(e) => {
           let { value } = e.target;
           if (onChange) {
@@ -736,10 +693,8 @@ export default function EventsCreateForm(props) {
         isRequired={false}
         isReadOnly={false}
         type="datetime-local"
-        value={time && convertToLocal(new Date(time))}
         onChange={(e) => {
-          let value =
-            e.target.value === "" ? "" : new Date(e.target.value).toISOString();
+          let { value } = e.target;
           if (onChange) {
             const modelFields = {
               topic,
@@ -762,7 +717,7 @@ export default function EventsCreateForm(props) {
           if (errors.time?.hasError) {
             runValidationTasks("time", value);
           }
-          setTime(value);
+          setTime(new Date(value).toISOString());
         }}
         onBlur={() => runValidationTasks("time", time)}
         errorMessage={errors.time?.errorMessage}
@@ -773,7 +728,6 @@ export default function EventsCreateForm(props) {
         label="Location map"
         isRequired={false}
         isReadOnly={false}
-        value={locationMap}
         onChange={(e) => {
           let { value } = e.target;
           if (onChange) {
@@ -809,7 +763,6 @@ export default function EventsCreateForm(props) {
         label="Location"
         isRequired={false}
         isReadOnly={false}
-        value={location}
         onChange={(e) => {
           let { value } = e.target;
           if (onChange) {
@@ -848,16 +801,21 @@ export default function EventsCreateForm(props) {
         <Button
           children="Clear"
           type="reset"
-          onClick={(event) => {
-            event.preventDefault();
-            resetStateValues();
-          }}
+          onClick={resetStateValues}
           {...getOverrideProps(overrides, "ClearButton")}
         ></Button>
         <Flex
           gap="15px"
           {...getOverrideProps(overrides, "RightAlignCTASubFlex")}
         >
+          <Button
+            children="Cancel"
+            type="button"
+            onClick={() => {
+              onCancel && onCancel();
+            }}
+            {...getOverrideProps(overrides, "CancelButton")}
+          ></Button>
           <Button
             children="Submit"
             type="submit"

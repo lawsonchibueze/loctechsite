@@ -5,9 +5,9 @@
  **************************************************************************/
 
 import * as React from "react";
-import { GridProps, TextFieldProps } from "@aws-amplify/ui-react";
-import { EscapeHatchProps } from "@aws-amplify/ui-react/internal";
 import { Instructor } from "../models";
+import { EscapeHatchProps } from "@aws-amplify/ui-react/internal";
+import { GridProps, TextFieldProps } from "@aws-amplify/ui-react";
 export declare type ValidationResponse = {
     hasError: boolean;
     errorMessage?: string;
@@ -29,15 +29,15 @@ export declare type InstructorUpdateFormValidationValues = {
     rating?: ValidationFunction<string>;
     review?: ValidationFunction<string>;
 };
-export declare type PrimitiveOverrideProps<T> = Partial<T> & React.DOMAttributes<HTMLDivElement>;
+export declare type FormProps<T> = Partial<T> & React.DOMAttributes<HTMLDivElement>;
 export declare type InstructorUpdateFormOverridesProps = {
-    InstructorUpdateFormGrid?: PrimitiveOverrideProps<GridProps>;
-    name?: PrimitiveOverrideProps<TextFieldProps>;
-    image?: PrimitiveOverrideProps<TextFieldProps>;
-    facebook?: PrimitiveOverrideProps<TextFieldProps>;
-    linkedin?: PrimitiveOverrideProps<TextFieldProps>;
-    rating?: PrimitiveOverrideProps<TextFieldProps>;
-    review?: PrimitiveOverrideProps<TextFieldProps>;
+    InstructorUpdateFormGrid?: FormProps<GridProps>;
+    name?: FormProps<TextFieldProps>;
+    image?: FormProps<TextFieldProps>;
+    facebook?: FormProps<TextFieldProps>;
+    linkedin?: FormProps<TextFieldProps>;
+    rating?: FormProps<TextFieldProps>;
+    review?: FormProps<TextFieldProps>;
 } & EscapeHatchProps;
 export declare type InstructorUpdateFormProps = React.PropsWithChildren<{
     overrides?: InstructorUpdateFormOverridesProps | undefined | null;
@@ -47,6 +47,7 @@ export declare type InstructorUpdateFormProps = React.PropsWithChildren<{
     onSubmit?: (fields: InstructorUpdateFormInputValues) => InstructorUpdateFormInputValues;
     onSuccess?: (fields: InstructorUpdateFormInputValues) => void;
     onError?: (fields: InstructorUpdateFormInputValues, errorMessage: string) => void;
+    onCancel?: () => void;
     onChange?: (fields: InstructorUpdateFormInputValues) => InstructorUpdateFormInputValues;
     onValidate?: InstructorUpdateFormValidationValues;
 } & React.CSSProperties>;

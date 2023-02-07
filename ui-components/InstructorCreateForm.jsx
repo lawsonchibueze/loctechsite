@@ -6,10 +6,10 @@
 
 /* eslint-disable */
 import * as React from "react";
-import { Button, Flex, Grid, TextField } from "@aws-amplify/ui-react";
-import { getOverrideProps } from "@aws-amplify/ui-react/internal";
-import { Instructor } from "../models";
 import { fetchByPath, validateField } from "./utils";
+import { Instructor } from "../models";
+import { getOverrideProps } from "@aws-amplify/ui-react/internal";
+import { Button, Flex, Grid, TextField } from "@aws-amplify/ui-react";
 import { DataStore } from "aws-amplify";
 export default function InstructorCreateForm(props) {
   const {
@@ -17,18 +17,19 @@ export default function InstructorCreateForm(props) {
     onSuccess,
     onError,
     onSubmit,
+    onCancel,
     onValidate,
     onChange,
     overrides,
     ...rest
   } = props;
   const initialValues = {
-    name: "",
-    image: "",
-    facebook: "",
-    linkedin: "",
-    rating: "",
-    review: "",
+    name: undefined,
+    image: undefined,
+    facebook: undefined,
+    linkedin: undefined,
+    rating: undefined,
+    review: undefined,
   };
   const [name, setName] = React.useState(initialValues.name);
   const [image, setImage] = React.useState(initialValues.image);
@@ -54,14 +55,7 @@ export default function InstructorCreateForm(props) {
     rating: [],
     review: [],
   };
-  const runValidationTasks = async (
-    fieldName,
-    currentValue,
-    getDisplayValue
-  ) => {
-    const value = getDisplayValue
-      ? getDisplayValue(currentValue)
-      : currentValue;
+  const runValidationTasks = async (fieldName, value) => {
     let validationResponse = validateField(value, validations[fieldName]);
     const customValidator = fetchByPath(onValidate, fieldName);
     if (customValidator) {
@@ -80,9 +74,9 @@ export default function InstructorCreateForm(props) {
         event.preventDefault();
         let modelFields = {
           name,
-          image,
-          facebook,
-          linkedin,
+          image: image || undefined,
+          facebook: facebook || undefined,
+          linkedin: linkedin || undefined,
           rating,
           review,
         };
@@ -109,11 +103,6 @@ export default function InstructorCreateForm(props) {
           modelFields = onSubmit(modelFields);
         }
         try {
-          Object.entries(modelFields).forEach(([key, value]) => {
-            if (typeof value === "string" && value.trim() === "") {
-              modelFields[key] = undefined;
-            }
-          });
           await DataStore.save(new Instructor(modelFields));
           if (onSuccess) {
             onSuccess(modelFields);
@@ -127,14 +116,13 @@ export default function InstructorCreateForm(props) {
           }
         }
       }}
-      {...getOverrideProps(overrides, "InstructorCreateForm")}
       {...rest}
+      {...getOverrideProps(overrides, "InstructorCreateForm")}
     >
       <TextField
         label="Name"
         isRequired={false}
         isReadOnly={false}
-        value={name}
         onChange={(e) => {
           let { value } = e.target;
           if (onChange) {
@@ -163,7 +151,6 @@ export default function InstructorCreateForm(props) {
         label="Image"
         isRequired={false}
         isReadOnly={false}
-        value={image}
         onChange={(e) => {
           let { value } = e.target;
           if (onChange) {
@@ -192,7 +179,6 @@ export default function InstructorCreateForm(props) {
         label="Facebook"
         isRequired={false}
         isReadOnly={false}
-        value={facebook}
         onChange={(e) => {
           let { value } = e.target;
           if (onChange) {
@@ -221,7 +207,6 @@ export default function InstructorCreateForm(props) {
         label="Linkedin"
         isRequired={false}
         isReadOnly={false}
-        value={linkedin}
         onChange={(e) => {
           let { value } = e.target;
           if (onChange) {
@@ -250,7 +235,6 @@ export default function InstructorCreateForm(props) {
         label="Rating"
         isRequired={false}
         isReadOnly={false}
-        value={rating}
         onChange={(e) => {
           let { value } = e.target;
           if (onChange) {
@@ -279,7 +263,6 @@ export default function InstructorCreateForm(props) {
         label="Review"
         isRequired={false}
         isReadOnly={false}
-        value={review}
         onChange={(e) => {
           let { value } = e.target;
           if (onChange) {
@@ -311,16 +294,21 @@ export default function InstructorCreateForm(props) {
         <Button
           children="Clear"
           type="reset"
-          onClick={(event) => {
-            event.preventDefault();
-            resetStateValues();
-          }}
+          onClick={resetStateValues}
           {...getOverrideProps(overrides, "ClearButton")}
         ></Button>
         <Flex
           gap="15px"
           {...getOverrideProps(overrides, "RightAlignCTASubFlex")}
         >
+          <Button
+            children="Cancel"
+            type="button"
+            onClick={() => {
+              onCancel && onCancel();
+            }}
+            {...getOverrideProps(overrides, "CancelButton")}
+          ></Button>
           <Button
             children="Submit"
             type="submit"

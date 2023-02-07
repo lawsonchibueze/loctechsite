@@ -6,29 +6,30 @@
 
 /* eslint-disable */
 import * as React from "react";
-import { Button, Flex, Grid, TextField } from "@aws-amplify/ui-react";
-import { getOverrideProps } from "@aws-amplify/ui-react/internal";
-import { HeroData } from "../models";
 import { fetchByPath, validateField } from "./utils";
+import { HeroData } from "../models";
+import { getOverrideProps } from "@aws-amplify/ui-react/internal";
+import { Button, Flex, Grid, TextField } from "@aws-amplify/ui-react";
 import { DataStore } from "aws-amplify";
 export default function HeroDataUpdateForm(props) {
   const {
-    id: idProp,
+    id,
     heroData,
     onSuccess,
     onError,
     onSubmit,
+    onCancel,
     onValidate,
     onChange,
     overrides,
     ...rest
   } = props;
   const initialValues = {
-    image: "",
-    smallText: "",
-    mediumText: "",
-    largeText: "",
-    buttonText: "",
+    image: undefined,
+    smallText: undefined,
+    mediumText: undefined,
+    largeText: undefined,
+    buttonText: undefined,
   };
   const [image, setImage] = React.useState(initialValues.image);
   const [smallText, setSmallText] = React.useState(initialValues.smallText);
@@ -37,9 +38,7 @@ export default function HeroDataUpdateForm(props) {
   const [buttonText, setButtonText] = React.useState(initialValues.buttonText);
   const [errors, setErrors] = React.useState({});
   const resetStateValues = () => {
-    const cleanValues = heroDataRecord
-      ? { ...initialValues, ...heroDataRecord }
-      : initialValues;
+    const cleanValues = { ...initialValues, ...heroDataRecord };
     setImage(cleanValues.image);
     setSmallText(cleanValues.smallText);
     setMediumText(cleanValues.mediumText);
@@ -50,13 +49,11 @@ export default function HeroDataUpdateForm(props) {
   const [heroDataRecord, setHeroDataRecord] = React.useState(heroData);
   React.useEffect(() => {
     const queryData = async () => {
-      const record = idProp
-        ? await DataStore.query(HeroData, idProp)
-        : heroData;
+      const record = id ? await DataStore.query(HeroData, id) : heroData;
       setHeroDataRecord(record);
     };
     queryData();
-  }, [idProp, heroData]);
+  }, [id, heroData]);
   React.useEffect(resetStateValues, [heroDataRecord]);
   const validations = {
     image: [],
@@ -65,14 +62,7 @@ export default function HeroDataUpdateForm(props) {
     largeText: [],
     buttonText: [],
   };
-  const runValidationTasks = async (
-    fieldName,
-    currentValue,
-    getDisplayValue
-  ) => {
-    const value = getDisplayValue
-      ? getDisplayValue(currentValue)
-      : currentValue;
+  const runValidationTasks = async (fieldName, value) => {
     let validationResponse = validateField(value, validations[fieldName]);
     const customValidator = fetchByPath(onValidate, fieldName);
     if (customValidator) {
@@ -119,11 +109,6 @@ export default function HeroDataUpdateForm(props) {
           modelFields = onSubmit(modelFields);
         }
         try {
-          Object.entries(modelFields).forEach(([key, value]) => {
-            if (typeof value === "string" && value.trim() === "") {
-              modelFields[key] = undefined;
-            }
-          });
           await DataStore.save(
             HeroData.copyOf(heroDataRecord, (updated) => {
               Object.assign(updated, modelFields);
@@ -138,14 +123,14 @@ export default function HeroDataUpdateForm(props) {
           }
         }
       }}
-      {...getOverrideProps(overrides, "HeroDataUpdateForm")}
       {...rest}
+      {...getOverrideProps(overrides, "HeroDataUpdateForm")}
     >
       <TextField
         label="Image"
         isRequired={false}
         isReadOnly={false}
-        value={image}
+        defaultValue={image}
         onChange={(e) => {
           let { value } = e.target;
           if (onChange) {
@@ -173,7 +158,7 @@ export default function HeroDataUpdateForm(props) {
         label="Small text"
         isRequired={false}
         isReadOnly={false}
-        value={smallText}
+        defaultValue={smallText}
         onChange={(e) => {
           let { value } = e.target;
           if (onChange) {
@@ -201,7 +186,7 @@ export default function HeroDataUpdateForm(props) {
         label="Medium text"
         isRequired={false}
         isReadOnly={false}
-        value={mediumText}
+        defaultValue={mediumText}
         onChange={(e) => {
           let { value } = e.target;
           if (onChange) {
@@ -229,7 +214,7 @@ export default function HeroDataUpdateForm(props) {
         label="Large text"
         isRequired={false}
         isReadOnly={false}
-        value={largeText}
+        defaultValue={largeText}
         onChange={(e) => {
           let { value } = e.target;
           if (onChange) {
@@ -257,7 +242,7 @@ export default function HeroDataUpdateForm(props) {
         label="Button text"
         isRequired={false}
         isReadOnly={false}
-        value={buttonText}
+        defaultValue={buttonText}
         onChange={(e) => {
           let { value } = e.target;
           if (onChange) {
@@ -288,11 +273,7 @@ export default function HeroDataUpdateForm(props) {
         <Button
           children="Reset"
           type="reset"
-          onClick={(event) => {
-            event.preventDefault();
-            resetStateValues();
-          }}
-          isDisabled={!(idProp || heroData)}
+          onClick={resetStateValues}
           {...getOverrideProps(overrides, "ResetButton")}
         ></Button>
         <Flex
@@ -300,13 +281,18 @@ export default function HeroDataUpdateForm(props) {
           {...getOverrideProps(overrides, "RightAlignCTASubFlex")}
         >
           <Button
+            children="Cancel"
+            type="button"
+            onClick={() => {
+              onCancel && onCancel();
+            }}
+            {...getOverrideProps(overrides, "CancelButton")}
+          ></Button>
+          <Button
             children="Submit"
             type="submit"
             variation="primary"
-            isDisabled={
-              !(idProp || heroData) ||
-              Object.values(errors).some((e) => e?.hasError)
-            }
+            isDisabled={Object.values(errors).some((e) => e?.hasError)}
             {...getOverrideProps(overrides, "SubmitButton")}
           ></Button>
         </Flex>

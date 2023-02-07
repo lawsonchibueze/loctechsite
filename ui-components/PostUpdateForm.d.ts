@@ -5,9 +5,9 @@
  **************************************************************************/
 
 import * as React from "react";
-import { GridProps, SwitchFieldProps, TextFieldProps } from "@aws-amplify/ui-react";
-import { EscapeHatchProps } from "@aws-amplify/ui-react/internal";
 import { Post } from "../models";
+import { EscapeHatchProps } from "@aws-amplify/ui-react/internal";
+import { GridProps, SwitchFieldProps, TextFieldProps } from "@aws-amplify/ui-react";
 export declare type ValidationResponse = {
     hasError: boolean;
     errorMessage?: string;
@@ -33,17 +33,17 @@ export declare type PostUpdateFormValidationValues = {
     author?: ValidationFunction<string>;
     date?: ValidationFunction<string>;
 };
-export declare type PrimitiveOverrideProps<T> = Partial<T> & React.DOMAttributes<HTMLDivElement>;
+export declare type FormProps<T> = Partial<T> & React.DOMAttributes<HTMLDivElement>;
 export declare type PostUpdateFormOverridesProps = {
-    PostUpdateFormGrid?: PrimitiveOverrideProps<GridProps>;
-    title?: PrimitiveOverrideProps<TextFieldProps>;
-    content?: PrimitiveOverrideProps<TextFieldProps>;
-    isFeatured?: PrimitiveOverrideProps<SwitchFieldProps>;
-    image?: PrimitiveOverrideProps<TextFieldProps>;
-    category?: PrimitiveOverrideProps<TextFieldProps>;
-    tags?: PrimitiveOverrideProps<TextFieldProps>;
-    author?: PrimitiveOverrideProps<TextFieldProps>;
-    date?: PrimitiveOverrideProps<TextFieldProps>;
+    PostUpdateFormGrid?: FormProps<GridProps>;
+    title?: FormProps<TextFieldProps>;
+    content?: FormProps<TextFieldProps>;
+    isFeatured?: FormProps<SwitchFieldProps>;
+    image?: FormProps<TextFieldProps>;
+    category?: FormProps<TextFieldProps>;
+    tags?: FormProps<TextFieldProps>;
+    author?: FormProps<TextFieldProps>;
+    date?: FormProps<TextFieldProps>;
 } & EscapeHatchProps;
 export declare type PostUpdateFormProps = React.PropsWithChildren<{
     overrides?: PostUpdateFormOverridesProps | undefined | null;
@@ -53,6 +53,7 @@ export declare type PostUpdateFormProps = React.PropsWithChildren<{
     onSubmit?: (fields: PostUpdateFormInputValues) => PostUpdateFormInputValues;
     onSuccess?: (fields: PostUpdateFormInputValues) => void;
     onError?: (fields: PostUpdateFormInputValues, errorMessage: string) => void;
+    onCancel?: () => void;
     onChange?: (fields: PostUpdateFormInputValues) => PostUpdateFormInputValues;
     onValidate?: PostUpdateFormValidationValues;
 } & React.CSSProperties>;

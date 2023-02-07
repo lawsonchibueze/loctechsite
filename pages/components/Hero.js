@@ -2,11 +2,11 @@
 import React, { useEffect, useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
-import brain from '/public/images/artificial-intelligence.png'
-import book from '/public/images/certificate.PNG'
-import cert from '/public/images/porfolio.PNG'
-import cur from '/public/images/user.PNG'
-import { MdOutlineNotificationsActive } from 'react-icons/md'
+import brain from "/public/images/artificial-intelligence.png";
+import book from "/public/images/certificate.PNG";
+import cert from "/public/images/porfolio.PNG";
+import cur from "/public/images/user.PNG";
+import { MdOutlineNotificationsActive } from "react-icons/md";
 import { HeroData } from "../../models";
 import { DataStore } from "@aws-amplify/datastore";
 import { motion } from "framer-motion";
@@ -53,15 +53,19 @@ const Hero = () => {
             key={index}
           >
             <motion.div className="flex flex-col">
-              <h2 className="text-violet-700 text-xl lg:text-start text-center font-mddium tracking-widest mb-2">{hero.smallText}</h2>
+              <h2 className="text-violet-700 text-xl lg:text-start text-center font-mddium tracking-widest mb-2">
+                {hero.smallText}
+              </h2>
               <p className="font-medium text-6xl leading-snug lg:text-start text-center text-[#252525] mb-8">
                 {hero.largeText}
               </p>
-              <h3 className="text-gray-900 text-2xl lg:text-start text-center mb-8 tracking-wider">{hero.mediumText}</h3>
+              <h3 className="text-gray-900 text-2xl lg:text-start text-center mb-8 tracking-wider">
+                {hero.mediumText}
+              </h3>
               <a
                 href="https://docs.google.com/forms/d/e/1FAIpQLSdmS11WZUloGtsBywpcd8OSqAJwlS2oPUJK6wQPBse1kn5NtA/closedform"
-                target='_blank'
-                rel='noreferrer'
+                target="_blank"
+                rel="noreferrer"
                 className="lg:self-start self-center"
               >
                 <button className="bg-violet-700 text-white font-bold rounded-md lg:w-60 py-4 px-6 lg:px-0 text-base hover:shadow-lg transition-shadow duration-500 ease-linear">
@@ -74,11 +78,15 @@ const Hero = () => {
                 src={hero.image}
                 alt="hero 1"
                 className="object-cover min-w-full w-fit"
-              // width={400}
-              // height={400}
+                // width={400}
+                // height={400}
               />
               <div className="absolute bg-white w-[50%]  px-8 py-5 rounded-lg drop-shadow-xl bottom-12 lg:-left-20 left-1 animate-bounce bg-opacity-60 backdrop-filter backdrop-blur-lg">
-                <div className="">Tomorrow is our <span className="font-semibold">&quot;When I Grow Up&quot; Spirit Day!</span>
+                <div className="">
+                  Tomorrow is our{" "}
+                  <span className="font-semibold">
+                    &quot;When I Grow Up&quot; Spirit Day!
+                  </span>
                   <div className="absolute bg-[#FFC221] p-1 h-14 w-14 rounded-full flex justify-center items-center -top-7 -left-5">
                     <MdOutlineNotificationsActive className="w-10 h-10 text-white" />
                   </div>
@@ -86,7 +94,7 @@ const Hero = () => {
               </div>
             </div>
           </div>
-        )
+        );
       })}
       {/* <div className="bg-violet-900 lg:flex hidden flex-col lg:flex-row justify-between lg:px-32 px-4 py-6 mt-14 gap-8 lg:gap-0">
         {items.map((item, index) => {

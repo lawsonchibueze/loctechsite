@@ -5,8 +5,8 @@
  **************************************************************************/
 
 import * as React from "react";
-import { GridProps, SelectFieldProps, SwitchFieldProps, TextFieldProps } from "@aws-amplify/ui-react";
 import { EscapeHatchProps } from "@aws-amplify/ui-react/internal";
+import { GridProps, SelectFieldProps, SwitchFieldProps, TextFieldProps } from "@aws-amplify/ui-react";
 export declare type ValidationResponse = {
     hasError: boolean;
     errorMessage?: string;
@@ -26,14 +26,14 @@ export declare type TestimonialCreateFormValidationValues = {
     Feedback?: ValidationFunction<string>;
     name?: ValidationFunction<string>;
 };
-export declare type PrimitiveOverrideProps<T> = Partial<T> & React.DOMAttributes<HTMLDivElement>;
+export declare type FormProps<T> = Partial<T> & React.DOMAttributes<HTMLDivElement>;
 export declare type TestimonialCreateFormOverridesProps = {
-    TestimonialCreateFormGrid?: PrimitiveOverrideProps<GridProps>;
-    image?: PrimitiveOverrideProps<TextFieldProps>;
-    category?: PrimitiveOverrideProps<SelectFieldProps>;
-    Featured?: PrimitiveOverrideProps<SwitchFieldProps>;
-    Feedback?: PrimitiveOverrideProps<TextFieldProps>;
-    name?: PrimitiveOverrideProps<TextFieldProps>;
+    TestimonialCreateFormGrid?: FormProps<GridProps>;
+    image?: FormProps<TextFieldProps>;
+    category?: FormProps<SelectFieldProps>;
+    Featured?: FormProps<SwitchFieldProps>;
+    Feedback?: FormProps<TextFieldProps>;
+    name?: FormProps<TextFieldProps>;
 } & EscapeHatchProps;
 export declare type TestimonialCreateFormProps = React.PropsWithChildren<{
     overrides?: TestimonialCreateFormOverridesProps | undefined | null;
@@ -42,6 +42,7 @@ export declare type TestimonialCreateFormProps = React.PropsWithChildren<{
     onSubmit?: (fields: TestimonialCreateFormInputValues) => TestimonialCreateFormInputValues;
     onSuccess?: (fields: TestimonialCreateFormInputValues) => void;
     onError?: (fields: TestimonialCreateFormInputValues, errorMessage: string) => void;
+    onCancel?: () => void;
     onChange?: (fields: TestimonialCreateFormInputValues) => TestimonialCreateFormInputValues;
     onValidate?: TestimonialCreateFormValidationValues;
 } & React.CSSProperties>;

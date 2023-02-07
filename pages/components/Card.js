@@ -7,75 +7,94 @@ import { Course } from "../../models";
 import { motion } from "framer-motion";
 
 export default function Card({ course }) {
-    const formatter = new Intl.NumberFormat("en-US", {
-        style: "currency",
-        currency: "NGN",
+  const formatter = new Intl.NumberFormat("en-US", {
+    style: "currency",
+    currency: "NGN",
+  });
+
+  const [courses, setCourses] = useState([]);
+  useEffect(() => {
+    fetchCourses();
+    async function fetchCourses() {
+      const courseData = await DataStore.query(Course);
+      setCourses(courseData);
+      console.log(courseData);
+    }
+    DataStore.observe(Course).subscribe((msg) => {
+      console.log(msg.Course, msg.opType, msg.element);
     });
+  }, []);
 
-    const [courses, setCourses] = useState([]);
-    useEffect(() => {
-        fetchCourses();
-        async function fetchCourses() {
-            const courseData = await DataStore.query(Course);
-            setCourses(courseData);
-            console.log(courseData);
-        }
-        DataStore.observe(Course).subscribe((msg) => {
-            console.log(msg.Course, msg.opType, msg.element);
-        });
-    }, []);
-
-    return (
-        <motion.div
-            initial={{ opacity: 0, y: -180 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{
-                ease: 'easeInOut',
-                duration: 1,
-                delay: 0.6
-            }}
-        >
-            <Link href={`/courses/${course.id}`} className='flex flex-col gap-2 rounded-md w-64'>
-                <div className="relative group overflow-hidden">
-                    <img
-                        src={course.image}
-                        alt=''
-                        // width={100}
-                        // height={100}
-                        className="rounded-md ease-in-out duration-500 group-hover:scale-110 w-full h-40 object-cover"
-                    />
-                    {course.discount && (
-                        <div className="absolute text-white bg-[#0071dc] top-2 left-3 px-2 font-medium rounded-sm text-sm">
-                            {course.discountPercent}
-                        </div>
-                    )}
-                    {course.online && (
-                        <div className="absolute text-white bg-[#6CBD7E] top-2 left-3 px-2 font-medium rounded-sm text-sm">
-                            Online
-                        </div>
-                    )}
-                </div>
-                <div className="flex flex-col gap-2 text-start h-full">
-                    <span className='font-light px-2 text-[#17b8c1] bg-[#17b8c126] self-start'>{course.category.replaceAll('_', ' ')}</span>
-                    {course.level === 'ADVANCE' && (
-                        <span className='font-medium px-2 text-[#5b63fe] bg-[#5b63fe26] self-start'>Advance</span>
-                    )}
-                    <p className="font-medium text-[15px] text-black">{course.name}</p>
-                    <h3 className="text-[#0071dc]">{course.tutor}</h3>
-                    <span className="text-[15px]">{course.descriptions.substring(0, 70) + '...'}</span>
-                    {course.free && (
-                        <h4 className="font-bold flex flex-row items-center text-lg text-[#696969]">Free</h4>
-                    )}
-                    {course.discount ? (
-                        <div className="flex flex-row gap-4">
-                            <h4 className="font-bold flex flex-row items-center text-lg text-[#d31819]">{course.newPrice} <span className="text-xs">{course.newPriceSm}</span></h4>
-                            <h4 className="font-bold flex flex-row items-center text-lg line-through text-[#ababab]">{course.oldPrice} <span className="text-xs">{course.oldPriceSm}</span></h4>
-                        </div>
-                    ) : (
-                        <h4 className="font-semibold flex flex-row items-center text-lg">₦ {course.price} <span className="text-xs">{course.priceSm}</span></h4>
-                    )}
-                </div>
-            </Link>
-        </motion.div>
-    )
+  return (
+    <motion.div
+      initial={{ opacity: 0, y: -180 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{
+        ease: "easeInOut",
+        duration: 1,
+        delay: 0.6,
+      }}
+    >
+      <Link
+        href={`/courses/${course.id}`}
+        className="flex flex-col gap-2 rounded-md w-64"
+      >
+        <div className="relative group overflow-hidden">
+          <img
+            src={course.image}
+            alt=""
+            // width={100}
+            // height={100}
+            className="rounded-md ease-in-out duration-500 group-hover:scale-110 w-full h-40 object-cover"
+          />
+          {course.discount && (
+            <div className="absolute text-white bg-[#0071dc] top-2 left-3 px-2 font-medium rounded-sm text-sm">
+              {course.discountPercent}
+            </div>
+          )}
+          {course.online && (
+            <div className="absolute text-white bg-[#6CBD7E] top-2 left-3 px-2 font-medium rounded-sm text-sm">
+              Online
+            </div>
+          )}
+        </div>
+        <div className="flex flex-col gap-2 text-start h-full">
+          <span className="font-light px-2 text-[#17b8c1] bg-[#17b8c126] self-start">
+            {course.category.replaceAll("_", " ")}
+          </span>
+          {course.level === "ADVANCE" && (
+            <span className="font-medium px-2 text-[#5b63fe] bg-[#5b63fe26] self-start">
+              Advance
+            </span>
+          )}
+          <p className="font-medium text-[15px] text-black">{course.name}</p>
+          <h3 className="text-[#0071dc]">{course.tutor}</h3>
+          <span className="text-[15px]">
+            {course.descriptions.substring(0, 70) + "..."}
+          </span>
+          {course.free && (
+            <h4 className="font-bold flex flex-row items-center text-lg text-[#696969]">
+              Free
+            </h4>
+          )}
+          {course.discount ? (
+            <div className="flex flex-row gap-4">
+              <h4 className="font-bold flex flex-row items-center text-lg text-[#d31819]">
+                {course.newPrice}{" "}
+                <span className="text-xs">{course.newPriceSm}</span>
+              </h4>
+              <h4 className="font-bold flex flex-row items-center text-lg line-through text-[#ababab]">
+                {course.oldPrice}{" "}
+                <span className="text-xs">{course.oldPriceSm}</span>
+              </h4>
+            </div>
+          ) : (
+            <h4 className="font-semibold flex flex-row items-center text-lg">
+              ₦ {course.price} <span className="text-xs">{course.priceSm}</span>
+            </h4>
+          )}
+        </div>
+      </Link>
+    </motion.div>
+  );
 }

@@ -6,6 +6,9 @@
 
 /* eslint-disable */
 import * as React from "react";
+import { fetchByPath, validateField } from "./utils";
+import { Course } from "../models";
+import { getOverrideProps } from "@aws-amplify/ui-react/internal";
 import {
   Badge,
   Button,
@@ -20,9 +23,6 @@ import {
   TextField,
   useTheme,
 } from "@aws-amplify/ui-react";
-import { getOverrideProps } from "@aws-amplify/ui-react/internal";
-import { Course } from "../models";
-import { fetchByPath, validateField } from "./utils";
 import { DataStore } from "aws-amplify";
 function ArrayField({
   items = [],
@@ -34,10 +34,7 @@ function ArrayField({
   setFieldValue,
   currentFieldValue,
   defaultFieldValue,
-  lengthLimit,
-  getBadgeText,
 }) {
-  const labelElement = <Text>{label}</Text>;
   const { tokens } = useTheme();
   const [selectedBadgeIndex, setSelectedBadgeIndex] = React.useState();
   const [isEditing, setIsEditing] = React.useState();
@@ -53,9 +50,9 @@ function ArrayField({
   };
   const addItem = async () => {
     if (
-      currentFieldValue !== undefined &&
-      currentFieldValue !== null &&
-      currentFieldValue !== "" &&
+      (currentFieldValue !== undefined ||
+        currentFieldValue !== null ||
+        currentFieldValue !== "") &&
       !hasError
     ) {
       const newItems = [...items];
@@ -69,71 +66,12 @@ function ArrayField({
       setIsEditing(false);
     }
   };
-  const arraySection = (
-    <React.Fragment>
-      {!!items?.length && (
-        <ScrollView height="inherit" width="inherit" maxHeight={"7rem"}>
-          {items.map((value, index) => {
-            return (
-              <Badge
-                key={index}
-                style={{
-                  cursor: "pointer",
-                  alignItems: "center",
-                  marginRight: 3,
-                  marginTop: 3,
-                  backgroundColor:
-                    index === selectedBadgeIndex ? "#B8CEF9" : "",
-                }}
-                onClick={() => {
-                  setSelectedBadgeIndex(index);
-                  setFieldValue(items[index]);
-                  setIsEditing(true);
-                }}
-              >
-                {getBadgeText ? getBadgeText(value) : value.toString()}
-                <Icon
-                  style={{
-                    cursor: "pointer",
-                    paddingLeft: 3,
-                    width: 20,
-                    height: 20,
-                  }}
-                  viewBox={{ width: 20, height: 20 }}
-                  paths={[
-                    {
-                      d: "M10 10l5.09-5.09L10 10l5.09 5.09L10 10zm0 0L4.91 4.91 10 10l-5.09 5.09L10 10z",
-                      stroke: "black",
-                    },
-                  ]}
-                  ariaLabel="button"
-                  onClick={(event) => {
-                    event.stopPropagation();
-                    removeItem(index);
-                  }}
-                />
-              </Badge>
-            );
-          })}
-        </ScrollView>
-      )}
-      <Divider orientation="horizontal" marginTop={5} />
-    </React.Fragment>
-  );
-  if (lengthLimit !== undefined && items.length >= lengthLimit && !isEditing) {
-    return (
-      <React.Fragment>
-        {labelElement}
-        {arraySection}
-      </React.Fragment>
-    );
-  }
   return (
     <React.Fragment>
-      {labelElement}
       {isEditing && children}
       {!isEditing ? (
         <>
+          <Text>{label}</Text>
           <Button
             onClick={() => {
               setIsEditing(true);
@@ -167,37 +105,84 @@ function ArrayField({
           </Button>
         </Flex>
       )}
-      {arraySection}
+      {!!items?.length && (
+        <ScrollView height="inherit" width="inherit" maxHeight={"7rem"}>
+          {items.map((value, index) => {
+            return (
+              <Badge
+                key={index}
+                style={{
+                  cursor: "pointer",
+                  alignItems: "center",
+                  marginRight: 3,
+                  marginTop: 3,
+                  backgroundColor:
+                    index === selectedBadgeIndex ? "#B8CEF9" : "",
+                }}
+                onClick={() => {
+                  setSelectedBadgeIndex(index);
+                  setFieldValue(items[index]);
+                  setIsEditing(true);
+                }}
+              >
+                {value.toString()}
+                <Icon
+                  style={{
+                    cursor: "pointer",
+                    paddingLeft: 3,
+                    width: 20,
+                    height: 20,
+                  }}
+                  viewBox={{ width: 20, height: 20 }}
+                  paths={[
+                    {
+                      d: "M10 10l5.09-5.09L10 10l5.09 5.09L10 10zm0 0L4.91 4.91 10 10l-5.09 5.09L10 10z",
+                      stroke: "black",
+                    },
+                  ]}
+                  ariaLabel="button"
+                  onClick={(event) => {
+                    event.stopPropagation();
+                    removeItem(index);
+                  }}
+                />
+              </Badge>
+            );
+          })}
+        </ScrollView>
+      )}
+      <Divider orientation="horizontal" marginTop={5} />
     </React.Fragment>
   );
 }
 export default function CourseUpdateForm(props) {
   const {
-    id: idProp,
+    id,
     course,
     onSuccess,
     onError,
     onSubmit,
+    onCancel,
     onValidate,
     onChange,
     overrides,
     ...rest
   } = props;
   const initialValues = {
-    name: "",
-    descriptions: "",
-    price: "",
-    image: "",
-    video: "",
+    name: undefined,
+    descriptions: undefined,
+    price: undefined,
+    image: undefined,
+    video: undefined,
     category: undefined,
-    duration: "",
+    duration: undefined,
     learningObjective: [],
     isFeatured: false,
     online: false,
-    curriculum: "",
-    headTitle: "",
-    headMeta: "",
-    headContent: "",
+    curriculum: undefined,
+    headTitle: undefined,
+    headMeta: undefined,
+    headContent: undefined,
   };
   const [name, setName] = React.useState(initialValues.name);
   const [descriptions, setDescriptions] = React.useState(
@@ -221,9 +206,7 @@ export default function CourseUpdateForm(props) {
   );
   const [errors, setErrors] = React.useState({});
   const resetStateValues = () => {
-    const cleanValues = courseRecord
-      ? { ...initialValues, ...courseRecord }
-      : initialValues;
+    const cleanValues = { ...initialValues, ...courseRecord };
     setName(cleanValues.name);
     setDescriptions(cleanValues.descriptions);
     setPrice(cleanValues.price);
@@ -232,7 +215,7 @@ export default function CourseUpdateForm(props) {
     setCategory(cleanValues.category);
     setDuration(cleanValues.duration);
     setLearningObjective(cleanValues.learningObjective ?? []);
-    setCurrentLearningObjectiveValue("");
+    setCurrentLearningObjectiveValue(undefined);
     setIsFeatured(cleanValues.isFeatured);
     setOnline(cleanValues.online);
     setCurriculum(cleanValues.curriculum);
@@ -244,14 +227,14 @@ export default function CourseUpdateForm(props) {
   const [courseRecord, setCourseRecord] = React.useState(course);
   React.useEffect(() => {
     const queryData = async () => {
-      const record = idProp ? await DataStore.query(Course, idProp) : course;
+      const record = id ? await DataStore.query(Course, id) : course;
       setCourseRecord(record);
     };
     queryData();
-  }, [idProp, course]);
+  }, [id, course]);
   React.useEffect(resetStateValues, [courseRecord]);
   const [currentLearningObjectiveValue, setCurrentLearningObjectiveValue] =
-    React.useState("");
+    React.useState(undefined);
   const learningObjectiveRef = React.createRef();
   const validations = {
     name: [{ type: "Required" }],
@@ -269,14 +252,7 @@ export default function CourseUpdateForm(props) {
     headMeta: [],
     headContent: [],
   };
-  const runValidationTasks = async (
-    fieldName,
-    currentValue,
-    getDisplayValue
-  ) => {
-    const value = getDisplayValue
-      ? getDisplayValue(currentValue)
-      : currentValue;
+  const runValidationTasks = async (fieldName, value) => {
     let validationResponse = validateField(value, validations[fieldName]);
     const customValidator = fetchByPath(onValidate, fieldName);
     if (customValidator) {
@@ -297,14 +273,14 @@ export default function CourseUpdateForm(props) {
           name,
           descriptions,
           price,
-          image,
-          video,
+          image: image || undefined,
+          video: video || undefined,
           category,
           duration,
           learningObjective,
           isFeatured,
           online,
-          curriculum,
+          curriculum: curriculum || undefined,
           headTitle,
           headMeta,
           headContent,
@@ -332,11 +308,6 @@ export default function CourseUpdateForm(props) {
           modelFields = onSubmit(modelFields);
         }
         try {
-          Object.entries(modelFields).forEach(([key, value]) => {
-            if (typeof value === "string" && value.trim() === "") {
-              modelFields[key] = undefined;
-            }
-          });
           await DataStore.save(
             Course.copyOf(courseRecord, (updated) => {
               Object.assign(updated, modelFields);
@@ -351,14 +322,14 @@ export default function CourseUpdateForm(props) {
           }
         }
       }}
-      {...getOverrideProps(overrides, "CourseUpdateForm")}
       {...rest}
+      {...getOverrideProps(overrides, "CourseUpdateForm")}
     >
       <TextField
         label="Name"
         isRequired={true}
         isReadOnly={false}
-        value={name}
+        defaultValue={name}
         onChange={(e) => {
           let { value } = e.target;
           if (onChange) {
@@ -395,7 +366,7 @@ export default function CourseUpdateForm(props) {
         label="Descriptions"
         isRequired={true}
         isReadOnly={false}
-        value={descriptions}
+        defaultValue={descriptions}
         onChange={(e) => {
           let { value } = e.target;
           if (onChange) {
@@ -434,11 +405,16 @@ export default function CourseUpdateForm(props) {
         isReadOnly={false}
         type="number"
         step="any"
-        value={price}
+        defaultValue={price}
         onChange={(e) => {
-          let value = isNaN(parseFloat(e.target.value))
-            ? e.target.value
-            : parseFloat(e.target.value);
+          let value = Number(e.target.value);
+          if (isNaN(value)) {
+            setErrors((errors) => ({
+              ...errors,
+              price: "Value must be a valid number",
+            }));
+            return;
+          }
           if (onChange) {
             const modelFields = {
               name,
@@ -473,7 +449,7 @@ export default function CourseUpdateForm(props) {
         label="Image"
         isRequired={false}
         isReadOnly={false}
-        value={image}
+        defaultValue={image}
         onChange={(e) => {
           let { value } = e.target;
           if (onChange) {
@@ -510,7 +486,7 @@ export default function CourseUpdateForm(props) {
         label="Video"
         isRequired={false}
         isReadOnly={false}
-        value={video}
+        defaultValue={video}
         onChange={(e) => {
           let { value } = e.target;
           if (onChange) {
@@ -617,11 +593,16 @@ export default function CourseUpdateForm(props) {
         isReadOnly={false}
         type="number"
         step="any"
-        value={duration}
+        defaultValue={duration}
         onChange={(e) => {
-          let value = isNaN(parseInt(e.target.value))
-            ? e.target.value
-            : parseInt(e.target.value);
+          let value = parseInt(e.target.value);
+          if (isNaN(value)) {
+            setErrors((errors) => ({
+              ...errors,
+              duration: "Value must be a valid number",
+            }));
+            return;
+          }
           if (onChange) {
             const modelFields = {
               name,
@@ -676,7 +657,7 @@ export default function CourseUpdateForm(props) {
             values = result?.learningObjective ?? values;
           }
           setLearningObjective(values);
-          setCurrentLearningObjectiveValue("");
+          setCurrentLearningObjectiveValue(undefined);
         }}
         currentFieldValue={currentLearningObjectiveValue}
         label={"Learning objective"}
@@ -684,7 +665,7 @@ export default function CourseUpdateForm(props) {
         hasError={errors.learningObjective?.hasError}
         setFieldValue={setCurrentLearningObjectiveValue}
         inputFieldRef={learningObjectiveRef}
-        defaultFieldValue={""}
+        defaultFieldValue={undefined}
       >
         <TextField
           label="Learning objective"
@@ -707,7 +688,6 @@ export default function CourseUpdateForm(props) {
           errorMessage={errors.learningObjective?.errorMessage}
           hasError={errors.learningObjective?.hasError}
           ref={learningObjectiveRef}
-          labelHidden={true}
           {...getOverrideProps(overrides, "learningObjective")}
         ></TextField>
       </ArrayField>
@@ -789,7 +769,7 @@ export default function CourseUpdateForm(props) {
         label="Curriculum"
         isRequired={false}
         isReadOnly={false}
-        value={curriculum}
+        defaultValue={curriculum}
         onChange={(e) => {
           let { value } = e.target;
           if (onChange) {
@@ -826,7 +806,7 @@ export default function CourseUpdateForm(props) {
         label="Head title"
         isRequired={false}
         isReadOnly={false}
-        value={headTitle}
+        defaultValue={headTitle}
         onChange={(e) => {
           let { value } = e.target;
           if (onChange) {
@@ -863,7 +843,7 @@ export default function CourseUpdateForm(props) {
         label="Head meta"
         isRequired={false}
         isReadOnly={false}
-        value={headMeta}
+        defaultValue={headMeta}
         onChange={(e) => {
           let { value } = e.target;
           if (onChange) {
@@ -900,7 +880,7 @@ export default function CourseUpdateForm(props) {
         label="Head content"
         isRequired={false}
         isReadOnly={false}
-        value={headContent}
+        defaultValue={headContent}
         onChange={(e) => {
           let { value } = e.target;
           if (onChange) {
@@ -940,11 +920,7 @@ export default function CourseUpdateForm(props) {
         <Button
           children="Reset"
           type="reset"
-          onClick={(event) => {
-            event.preventDefault();
-            resetStateValues();
-          }}
-          isDisabled={!(idProp || course)}
+          onClick={resetStateValues}
           {...getOverrideProps(overrides, "ResetButton")}
         ></Button>
         <Flex
@@ -952,13 +928,18 @@ export default function CourseUpdateForm(props) {
           {...getOverrideProps(overrides, "RightAlignCTASubFlex")}
         >
           <Button
+            children="Cancel"
+            type="button"
+            onClick={() => {
+              onCancel && onCancel();
+            }}
+            {...getOverrideProps(overrides, "CancelButton")}
+          ></Button>
+          <Button
             children="Submit"
             type="submit"
             variation="primary"
-            isDisabled={
-              !(idProp || course) ||
-              Object.values(errors).some((e) => e?.hasError)
-            }
+            isDisabled={Object.values(errors).some((e) => e?.hasError)}
             {...getOverrideProps(overrides, "SubmitButton")}
           ></Button>
         </Flex>

@@ -5,8 +5,8 @@
  **************************************************************************/
 
 import * as React from "react";
-import { GridProps, TextFieldProps } from "@aws-amplify/ui-react";
 import { EscapeHatchProps } from "@aws-amplify/ui-react/internal";
+import { GridProps, TextFieldProps } from "@aws-amplify/ui-react";
 export declare type ValidationResponse = {
     hasError: boolean;
     errorMessage?: string;
@@ -26,14 +26,14 @@ export declare type HeroDataCreateFormValidationValues = {
     largeText?: ValidationFunction<string>;
     buttonText?: ValidationFunction<string>;
 };
-export declare type PrimitiveOverrideProps<T> = Partial<T> & React.DOMAttributes<HTMLDivElement>;
+export declare type FormProps<T> = Partial<T> & React.DOMAttributes<HTMLDivElement>;
 export declare type HeroDataCreateFormOverridesProps = {
-    HeroDataCreateFormGrid?: PrimitiveOverrideProps<GridProps>;
-    image?: PrimitiveOverrideProps<TextFieldProps>;
-    smallText?: PrimitiveOverrideProps<TextFieldProps>;
-    mediumText?: PrimitiveOverrideProps<TextFieldProps>;
-    largeText?: PrimitiveOverrideProps<TextFieldProps>;
-    buttonText?: PrimitiveOverrideProps<TextFieldProps>;
+    HeroDataCreateFormGrid?: FormProps<GridProps>;
+    image?: FormProps<TextFieldProps>;
+    smallText?: FormProps<TextFieldProps>;
+    mediumText?: FormProps<TextFieldProps>;
+    largeText?: FormProps<TextFieldProps>;
+    buttonText?: FormProps<TextFieldProps>;
 } & EscapeHatchProps;
 export declare type HeroDataCreateFormProps = React.PropsWithChildren<{
     overrides?: HeroDataCreateFormOverridesProps | undefined | null;
@@ -42,6 +42,7 @@ export declare type HeroDataCreateFormProps = React.PropsWithChildren<{
     onSubmit?: (fields: HeroDataCreateFormInputValues) => HeroDataCreateFormInputValues;
     onSuccess?: (fields: HeroDataCreateFormInputValues) => void;
     onError?: (fields: HeroDataCreateFormInputValues, errorMessage: string) => void;
+    onCancel?: () => void;
     onChange?: (fields: HeroDataCreateFormInputValues) => HeroDataCreateFormInputValues;
     onValidate?: HeroDataCreateFormValidationValues;
 } & React.CSSProperties>;

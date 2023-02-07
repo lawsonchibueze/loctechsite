@@ -6,6 +6,9 @@
 
 /* eslint-disable */
 import * as React from "react";
+import { fetchByPath, validateField } from "./utils";
+import { Testimonial } from "../models";
+import { getOverrideProps } from "@aws-amplify/ui-react/internal";
 import {
   Button,
   Flex,
@@ -14,28 +17,26 @@ import {
   SwitchField,
   TextField,
 } from "@aws-amplify/ui-react";
-import { getOverrideProps } from "@aws-amplify/ui-react/internal";
-import { Testimonial } from "../models";
-import { fetchByPath, validateField } from "./utils";
 import { DataStore } from "aws-amplify";
 export default function TestimonialUpdateForm(props) {
   const {
-    id: idProp,
+    id,
     testimonial,
     onSuccess,
     onError,
     onSubmit,
+    onCancel,
     onValidate,
     onChange,
     overrides,
     ...rest
   } = props;
   const initialValues = {
-    image: "",
+    image: undefined,
     category: undefined,
     Featured: false,
-    Feedback: "",
-    name: "",
+    Feedback: undefined,
+    name: undefined,
   };
   const [image, setImage] = React.useState(initialValues.image);
   const [category, setCategory] = React.useState(initialValues.category);
@@ -44,9 +45,7 @@ export default function TestimonialUpdateForm(props) {
   const [name, setName] = React.useState(initialValues.name);
   const [errors, setErrors] = React.useState({});
   const resetStateValues = () => {
-    const cleanValues = testimonialRecord
-      ? { ...initialValues, ...testimonialRecord }
-      : initialValues;
+    const cleanValues = { ...initialValues, ...testimonialRecord };
     setImage(cleanValues.image);
     setCategory(cleanValues.category);
     setFeatured(cleanValues.Featured);
@@ -57,13 +56,11 @@ export default function TestimonialUpdateForm(props) {
   const [testimonialRecord, setTestimonialRecord] = React.useState(testimonial);
   React.useEffect(() => {
     const queryData = async () => {
-      const record = idProp
-        ? await DataStore.query(Testimonial, idProp)
-        : testimonial;
+      const record = id ? await DataStore.query(Testimonial, id) : testimonial;
       setTestimonialRecord(record);
     };
     queryData();
-  }, [idProp, testimonial]);
+  }, [id, testimonial]);
   React.useEffect(resetStateValues, [testimonialRecord]);
   const validations = {
     image: [{ type: "URL" }],
@@ -72,14 +69,7 @@ export default function TestimonialUpdateForm(props) {
     Feedback: [],
     name: [],
   };
-  const runValidationTasks = async (
-    fieldName,
-    currentValue,
-    getDisplayValue
-  ) => {
-    const value = getDisplayValue
-      ? getDisplayValue(currentValue)
-      : currentValue;
+  const runValidationTasks = async (fieldName, value) => {
     let validationResponse = validateField(value, validations[fieldName]);
     const customValidator = fetchByPath(onValidate, fieldName);
     if (customValidator) {
@@ -97,7 +87,7 @@ export default function TestimonialUpdateForm(props) {
       onSubmit={async (event) => {
         event.preventDefault();
         let modelFields = {
-          image,
+          image: image || undefined,
           category,
           Featured,
           Feedback,
@@ -126,11 +116,6 @@ export default function TestimonialUpdateForm(props) {
           modelFields = onSubmit(modelFields);
         }
         try {
-          Object.entries(modelFields).forEach(([key, value]) => {
-            if (typeof value === "string" && value.trim() === "") {
-              modelFields[key] = undefined;
-            }
-          });
           await DataStore.save(
             Testimonial.copyOf(testimonialRecord, (updated) => {
               Object.assign(updated, modelFields);
@@ -145,14 +130,14 @@ export default function TestimonialUpdateForm(props) {
           }
         }
       }}
-      {...getOverrideProps(overrides, "TestimonialUpdateForm")}
       {...rest}
+      {...getOverrideProps(overrides, "TestimonialUpdateForm")}
     >
       <TextField
         label="Image"
         isRequired={false}
         isReadOnly={false}
-        value={image}
+        defaultValue={image}
         onChange={(e) => {
           let { value } = e.target;
           if (onChange) {
@@ -257,7 +242,7 @@ export default function TestimonialUpdateForm(props) {
         label="Feedback"
         isRequired={false}
         isReadOnly={false}
-        value={Feedback}
+        defaultValue={Feedback}
         onChange={(e) => {
           let { value } = e.target;
           if (onChange) {
@@ -285,7 +270,7 @@ export default function TestimonialUpdateForm(props) {
         label="Name"
         isRequired={false}
         isReadOnly={false}
-        value={name}
+        defaultValue={name}
         onChange={(e) => {
           let { value } = e.target;
           if (onChange) {
@@ -316,11 +301,7 @@ export default function TestimonialUpdateForm(props) {
         <Button
           children="Reset"
           type="reset"
-          onClick={(event) => {
-            event.preventDefault();
-            resetStateValues();
-          }}
-          isDisabled={!(idProp || testimonial)}
+          onClick={resetStateValues}
           {...getOverrideProps(overrides, "ResetButton")}
         ></Button>
         <Flex
@@ -328,13 +309,18 @@ export default function TestimonialUpdateForm(props) {
           {...getOverrideProps(overrides, "RightAlignCTASubFlex")}
         >
           <Button
+            children="Cancel"
+            type="button"
+            onClick={() => {
+              onCancel && onCancel();
+            }}
+            {...getOverrideProps(overrides, "CancelButton")}
+          ></Button>
+          <Button
             children="Submit"
             type="submit"
             variation="primary"
-            isDisabled={
-              !(idProp || testimonial) ||
-              Object.values(errors).some((e) => e?.hasError)
-            }
+            isDisabled={Object.values(errors).some((e) => e?.hasError)}
             {...getOverrideProps(overrides, "SubmitButton")}
           ></Button>
         </Flex>

@@ -5,9 +5,9 @@
  **************************************************************************/
 
 import * as React from "react";
-import { GridProps, SelectFieldProps, SwitchFieldProps, TextFieldProps } from "@aws-amplify/ui-react";
-import { EscapeHatchProps } from "@aws-amplify/ui-react/internal";
 import { Course } from "../models";
+import { EscapeHatchProps } from "@aws-amplify/ui-react/internal";
+import { GridProps, SelectFieldProps, SwitchFieldProps, TextFieldProps } from "@aws-amplify/ui-react";
 export declare type ValidationResponse = {
     hasError: boolean;
     errorMessage?: string;
@@ -45,23 +45,23 @@ export declare type CourseUpdateFormValidationValues = {
     headMeta?: ValidationFunction<string>;
     headContent?: ValidationFunction<string>;
 };
-export declare type PrimitiveOverrideProps<T> = Partial<T> & React.DOMAttributes<HTMLDivElement>;
+export declare type FormProps<T> = Partial<T> & React.DOMAttributes<HTMLDivElement>;
 export declare type CourseUpdateFormOverridesProps = {
-    CourseUpdateFormGrid?: PrimitiveOverrideProps<GridProps>;
-    name?: PrimitiveOverrideProps<TextFieldProps>;
-    descriptions?: PrimitiveOverrideProps<TextFieldProps>;
-    price?: PrimitiveOverrideProps<TextFieldProps>;
-    image?: PrimitiveOverrideProps<TextFieldProps>;
-    video?: PrimitiveOverrideProps<TextFieldProps>;
-    category?: PrimitiveOverrideProps<SelectFieldProps>;
-    duration?: PrimitiveOverrideProps<TextFieldProps>;
-    learningObjective?: PrimitiveOverrideProps<TextFieldProps>;
-    isFeatured?: PrimitiveOverrideProps<SwitchFieldProps>;
-    online?: PrimitiveOverrideProps<SwitchFieldProps>;
-    curriculum?: PrimitiveOverrideProps<TextFieldProps>;
-    headTitle?: PrimitiveOverrideProps<TextFieldProps>;
-    headMeta?: PrimitiveOverrideProps<TextFieldProps>;
-    headContent?: PrimitiveOverrideProps<TextFieldProps>;
+    CourseUpdateFormGrid?: FormProps<GridProps>;
+    name?: FormProps<TextFieldProps>;
+    descriptions?: FormProps<TextFieldProps>;
+    price?: FormProps<TextFieldProps>;
+    image?: FormProps<TextFieldProps>;
+    video?: FormProps<TextFieldProps>;
+    category?: FormProps<SelectFieldProps>;
+    duration?: FormProps<TextFieldProps>;
+    learningObjective?: FormProps<TextFieldProps>;
+    isFeatured?: FormProps<SwitchFieldProps>;
+    online?: FormProps<SwitchFieldProps>;
+    curriculum?: FormProps<TextFieldProps>;
+    headTitle?: FormProps<TextFieldProps>;
+    headMeta?: FormProps<TextFieldProps>;
+    headContent?: FormProps<TextFieldProps>;
 } & EscapeHatchProps;
 export declare type CourseUpdateFormProps = React.PropsWithChildren<{
     overrides?: CourseUpdateFormOverridesProps | undefined | null;
@@ -71,6 +71,7 @@ export declare type CourseUpdateFormProps = React.PropsWithChildren<{
     onSubmit?: (fields: CourseUpdateFormInputValues) => CourseUpdateFormInputValues;
     onSuccess?: (fields: CourseUpdateFormInputValues) => void;
     onError?: (fields: CourseUpdateFormInputValues, errorMessage: string) => void;
+    onCancel?: () => void;
     onChange?: (fields: CourseUpdateFormInputValues) => CourseUpdateFormInputValues;
     onValidate?: CourseUpdateFormValidationValues;
 } & React.CSSProperties>;

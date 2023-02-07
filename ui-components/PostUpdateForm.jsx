@@ -6,6 +6,9 @@
 
 /* eslint-disable */
 import * as React from "react";
+import { fetchByPath, validateField } from "./utils";
+import { Post } from "../models";
+import { getOverrideProps } from "@aws-amplify/ui-react/internal";
 import {
   Button,
   Flex,
@@ -13,31 +16,29 @@ import {
   SwitchField,
   TextField,
 } from "@aws-amplify/ui-react";
-import { getOverrideProps } from "@aws-amplify/ui-react/internal";
-import { Post } from "../models";
-import { fetchByPath, validateField } from "./utils";
 import { DataStore } from "aws-amplify";
 export default function PostUpdateForm(props) {
   const {
-    id: idProp,
+    id,
     post,
     onSuccess,
     onError,
     onSubmit,
+    onCancel,
     onValidate,
     onChange,
     overrides,
     ...rest
   } = props;
   const initialValues = {
-    title: "",
-    content: "",
+    title: undefined,
+    content: undefined,
     isFeatured: false,
-    image: "",
-    category: "",
-    tags: "",
-    author: "",
-    date: "",
+    image: undefined,
+    category: undefined,
+    tags: undefined,
+    author: undefined,
+    date: undefined,
   };
   const [title, setTitle] = React.useState(initialValues.title);
   const [content, setContent] = React.useState(initialValues.content);
@@ -49,9 +50,7 @@ export default function PostUpdateForm(props) {
   const [date, setDate] = React.useState(initialValues.date);
   const [errors, setErrors] = React.useState({});
   const resetStateValues = () => {
-    const cleanValues = postRecord
-      ? { ...initialValues, ...postRecord }
-      : initialValues;
+    const cleanValues = { ...initialValues, ...postRecord };
     setTitle(cleanValues.title);
     setContent(cleanValues.content);
     setIsFeatured(cleanValues.isFeatured);
@@ -65,11 +64,11 @@ export default function PostUpdateForm(props) {
   const [postRecord, setPostRecord] = React.useState(post);
   React.useEffect(() => {
     const queryData = async () => {
-      const record = idProp ? await DataStore.query(Post, idProp) : post;
+      const record = id ? await DataStore.query(Post, id) : post;
       setPostRecord(record);
     };
     queryData();
-  }, [idProp, post]);
+  }, [id, post]);
   React.useEffect(resetStateValues, [postRecord]);
   const validations = {
     title: [],
@@ -81,14 +80,7 @@ export default function PostUpdateForm(props) {
     author: [],
     date: [],
   };
-  const runValidationTasks = async (
-    fieldName,
-    currentValue,
-    getDisplayValue
-  ) => {
-    const value = getDisplayValue
-      ? getDisplayValue(currentValue)
-      : currentValue;
+  const runValidationTasks = async (fieldName, value) => {
     let validationResponse = validateField(value, validations[fieldName]);
     const customValidator = fetchByPath(onValidate, fieldName);
     if (customValidator) {
@@ -109,7 +101,7 @@ export default function PostUpdateForm(props) {
           title,
           content,
           isFeatured,
-          image,
+          image: image || undefined,
           category,
           tags,
           author,
@@ -138,11 +130,6 @@ export default function PostUpdateForm(props) {
           modelFields = onSubmit(modelFields);
         }
         try {
-          Object.entries(modelFields).forEach(([key, value]) => {
-            if (typeof value === "string" && value.trim() === "") {
-              modelFields[key] = undefined;
-            }
-          });
           await DataStore.save(
             Post.copyOf(postRecord, (updated) => {
               Object.assign(updated, modelFields);
@@ -157,14 +144,14 @@ export default function PostUpdateForm(props) {
           }
         }
       }}
-      {...getOverrideProps(overrides, "PostUpdateForm")}
       {...rest}
+      {...getOverrideProps(overrides, "PostUpdateForm")}
     >
       <TextField
         label="Title"
         isRequired={false}
         isReadOnly={false}
-        value={title}
+        defaultValue={title}
         onChange={(e) => {
           let { value } = e.target;
           if (onChange) {
@@ -195,7 +182,7 @@ export default function PostUpdateForm(props) {
         label="Content"
         isRequired={false}
         isReadOnly={false}
-        value={content}
+        defaultValue={content}
         onChange={(e) => {
           let { value } = e.target;
           if (onChange) {
@@ -257,7 +244,7 @@ export default function PostUpdateForm(props) {
         label="Image"
         isRequired={false}
         isReadOnly={false}
-        value={image}
+        defaultValue={image}
         onChange={(e) => {
           let { value } = e.target;
           if (onChange) {
@@ -288,7 +275,7 @@ export default function PostUpdateForm(props) {
         label="Category"
         isRequired={false}
         isReadOnly={false}
-        value={category}
+        defaultValue={category}
         onChange={(e) => {
           let { value } = e.target;
           if (onChange) {
@@ -319,7 +306,7 @@ export default function PostUpdateForm(props) {
         label="Tags"
         isRequired={false}
         isReadOnly={false}
-        value={tags}
+        defaultValue={tags}
         onChange={(e) => {
           let { value } = e.target;
           if (onChange) {
@@ -350,7 +337,7 @@ export default function PostUpdateForm(props) {
         label="Author"
         isRequired={false}
         isReadOnly={false}
-        value={author}
+        defaultValue={author}
         onChange={(e) => {
           let { value } = e.target;
           if (onChange) {
@@ -382,7 +369,7 @@ export default function PostUpdateForm(props) {
         isRequired={false}
         isReadOnly={false}
         type="date"
-        value={date}
+        defaultValue={date}
         onChange={(e) => {
           let { value } = e.target;
           if (onChange) {
@@ -416,11 +403,7 @@ export default function PostUpdateForm(props) {
         <Button
           children="Reset"
           type="reset"
-          onClick={(event) => {
-            event.preventDefault();
-            resetStateValues();
-          }}
-          isDisabled={!(idProp || post)}
+          onClick={resetStateValues}
           {...getOverrideProps(overrides, "ResetButton")}
         ></Button>
         <Flex
@@ -428,13 +411,18 @@ export default function PostUpdateForm(props) {
           {...getOverrideProps(overrides, "RightAlignCTASubFlex")}
         >
           <Button
+            children="Cancel"
+            type="button"
+            onClick={() => {
+              onCancel && onCancel();
+            }}
+            {...getOverrideProps(overrides, "CancelButton")}
+          ></Button>
+          <Button
             children="Submit"
             type="submit"
             variation="primary"
-            isDisabled={
-              !(idProp || post) ||
-              Object.values(errors).some((e) => e?.hasError)
-            }
+            isDisabled={Object.values(errors).some((e) => e?.hasError)}
             {...getOverrideProps(overrides, "SubmitButton")}
           ></Button>
         </Flex>

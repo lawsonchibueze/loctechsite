@@ -5,9 +5,9 @@
  **************************************************************************/
 
 import * as React from "react";
-import { GridProps, SelectFieldProps, SwitchFieldProps, TextFieldProps } from "@aws-amplify/ui-react";
-import { EscapeHatchProps } from "@aws-amplify/ui-react/internal";
 import { Testimonial } from "../models";
+import { EscapeHatchProps } from "@aws-amplify/ui-react/internal";
+import { GridProps, SelectFieldProps, SwitchFieldProps, TextFieldProps } from "@aws-amplify/ui-react";
 export declare type ValidationResponse = {
     hasError: boolean;
     errorMessage?: string;
@@ -27,14 +27,14 @@ export declare type TestimonialUpdateFormValidationValues = {
     Feedback?: ValidationFunction<string>;
     name?: ValidationFunction<string>;
 };
-export declare type PrimitiveOverrideProps<T> = Partial<T> & React.DOMAttributes<HTMLDivElement>;
+export declare type FormProps<T> = Partial<T> & React.DOMAttributes<HTMLDivElement>;
 export declare type TestimonialUpdateFormOverridesProps = {
-    TestimonialUpdateFormGrid?: PrimitiveOverrideProps<GridProps>;
-    image?: PrimitiveOverrideProps<TextFieldProps>;
-    category?: PrimitiveOverrideProps<SelectFieldProps>;
-    Featured?: PrimitiveOverrideProps<SwitchFieldProps>;
-    Feedback?: PrimitiveOverrideProps<TextFieldProps>;
-    name?: PrimitiveOverrideProps<TextFieldProps>;
+    TestimonialUpdateFormGrid?: FormProps<GridProps>;
+    image?: FormProps<TextFieldProps>;
+    category?: FormProps<SelectFieldProps>;
+    Featured?: FormProps<SwitchFieldProps>;
+    Feedback?: FormProps<TextFieldProps>;
+    name?: FormProps<TextFieldProps>;
 } & EscapeHatchProps;
 export declare type TestimonialUpdateFormProps = React.PropsWithChildren<{
     overrides?: TestimonialUpdateFormOverridesProps | undefined | null;
@@ -44,6 +44,7 @@ export declare type TestimonialUpdateFormProps = React.PropsWithChildren<{
     onSubmit?: (fields: TestimonialUpdateFormInputValues) => TestimonialUpdateFormInputValues;
     onSuccess?: (fields: TestimonialUpdateFormInputValues) => void;
     onError?: (fields: TestimonialUpdateFormInputValues, errorMessage: string) => void;
+    onCancel?: () => void;
     onChange?: (fields: TestimonialUpdateFormInputValues) => TestimonialUpdateFormInputValues;
     onValidate?: TestimonialUpdateFormValidationValues;
 } & React.CSSProperties>;

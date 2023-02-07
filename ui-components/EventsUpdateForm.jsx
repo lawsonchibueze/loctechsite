@@ -6,6 +6,9 @@
 
 /* eslint-disable */
 import * as React from "react";
+import { fetchByPath, validateField } from "./utils";
+import { Events } from "../models";
+import { getOverrideProps } from "@aws-amplify/ui-react/internal";
 import {
   Badge,
   Button,
@@ -18,9 +21,6 @@ import {
   TextField,
   useTheme,
 } from "@aws-amplify/ui-react";
-import { getOverrideProps } from "@aws-amplify/ui-react/internal";
-import { Events } from "../models";
-import { fetchByPath, validateField } from "./utils";
 import { DataStore } from "aws-amplify";
 function ArrayField({
   items = [],
@@ -32,10 +32,7 @@ function ArrayField({
   setFieldValue,
   currentFieldValue,
   defaultFieldValue,
-  lengthLimit,
-  getBadgeText,
 }) {
-  const labelElement = <Text>{label}</Text>;
   const { tokens } = useTheme();
   const [selectedBadgeIndex, setSelectedBadgeIndex] = React.useState();
   const [isEditing, setIsEditing] = React.useState();
@@ -51,9 +48,9 @@ function ArrayField({
   };
   const addItem = async () => {
     if (
-      currentFieldValue !== undefined &&
-      currentFieldValue !== null &&
-      currentFieldValue !== "" &&
+      (currentFieldValue !== undefined ||
+        currentFieldValue !== null ||
+        currentFieldValue !== "") &&
       !hasError
     ) {
       const newItems = [...items];
@@ -67,71 +64,12 @@ function ArrayField({
       setIsEditing(false);
     }
   };
-  const arraySection = (
-    <React.Fragment>
-      {!!items?.length && (
-        <ScrollView height="inherit" width="inherit" maxHeight={"7rem"}>
-          {items.map((value, index) => {
-            return (
-              <Badge
-                key={index}
-                style={{
-                  cursor: "pointer",
-                  alignItems: "center",
-                  marginRight: 3,
-                  marginTop: 3,
-                  backgroundColor:
-                    index === selectedBadgeIndex ? "#B8CEF9" : "",
-                }}
-                onClick={() => {
-                  setSelectedBadgeIndex(index);
-                  setFieldValue(items[index]);
-                  setIsEditing(true);
-                }}
-              >
-                {getBadgeText ? getBadgeText(value) : value.toString()}
-                <Icon
-                  style={{
-                    cursor: "pointer",
-                    paddingLeft: 3,
-                    width: 20,
-                    height: 20,
-                  }}
-                  viewBox={{ width: 20, height: 20 }}
-                  paths={[
-                    {
-                      d: "M10 10l5.09-5.09L10 10l5.09 5.09L10 10zm0 0L4.91 4.91 10 10l-5.09 5.09L10 10z",
-                      stroke: "black",
-                    },
-                  ]}
-                  ariaLabel="button"
-                  onClick={(event) => {
-                    event.stopPropagation();
-                    removeItem(index);
-                  }}
-                />
-              </Badge>
-            );
-          })}
-        </ScrollView>
-      )}
-      <Divider orientation="horizontal" marginTop={5} />
-    </React.Fragment>
-  );
-  if (lengthLimit !== undefined && items.length >= lengthLimit && !isEditing) {
-    return (
-      <React.Fragment>
-        {labelElement}
-        {arraySection}
-      </React.Fragment>
-    );
-  }
   return (
     <React.Fragment>
-      {labelElement}
       {isEditing && children}
       {!isEditing ? (
         <>
+          <Text>{label}</Text>
           <Button
             onClick={() => {
               setIsEditing(true);
@@ -165,36 +103,83 @@ function ArrayField({
           </Button>
         </Flex>
       )}
-      {arraySection}
+      {!!items?.length && (
+        <ScrollView height="inherit" width="inherit" maxHeight={"7rem"}>
+          {items.map((value, index) => {
+            return (
+              <Badge
+                key={index}
+                style={{
+                  cursor: "pointer",
+                  alignItems: "center",
+                  marginRight: 3,
+                  marginTop: 3,
+                  backgroundColor:
+                    index === selectedBadgeIndex ? "#B8CEF9" : "",
+                }}
+                onClick={() => {
+                  setSelectedBadgeIndex(index);
+                  setFieldValue(items[index]);
+                  setIsEditing(true);
+                }}
+              >
+                {value.toString()}
+                <Icon
+                  style={{
+                    cursor: "pointer",
+                    paddingLeft: 3,
+                    width: 20,
+                    height: 20,
+                  }}
+                  viewBox={{ width: 20, height: 20 }}
+                  paths={[
+                    {
+                      d: "M10 10l5.09-5.09L10 10l5.09 5.09L10 10zm0 0L4.91 4.91 10 10l-5.09 5.09L10 10z",
+                      stroke: "black",
+                    },
+                  ]}
+                  ariaLabel="button"
+                  onClick={(event) => {
+                    event.stopPropagation();
+                    removeItem(index);
+                  }}
+                />
+              </Badge>
+            );
+          })}
+        </ScrollView>
+      )}
+      <Divider orientation="horizontal" marginTop={5} />
     </React.Fragment>
   );
 }
 export default function EventsUpdateForm(props) {
   const {
-    id: idProp,
+    id,
     events,
     onSuccess,
     onError,
     onSubmit,
+    onCancel,
     onValidate,
     onChange,
     overrides,
     ...rest
   } = props;
   const initialValues = {
-    topic: "",
-    content: "",
-    Image: "",
-    totalSlot: "",
-    facebook: "",
-    email: "",
-    cost: "",
-    buttonText: "",
+    topic: undefined,
+    content: undefined,
+    Image: undefined,
+    totalSlot: undefined,
+    facebook: undefined,
+    email: undefined,
+    cost: undefined,
+    buttonText: undefined,
     speakers: [],
-    date: "",
-    time: "",
-    locationMap: "",
-    location: "",
+    date: undefined,
+    time: undefined,
+    locationMap: undefined,
+    location: undefined,
   };
   const [topic, setTopic] = React.useState(initialValues.topic);
   const [content, setContent] = React.useState(initialValues.content);
@@ -213,9 +198,7 @@ export default function EventsUpdateForm(props) {
   const [location, setLocation] = React.useState(initialValues.location);
   const [errors, setErrors] = React.useState({});
   const resetStateValues = () => {
-    const cleanValues = eventsRecord
-      ? { ...initialValues, ...eventsRecord }
-      : initialValues;
+    const cleanValues = { ...initialValues, ...eventsRecord };
     setTopic(cleanValues.topic);
     setContent(cleanValues.content);
     setImage(cleanValues.Image);
@@ -225,7 +208,7 @@ export default function EventsUpdateForm(props) {
     setCost(cleanValues.cost);
     setButtonText(cleanValues.buttonText);
     setSpeakers(cleanValues.speakers ?? []);
-    setCurrentSpeakersValue("");
+    setCurrentSpeakersValue(undefined);
     setDate(cleanValues.date);
     setTime(cleanValues.time);
     setLocationMap(cleanValues.locationMap);
@@ -235,13 +218,14 @@ export default function EventsUpdateForm(props) {
   const [eventsRecord, setEventsRecord] = React.useState(events);
   React.useEffect(() => {
     const queryData = async () => {
-      const record = idProp ? await DataStore.query(Events, idProp) : events;
+      const record = id ? await DataStore.query(Events, id) : events;
       setEventsRecord(record);
     };
     queryData();
-  }, [idProp, events]);
+  }, [id, events]);
   React.useEffect(resetStateValues, [eventsRecord]);
-  const [currentSpeakersValue, setCurrentSpeakersValue] = React.useState("");
+  const [currentSpeakersValue, setCurrentSpeakersValue] =
+    React.useState(undefined);
   const speakersRef = React.createRef();
   const validations = {
     topic: [],
@@ -258,14 +242,7 @@ export default function EventsUpdateForm(props) {
     locationMap: [{ type: "URL" }],
     location: [],
   };
-  const runValidationTasks = async (
-    fieldName,
-    currentValue,
-    getDisplayValue
-  ) => {
-    const value = getDisplayValue
-      ? getDisplayValue(currentValue)
-      : currentValue;
+  const runValidationTasks = async (fieldName, value) => {
     let validationResponse = validateField(value, validations[fieldName]);
     const customValidator = fetchByPath(onValidate, fieldName);
     if (customValidator) {
@@ -302,16 +279,16 @@ export default function EventsUpdateForm(props) {
         let modelFields = {
           topic,
           content,
-          Image,
+          Image: Image || undefined,
           totalSlot,
-          facebook,
+          facebook: facebook || undefined,
           email,
           cost,
           buttonText,
-          speakers,
+          speakers: speakers || undefined,
           date,
           time,
-          locationMap,
+          locationMap: locationMap || undefined,
           location,
         };
         const validationResponses = await Promise.all(
@@ -337,11 +314,6 @@ export default function EventsUpdateForm(props) {
           modelFields = onSubmit(modelFields);
         }
         try {
-          Object.entries(modelFields).forEach(([key, value]) => {
-            if (typeof value === "string" && value.trim() === "") {
-              modelFields[key] = undefined;
-            }
-          });
           await DataStore.save(
             Events.copyOf(eventsRecord, (updated) => {
               Object.assign(updated, modelFields);
@@ -356,14 +328,14 @@ export default function EventsUpdateForm(props) {
           }
         }
       }}
-      {...getOverrideProps(overrides, "EventsUpdateForm")}
       {...rest}
+      {...getOverrideProps(overrides, "EventsUpdateForm")}
     >
       <TextField
         label="Topic"
         isRequired={false}
         isReadOnly={false}
-        value={topic}
+        defaultValue={topic}
         onChange={(e) => {
           let { value } = e.target;
           if (onChange) {
@@ -399,7 +371,7 @@ export default function EventsUpdateForm(props) {
         label="Content"
         isRequired={false}
         isReadOnly={false}
-        value={content}
+        defaultValue={content}
         onChange={(e) => {
           let { value } = e.target;
           if (onChange) {
@@ -435,7 +407,7 @@ export default function EventsUpdateForm(props) {
         label="Image"
         isRequired={false}
         isReadOnly={false}
-        value={Image}
+        defaultValue={Image}
         onChange={(e) => {
           let { value } = e.target;
           if (onChange) {
@@ -473,11 +445,16 @@ export default function EventsUpdateForm(props) {
         isReadOnly={false}
         type="number"
         step="any"
-        value={totalSlot}
+        defaultValue={totalSlot}
         onChange={(e) => {
-          let value = isNaN(parseInt(e.target.value))
-            ? e.target.value
-            : parseInt(e.target.value);
+          let value = parseInt(e.target.value);
+          if (isNaN(value)) {
+            setErrors((errors) => ({
+              ...errors,
+              totalSlot: "Value must be a valid number",
+            }));
+            return;
+          }
           if (onChange) {
             const modelFields = {
               topic,
@@ -511,7 +488,7 @@ export default function EventsUpdateForm(props) {
         label="Facebook"
         isRequired={false}
         isReadOnly={false}
-        value={facebook}
+        defaultValue={facebook}
         onChange={(e) => {
           let { value } = e.target;
           if (onChange) {
@@ -547,7 +524,7 @@ export default function EventsUpdateForm(props) {
         label="Email"
         isRequired={false}
         isReadOnly={false}
-        value={email}
+        defaultValue={email}
         onChange={(e) => {
           let { value } = e.target;
           if (onChange) {
@@ -585,11 +562,16 @@ export default function EventsUpdateForm(props) {
         isReadOnly={false}
         type="number"
         step="any"
-        value={cost}
+        defaultValue={cost}
         onChange={(e) => {
-          let value = isNaN(parseInt(e.target.value))
-            ? e.target.value
-            : parseInt(e.target.value);
+          let value = parseInt(e.target.value);
+          if (isNaN(value)) {
+            setErrors((errors) => ({
+              ...errors,
+              cost: "Value must be a valid number",
+            }));
+            return;
+          }
           if (onChange) {
             const modelFields = {
               topic,
@@ -623,7 +605,7 @@ export default function EventsUpdateForm(props) {
         label="Button text"
         isRequired={false}
         isReadOnly={false}
-        value={buttonText}
+        defaultValue={buttonText}
         onChange={(e) => {
           let { value } = e.target;
           if (onChange) {
@@ -678,7 +660,7 @@ export default function EventsUpdateForm(props) {
             values = result?.speakers ?? values;
           }
           setSpeakers(values);
-          setCurrentSpeakersValue("");
+          setCurrentSpeakersValue(undefined);
         }}
         currentFieldValue={currentSpeakersValue}
         label={"Speakers"}
@@ -686,7 +668,7 @@ export default function EventsUpdateForm(props) {
         hasError={errors.speakers?.hasError}
         setFieldValue={setCurrentSpeakersValue}
         inputFieldRef={speakersRef}
-        defaultFieldValue={""}
+        defaultFieldValue={undefined}
       >
         <TextField
           label="Speakers"
@@ -704,7 +686,6 @@ export default function EventsUpdateForm(props) {
           errorMessage={errors.speakers?.errorMessage}
           hasError={errors.speakers?.hasError}
           ref={speakersRef}
-          labelHidden={true}
           {...getOverrideProps(overrides, "speakers")}
         ></TextField>
       </ArrayField>
@@ -713,7 +694,7 @@ export default function EventsUpdateForm(props) {
         isRequired={false}
         isReadOnly={false}
         type="date"
-        value={date}
+        defaultValue={date}
         onChange={(e) => {
           let { value } = e.target;
           if (onChange) {
@@ -750,10 +731,9 @@ export default function EventsUpdateForm(props) {
         isRequired={false}
         isReadOnly={false}
         type="datetime-local"
-        value={time && convertToLocal(new Date(time))}
+        defaultValue={time && convertToLocal(new Date(time))}
         onChange={(e) => {
-          let value =
-            e.target.value === "" ? "" : new Date(e.target.value).toISOString();
+          let { value } = e.target;
           if (onChange) {
             const modelFields = {
               topic,
@@ -776,7 +756,7 @@ export default function EventsUpdateForm(props) {
           if (errors.time?.hasError) {
             runValidationTasks("time", value);
           }
-          setTime(value);
+          setTime(new Date(value).toISOString());
         }}
         onBlur={() => runValidationTasks("time", time)}
         errorMessage={errors.time?.errorMessage}
@@ -787,7 +767,7 @@ export default function EventsUpdateForm(props) {
         label="Location map"
         isRequired={false}
         isReadOnly={false}
-        value={locationMap}
+        defaultValue={locationMap}
         onChange={(e) => {
           let { value } = e.target;
           if (onChange) {
@@ -823,7 +803,7 @@ export default function EventsUpdateForm(props) {
         label="Location"
         isRequired={false}
         isReadOnly={false}
-        value={location}
+        defaultValue={location}
         onChange={(e) => {
           let { value } = e.target;
           if (onChange) {
@@ -862,11 +842,7 @@ export default function EventsUpdateForm(props) {
         <Button
           children="Reset"
           type="reset"
-          onClick={(event) => {
-            event.preventDefault();
-            resetStateValues();
-          }}
-          isDisabled={!(idProp || events)}
+          onClick={resetStateValues}
           {...getOverrideProps(overrides, "ResetButton")}
         ></Button>
         <Flex
@@ -874,13 +850,18 @@ export default function EventsUpdateForm(props) {
           {...getOverrideProps(overrides, "RightAlignCTASubFlex")}
         >
           <Button
+            children="Cancel"
+            type="button"
+            onClick={() => {
+              onCancel && onCancel();
+            }}
+            {...getOverrideProps(overrides, "CancelButton")}
+          ></Button>
+          <Button
             children="Submit"
             type="submit"
             variation="primary"
-            isDisabled={
-              !(idProp || events) ||
-              Object.values(errors).some((e) => e?.hasError)
-            }
+            isDisabled={Object.values(errors).some((e) => e?.hasError)}
             {...getOverrideProps(overrides, "SubmitButton")}
           ></Button>
         </Flex>

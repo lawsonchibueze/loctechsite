@@ -5,9 +5,9 @@
  **************************************************************************/
 
 import * as React from "react";
-import { GridProps, TextFieldProps } from "@aws-amplify/ui-react";
-import { EscapeHatchProps } from "@aws-amplify/ui-react/internal";
 import { HeroData } from "../models";
+import { EscapeHatchProps } from "@aws-amplify/ui-react/internal";
+import { GridProps, TextFieldProps } from "@aws-amplify/ui-react";
 export declare type ValidationResponse = {
     hasError: boolean;
     errorMessage?: string;
@@ -27,14 +27,14 @@ export declare type HeroDataUpdateFormValidationValues = {
     largeText?: ValidationFunction<string>;
     buttonText?: ValidationFunction<string>;
 };
-export declare type PrimitiveOverrideProps<T> = Partial<T> & React.DOMAttributes<HTMLDivElement>;
+export declare type FormProps<T> = Partial<T> & React.DOMAttributes<HTMLDivElement>;
 export declare type HeroDataUpdateFormOverridesProps = {
-    HeroDataUpdateFormGrid?: PrimitiveOverrideProps<GridProps>;
-    image?: PrimitiveOverrideProps<TextFieldProps>;
-    smallText?: PrimitiveOverrideProps<TextFieldProps>;
-    mediumText?: PrimitiveOverrideProps<TextFieldProps>;
-    largeText?: PrimitiveOverrideProps<TextFieldProps>;
-    buttonText?: PrimitiveOverrideProps<TextFieldProps>;
+    HeroDataUpdateFormGrid?: FormProps<GridProps>;
+    image?: FormProps<TextFieldProps>;
+    smallText?: FormProps<TextFieldProps>;
+    mediumText?: FormProps<TextFieldProps>;
+    largeText?: FormProps<TextFieldProps>;
+    buttonText?: FormProps<TextFieldProps>;
 } & EscapeHatchProps;
 export declare type HeroDataUpdateFormProps = React.PropsWithChildren<{
     overrides?: HeroDataUpdateFormOverridesProps | undefined | null;
@@ -44,6 +44,7 @@ export declare type HeroDataUpdateFormProps = React.PropsWithChildren<{
     onSubmit?: (fields: HeroDataUpdateFormInputValues) => HeroDataUpdateFormInputValues;
     onSuccess?: (fields: HeroDataUpdateFormInputValues) => void;
     onError?: (fields: HeroDataUpdateFormInputValues, errorMessage: string) => void;
+    onCancel?: () => void;
     onChange?: (fields: HeroDataUpdateFormInputValues) => HeroDataUpdateFormInputValues;
     onValidate?: HeroDataUpdateFormValidationValues;
 } & React.CSSProperties>;

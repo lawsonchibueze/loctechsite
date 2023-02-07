@@ -1,26 +1,26 @@
 export type AmplifyDependentResourcesAttributes = {
-  "api": {
-    "loctechsite": {
-      "GraphQLAPIEndpointOutput": "string",
-      "GraphQLAPIIdOutput": "string",
-      "GraphQLAPIKeyOutput": "string"
+    "api": {
+        "loctechsite": {
+            "GraphQLAPIKeyOutput": "string",
+            "GraphQLAPIIdOutput": "string",
+            "GraphQLAPIEndpointOutput": "string"
+        }
+    },
+    "auth": {
+        "loctechsite": {
+            "IdentityPoolId": "string",
+            "IdentityPoolName": "string",
+            "UserPoolId": "string",
+            "UserPoolArn": "string",
+            "UserPoolName": "string",
+            "AppClientIDWeb": "string",
+            "AppClientID": "string"
+        }
+    },
+    "storage": {
+        "s3loctechsitestoragef79d8bac": {
+            "BucketName": "string",
+            "Region": "string"
+        }
     }
-  },
-  "auth": {
-    "loctechsite": {
-      "AppClientID": "string",
-      "AppClientIDWeb": "string",
-      "IdentityPoolId": "string",
-      "IdentityPoolName": "string",
-      "UserPoolArn": "string",
-      "UserPoolId": "string",
-      "UserPoolName": "string"
-    }
-  },
-  "storage": {
-    "s3loctechsitestoragef79d8bac": {
-      "BucketName": "string",
-      "Region": "string"
-    }
-  }
 }

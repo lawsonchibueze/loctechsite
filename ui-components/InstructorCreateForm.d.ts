@@ -5,8 +5,8 @@
  **************************************************************************/
 
 import * as React from "react";
-import { GridProps, TextFieldProps } from "@aws-amplify/ui-react";
 import { EscapeHatchProps } from "@aws-amplify/ui-react/internal";
+import { GridProps, TextFieldProps } from "@aws-amplify/ui-react";
 export declare type ValidationResponse = {
     hasError: boolean;
     errorMessage?: string;
@@ -28,15 +28,15 @@ export declare type InstructorCreateFormValidationValues = {
     rating?: ValidationFunction<string>;
     review?: ValidationFunction<string>;
 };
-export declare type PrimitiveOverrideProps<T> = Partial<T> & React.DOMAttributes<HTMLDivElement>;
+export declare type FormProps<T> = Partial<T> & React.DOMAttributes<HTMLDivElement>;
 export declare type InstructorCreateFormOverridesProps = {
-    InstructorCreateFormGrid?: PrimitiveOverrideProps<GridProps>;
-    name?: PrimitiveOverrideProps<TextFieldProps>;
-    image?: PrimitiveOverrideProps<TextFieldProps>;
-    facebook?: PrimitiveOverrideProps<TextFieldProps>;
-    linkedin?: PrimitiveOverrideProps<TextFieldProps>;
-    rating?: PrimitiveOverrideProps<TextFieldProps>;
-    review?: PrimitiveOverrideProps<TextFieldProps>;
+    InstructorCreateFormGrid?: FormProps<GridProps>;
+    name?: FormProps<TextFieldProps>;
+    image?: FormProps<TextFieldProps>;
+    facebook?: FormProps<TextFieldProps>;
+    linkedin?: FormProps<TextFieldProps>;
+    rating?: FormProps<TextFieldProps>;
+    review?: FormProps<TextFieldProps>;
 } & EscapeHatchProps;
 export declare type InstructorCreateFormProps = React.PropsWithChildren<{
     overrides?: InstructorCreateFormOverridesProps | undefined | null;
@@ -45,6 +45,7 @@ export declare type InstructorCreateFormProps = React.PropsWithChildren<{
     onSubmit?: (fields: InstructorCreateFormInputValues) => InstructorCreateFormInputValues;
     onSuccess?: (fields: InstructorCreateFormInputValues) => void;
     onError?: (fields: InstructorCreateFormInputValues, errorMessage: string) => void;
+    onCancel?: () => void;
     onChange?: (fields: InstructorCreateFormInputValues) => InstructorCreateFormInputValues;
     onValidate?: InstructorCreateFormValidationValues;
 } & React.CSSProperties>;
