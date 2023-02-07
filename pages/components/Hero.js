@@ -58,16 +58,9 @@ const Hero = () => {
                 {hero.largeText}
               </p>
               <h3 className="text-gray-900 text-2xl lg:text-start text-center mb-8 tracking-wider">{hero.mediumText}</h3>
-              <a
-                href="https://docs.google.com/forms/d/e/1FAIpQLSdmS11WZUloGtsBywpcd8OSqAJwlS2oPUJK6wQPBse1kn5NtA/closedform"
-                target='_blank'
-                rel='noreferrer'
-                className="lg:self-start self-center"
-              >
-                <button className="bg-violet-700 text-white font-bold rounded-md lg:w-60 w-72 py-5 lg:py-4 px-6 lg:px-0 lg:text-base text-lg hover:shadow-lg transition-shadow duration-500 ease-linear">
-                  {hero.buttonText}
-                </button>
-              </a>
+              <button className="bg-violet-700 text-white font-bold rounded-md lg:w-60 w-72 py-5 lg:py-4 px-6 lg:px-0 lg:text-base text-lg hover:shadow-lg transition-shadow duration-500 ease-linear">
+                {hero.buttonText}
+              </button>
             </motion.div>
             <div className="relative lg:-mt-12">
               <img
