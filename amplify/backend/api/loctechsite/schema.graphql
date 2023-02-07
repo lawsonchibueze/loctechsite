@@ -1,0 +1,95 @@
+enum TestimonialCategory {
+  STUDY_ENVIRONMENT
+  TRAINING_STANDARD
+  INSTRUCTOR
+  JOB_PLACEMENT
+}
+
+type Testimonial @model @auth(rules: [{allow: public}]) {
+  id: ID!
+  image: AWSURL
+  category: TestimonialCategory
+  Featured: Boolean
+  Feedback: String
+  name: String
+}
+
+type Events @model @auth(rules: [{allow: public}]) {
+  id: ID!
+  topic: String
+  content: String
+  Image: AWSURL
+  totalSlot: Int
+  facebook: AWSURL
+  email: AWSEmail
+  cost: Int
+  buttonText: String
+  speakers: [AWSURL]
+  date: AWSDate
+  time: AWSDateTime
+  locationMap: AWSURL
+  location: String
+}
+
+type Post @model @auth(rules: [{allow: public, operations: [create, read]}]) {
+  id: ID!
+  title: String
+  content: String
+  isFeatured: Boolean
+  image: AWSURL
+  category: String
+  tags: String
+  author: String
+  date: AWSDate
+}
+
+type HeroData @model @auth(rules: [{allow: public}]) {
+  id: ID!
+  image: String
+  smallText: String
+  mediumText: String
+  largeText: String
+  buttonText: String
+}
+
+type Instructor @model @auth(rules: [{allow: public}]) {
+  id: ID!
+  name: String
+  image: AWSURL
+  facebook: AWSURL
+  linkedin: AWSURL
+  rating: String
+  review: String
+  Courses: [Course] @manyToMany(relationName: "InstructorCourse")
+}
+
+enum Category {
+  ALL
+  WEB_DEVELOPMENT
+  DATA_SCIENCE
+  NETWORKING_SECURITY
+  GRAPHICS_MEDIA
+  OFFICE_PRODUCTIVITY
+}
+
+type Course @model @auth(rules: [{allow: public}]) {
+  id: ID!
+  name: String!
+  descriptions: String!
+  price: Float!
+  image: AWSURL
+  video: AWSURL
+  category: Category!
+  duration: Int
+  learningObjective: [String]
+  isFeatured: Boolean!
+  instructors: [Instructor] @manyToMany(relationName: "InstructorCourse")
+  online: Boolean
+  curriculum: AWSURL
+  headTitle: String
+  headMeta: String
+  headContent: String
+  instructorImage: AWSURL
+  instructorName: String
+}
+ 

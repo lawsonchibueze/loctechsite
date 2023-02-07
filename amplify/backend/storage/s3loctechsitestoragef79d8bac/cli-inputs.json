@@ -1,0 +1,15 @@
+{
+  "resourceName": "s3loctechsitestoragef79d8bac",
+  "bucketName": "loctechsite-storage-f79d8bac",
+  "policyUUID": "935fd63b",
+  "storageAccess": "authAndGuest",
+  "guestAccess": [
+    "READ",
+    "CREATE_AND_UPDATE"
+  ],
+  "authAccess": [
+    "CREATE_AND_UPDATE",
+    "READ",
+    "DELETE"
+  ]
+}
