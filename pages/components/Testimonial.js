@@ -22,14 +22,6 @@ export default function TestimonialComponent(props) {
     fetchTestimonials();
   }, []);
 
-  const prevSlide = () => {
-    setCurrentSlide(currentSlide === 0 ? 1 : (prev) => prev - 1);
-  };
-
-  const nextSlide = (index) => {
-    setCurrentSlide(currentSlide === 1 ? 0 : (prev) => prev + 1);
-  };
-
   return (
     <div className="bg-[#f8f8f8]">
       <div className="flex flex-col gap-12 mt-10 lg:p-20 px-4 py-10 relative">
