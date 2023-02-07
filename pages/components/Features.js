@@ -21,18 +21,18 @@ const categories = [
     icon: development,
     category: 'Development'
   },
-  {
-    icon: routine,
-    category: 'Lifestyle'
-  },
+  // {
+  //   icon: routine,
+  //   category: 'Lifestyle'
+  // },
   {
     icon: personal,
     category: 'Personal Development'
   },
-  {
-    icon: business,
-    category: 'Business'
-  },
+  // {
+  //   icon: business,
+  //   category: 'Business'
+  // },
   {
     icon: finance,
     category: 'Finance'
@@ -49,14 +49,14 @@ const categories = [
     icon: data,
     category: 'Data Science'
   },
-  {
-    icon: fitness,
-    category: 'Health & Fitness'
-  },
-  {
-    icon: music,
-    category: 'Music'
-  },
+  // {
+  //   icon: fitness,
+  //   category: 'Health & Fitness'
+  // },
+  // {
+  //   icon: music,
+  //   category: 'Music'
+  // },
   {
     icon: teaching,
     category: 'Teaching & Academics'

@@ -178,19 +178,12 @@ export default function CourseCreateForm(props) {
     learningObjective: [],
     isFeatured: false,
     online: false,
-<<<<<<< HEAD
     curriculum: undefined,
     headTitle: undefined,
     headMeta: undefined,
     headContent: undefined,
-=======
-    curriculum: "",
-    headTitle: "",
-    headMeta: "",
-    headContent: "",
-    instructorImage: "",
-    instructorName: "",
->>>>>>> b4ecad6e27b2d9e558c2195d7750272efefd4cac
+    instructorImage: undefined,
+    instructorName: undefined,
   };
   const [name, setName] = React.useState(initialValues.name);
   const [descriptions, setDescriptions] = React.useState(
@@ -292,7 +285,7 @@ export default function CourseCreateForm(props) {
           headTitle,
           headMeta,
           headContent,
-          instructorImage,
+          instructorImage: instructorImage || undefined,
           instructorName,
         };
         const validationResponses = await Promise.all(
@@ -944,7 +937,6 @@ export default function CourseCreateForm(props) {
         label="Instructor image"
         isRequired={false}
         isReadOnly={false}
-        value={instructorImage}
         onChange={(e) => {
           let { value } = e.target;
           if (onChange) {
@@ -983,7 +975,6 @@ export default function CourseCreateForm(props) {
         label="Instructor name"
         isRequired={false}
         isReadOnly={false}
-        value={instructorName}
         onChange={(e) => {
           let { value } = e.target;
           if (onChange) {

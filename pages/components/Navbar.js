@@ -107,7 +107,7 @@ export default function Navbar() {
         <MagnifyingGlassIcon className='w-6 h-6 text-violet-700 font-bold cursor-pointer' />
       </div>
       <div className='lg:flex gap-8 items-center hidden'>
-        <div className='flex items-center gap-8 font-medium'>
+        <div className='flex items-center gap-8 font-semibold'>
           {links.map((link, index) => {
             return (
               <Link key={index} href={link.href} className={path === link.href && 'text-violet-700'}>

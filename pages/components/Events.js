@@ -60,11 +60,11 @@ export default function Event() {
                                     className='w-full h-44 object-cover ease-in-out duration-500 group-hover:scale-110 rounded-t-lg'
                                 />
                                 <div className='p-3 flex flex-col gap-4 items-center justify-center'>
-                                    <h1 className='text-[#ababab] text-[16px]'>November 9, 2020</h1>
+                                    <h1 className='text-[#ababab] text-[16px]'>{event.date}</h1>
                                     <Link href={`events/${event.id}`} className='font-semibold text-[16px] text-center hover:text-violet-700 transition-colors duration-500 ease-in-out'>{event.topic}</Link>
                                     <div className='flex flex-row items-center text-[14px] font-light gap-2'>
                                         <MapPinIcon className='w-5 h-5 text-gray-800' />
-                                        Port Harcourt
+                                        {event.location}
                                     </div>
                                 </div>
 

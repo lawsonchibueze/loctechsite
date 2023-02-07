@@ -50,7 +50,6 @@ export declare type CourseCreateFormValidationValues = {
 };
 export declare type FormProps<T> = Partial<T> & React.DOMAttributes<HTMLDivElement>;
 export declare type CourseCreateFormOverridesProps = {
-<<<<<<< HEAD
     CourseCreateFormGrid?: FormProps<GridProps>;
     name?: FormProps<TextFieldProps>;
     descriptions?: FormProps<TextFieldProps>;
@@ -66,25 +65,8 @@ export declare type CourseCreateFormOverridesProps = {
     headTitle?: FormProps<TextFieldProps>;
     headMeta?: FormProps<TextFieldProps>;
     headContent?: FormProps<TextFieldProps>;
-=======
-    CourseCreateFormGrid?: PrimitiveOverrideProps<GridProps>;
-    name?: PrimitiveOverrideProps<TextFieldProps>;
-    descriptions?: PrimitiveOverrideProps<TextFieldProps>;
-    price?: PrimitiveOverrideProps<TextFieldProps>;
-    image?: PrimitiveOverrideProps<TextFieldProps>;
-    video?: PrimitiveOverrideProps<TextFieldProps>;
-    category?: PrimitiveOverrideProps<SelectFieldProps>;
-    duration?: PrimitiveOverrideProps<TextFieldProps>;
-    learningObjective?: PrimitiveOverrideProps<TextFieldProps>;
-    isFeatured?: PrimitiveOverrideProps<SwitchFieldProps>;
-    online?: PrimitiveOverrideProps<SwitchFieldProps>;
-    curriculum?: PrimitiveOverrideProps<TextFieldProps>;
-    headTitle?: PrimitiveOverrideProps<TextFieldProps>;
-    headMeta?: PrimitiveOverrideProps<TextFieldProps>;
-    headContent?: PrimitiveOverrideProps<TextFieldProps>;
-    instructorImage?: PrimitiveOverrideProps<TextFieldProps>;
-    instructorName?: PrimitiveOverrideProps<TextFieldProps>;
->>>>>>> b4ecad6e27b2d9e558c2195d7750272efefd4cac
+    instructorImage?: FormProps<TextFieldProps>;
+    instructorName?: FormProps<TextFieldProps>;
 } & EscapeHatchProps;
 export declare type CourseCreateFormProps = React.PropsWithChildren<{
     overrides?: CourseCreateFormOverridesProps | undefined | null;
