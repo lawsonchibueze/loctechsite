@@ -42,7 +42,7 @@ export default function Blogs({ post }) {
                     <img
                         src={post.image}
                         alt='blog Image'
-                        className='rounded-md w-full'
+                        className='rounded-md lg:w-[60rem] lg:h-[50rem]'
                     />
                 </div>
                 <Text post={post} />

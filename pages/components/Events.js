@@ -45,10 +45,10 @@ export default function Event() {
         <div className='my-32 lg:px-20 px-4'>
             <div className="flex lg:flex-row flex-col gap-12">
                 <div className='flex flex-col gap-4 items-center lg:w-[30%] w-full flex-1'>
-                    <h1 className='text-base font-medium text-violet-700 borde leading-snug self-start'>EVENTS</h1>
-                    <h2 className='text-[#181818] text-3xl font-medium lg:text-start text-center self-start'>Upcoming Events</h2>
-                    <p>You can show all events here to let people take the chance to get involved</p>
-                    <button className="px-6 py-3 text-violet-800 font-medium bg-violet-50 hover:shadow-xl transition-shadow duration-500 ease-in-out lg:self-start self-center">View all</button>
+                    <h1 className='text-base font-semibold text-violet-700 borde leading-snug lg:self-start self-center'>EVENTS</h1>
+                    <h2 className='text-[#181818] text-3xl font-medium lg:text-start text-center lg:self-start self-center'>Upcoming Events</h2>
+                    <p className='lg:self-start self-center lg:text-start text-center'>You can show all events here to let people take the chance to get involved</p>
+                    <button className="px-6 py-3 text-violet-800 font-medium lg:w-fit w-60 bg-violet-50 hover:shadow-xl transition-shadow duration-500 ease-in-out lg:self-start self-center">View all</button>
                 </div>
                 <div className='grid lg:grid-cols-3 grid-flow-row gap-8'>
                     {events.map((event, index) => {

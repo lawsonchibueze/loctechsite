@@ -247,6 +247,8 @@ type EagerCourse = {
   readonly headTitle?: string | null;
   readonly headMeta?: string | null;
   readonly headContent?: string | null;
+  readonly instructorImage?: string | null;
+  readonly instructorName?: string | null;
   readonly createdAt?: string | null;
   readonly updatedAt?: string | null;
 }
@@ -272,6 +274,8 @@ type LazyCourse = {
   readonly headTitle?: string | null;
   readonly headMeta?: string | null;
   readonly headContent?: string | null;
+  readonly instructorImage?: string | null;
+  readonly instructorName?: string | null;
   readonly createdAt?: string | null;
   readonly updatedAt?: string | null;
 }

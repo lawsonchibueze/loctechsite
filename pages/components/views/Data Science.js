@@ -19,7 +19,7 @@ export default function Data() {
 
     return (
         <div>
-            <div className='grid lg:grid-cols-4 grid-flow-row gap-6'>
+            <div className='grid lg:grid-cols-4 grid-flow-row gap-8'>
                 {courses.map((course, index) => {
                     if (course.category === 'DATA_SCIENCE') {
                         return (

@@ -67,10 +67,11 @@ export default function Navbar() {
       <div className='flex gap-4 items-center justify-between lg:justify-start w-full lg:w-fit'>
         <Link href='/' className='text-4xl font-bold flex items-center gap-2'>
           <Image
-            src="/assets/logo.png"
-            width={120}
-            height={120}
+            src="/assets/logo1.png"
+            width={220}
+            height={220}
             alt="navbar"
+            className='-ml-8'
           />
         </Link>
         <div onClick={handleClick} className="flex flex-col space-y-2 items-end cursor-pointer lg:hidden z-50">
@@ -117,12 +118,12 @@ export default function Navbar() {
         </div>
         <Link href='/cart' className='relative flex'>
           <ShoppingBagIcon className='w-6 h-6' />
-          <div className='absolute bg-violet-700 -right-4 bottom-2 rounded-full w-3 h-3 flex justify-center items-center text-white text-sm p-3'>0</div>
+          <div className='absolute bg-red-700 -right-4 bottom-2 rounded-full w-3 h-3 flex justify-center items-center text-white text-sm p-3'>0</div>
         </Link>
       </div>
       {showLinks && (
-        <div className="absolute lg:hidden bg-[#112240] inset-y-0 right-0 h-screen w-4/5 bg-opacity-100 z-30 backdrop-blur-lg">
-          <div className="flex flex-col space-y-10 mt-20 p-10 items-center text-white">
+        <div className="absolute lg:hidden bg-gray-50 inset-y-0 right-0 h-screen w-4/5 bg-opacity-100 z-30 backdrop-blur-lg">
+          <div className="flex flex-col space-y-10 mt-20 p-10 items-center text-black font-medium text-[22px]">
             {links.map((link, index) => (
               <Link
                 onClick={removeLink}
@@ -132,9 +133,6 @@ export default function Navbar() {
                 {link.name}
               </Link>
             ))}
-            <button className="ring-1 ring-cyan-300 text-cyan-200 px-10 py-2 hover:bg-cyan-900 rounded-sm text-xl transition duration-700 ease-in-out">
-              Resume
-            </button>
           </div>
         </div>
       )}

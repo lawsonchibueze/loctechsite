@@ -65,7 +65,7 @@ const categories = [
 
 export default function Features() {
   return (
-    <div className='lg:px-20 px-4 py-20 bg-white'>
+    <div className='lg:px-20 px-4 py-20 bg-white lg:block hidden'>
       <h1 className='text-3xl font-medium text-gray-900 mb-10'>Top Category</h1>
       <div className='grid lg:grid-cols-4 grid-flow-row gap-8'>
         {categories.map((cat, index) => {

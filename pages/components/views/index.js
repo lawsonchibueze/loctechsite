@@ -13,7 +13,7 @@ const allTabs = [
         component: <All />
     },
     {
-        component: <Graphics />
+        component: <Web />
     },
     {
         component: <Networking />
@@ -22,7 +22,7 @@ const allTabs = [
         component: <Data />
     },
     {
-        component: <Web />
+        component: <Graphics />
     },
     {
         component: <Office />
