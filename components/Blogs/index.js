@@ -10,6 +10,8 @@ import author from "/public/images/author.jpg";
 import { withSSRContext } from "aws-amplify";
 import { Post } from "../../models";
 import { useRouter } from "next/router";
+import reactMarkdown from "react-markdown";
+import { ReactMarkdown } from "react-markdown/lib/react-markdown";
 
 const Blogs = ({ post }) => {
   const router = useRouter();
@@ -51,7 +53,7 @@ const Blogs = ({ post }) => {
           />
         </div>
         <div className="max-w-4xl text-[#696969] leading-relaxed text-[14px] font-light">
-          {post.content}
+          <ReactMarkdown>{post.content}</ReactMarkdown>
         </div>
         <CommentField />
       </div>

@@ -7,6 +7,7 @@ import { Events } from "../models";
 import about1 from "/public/images/about1.jpg";
 import about2 from "/public/images/about2.jpg";
 import about3 from "/public/images/about3.jpg";
+import { ReactMarkdown } from "react-markdown/lib/react-markdown";
 
 const data = [
   {
@@ -74,7 +75,7 @@ export default function Event() {
                 <div className="p-3 flex flex-col gap-4 items-center justify-center">
                   <h1 className="text-[#ababab] text-[16px]">{event.date}</h1>
                   <div className="font-semibold text-[16px] text-center hover:text-violet-700 transition-colors duration-500 ease-in-out">
-                    {event.topic}
+                    <ReactMarkdown>{event.topic}</ReactMarkdown>
                   </div>
                   <div className="flex flex-row items-center text-[14px] font-light gap-2">
                     <MapPinIcon className="w-5 h-5 text-gray-800" />
