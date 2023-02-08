@@ -1,47 +1,108 @@
 {
   "providers": {
     "awscloudformation": {
-      "AuthRoleName": "amplify-loctechapps-staging-180446-authRole",
-      "UnauthRoleArn": "arn:aws:iam::484645543282:role/amplify-loctechapps-staging-180446-unauthRole",
-      "AuthRoleArn": "arn:aws:iam::484645543282:role/amplify-loctechapps-staging-180446-authRole",
+      "AuthRoleName": "amplify-amplify628b805112a44-staging-111646-authRole",
+      "UnauthRoleArn": "arn:aws:iam::484645543282:role/amplify-amplify628b805112a44-staging-111646-unauthRole",
+      "AuthRoleArn": "arn:aws:iam::484645543282:role/amplify-amplify628b805112a44-staging-111646-authRole",
       "Region": "us-west-2",
-      "DeploymentBucketName": "amplify-loctechapps-staging-180446-deployment",
-      "UnauthRoleName": "amplify-loctechapps-staging-180446-unauthRole",
-      "StackName": "amplify-loctechapps-staging-180446",
-      "StackId": "arn:aws:cloudformation:us-west-2:484645543282:stack/amplify-loctechapps-staging-180446/1d636880-86da-11ed-adb0-022bb55ffc87",
-      "AmplifyAppId": "d2p5f1lth1s35l"
+      "DeploymentBucketName": "amplify-amplify628b805112a44-staging-111646-deployment",
+      "UnauthRoleName": "amplify-amplify628b805112a44-staging-111646-unauthRole",
+      "StackName": "amplify-amplify628b805112a44-staging-111646",
+      "StackId": "arn:aws:cloudformation:us-west-2:484645543282:stack/amplify-amplify628b805112a44-staging-111646/9a19bc80-926a-11ed-b18c-027572b4f05b",
+      "AmplifyAppId": "d1b3auu8c4bkoh"
     }
   },
   "api": {
-    "loctechapps": {
-      "service": "AppSync",
-      "providerPlugin": "awscloudformation",
+    "loctechsite": {
       "dependsOn": [],
       "output": {
         "authConfig": {
+          "additionalAuthenticationProviders": [
+            {
+              "authenticationType": "AWS_IAM"
+            }
+          ],
           "defaultAuthentication": {
             "authenticationType": "API_KEY",
             "apiKeyConfig": {
               "apiKeyExpirationDays": 30,
               "description": "api key description"
             }
-          },
-          "additionalAuthenticationProviders": [
-            {
-              "authenticationType": "AWS_IAM"
-            }
+          }
+        },
+        "GraphQLAPIIdOutput": "d2lt5per3nd6hapwtwxvvw4kxe",
+        "GraphQLAPIEndpointOutput": "https://mc25botkbbhbvgieewp6wttpni.appsync-api.us-west-2.amazonaws.com/graphql",
+        "GraphQLAPIKeyOutput": "da2-q2gyni6nhfcuhhsgab75o7oqbu"
+      },
+      "providerPlugin": "awscloudformation",
+      "service": "AppSync",
+      "lastPushTimeStamp": "2023-02-07T16:51:13.900Z",
+      "providerMetadata": {
+        "s3TemplateURL": "https://s3.amazonaws.com/amplify-amplify628b805112a44-staging-111646-deployment/amplify-cfn-templates/api/cloudformation-template.json",
+        "logicalId": "apiloctechsite"
+      },
+      "lastPushDirHash": "9v5qv7NpGRq1KY2EwXiYZwoIKh0="
+    }
+  },
+  "auth": {
+    "loctechsite": {
+      "customAuth": false,
+      "dependsOn": [],
+      "frontendAuthConfig": {
+        "mfaConfiguration": "OFF",
+        "mfaTypes": [
+          "SMS"
+        ],
+        "passwordProtectionSettings": {
+          "passwordPolicyMinLength": 8,
+          "passwordPolicyCharacters": [
+            "REQUIRES_LOWERCASE",
+            "REQUIRES_NUMBERS",
+            "REQUIRES_SYMBOLS",
+            "REQUIRES_UPPERCASE"
           ]
         },
-        "GraphQLAPIIdOutput": "6nxhlanpgfazjdp3m54gnwd67i",
-        "GraphQLAPIEndpointOutput": "https://sfzpf55hivakfnrwxx6qia66ky.appsync-api.us-west-2.amazonaws.com/graphql",
-        "GraphQLAPIKeyOutput": "da2-42he3trwgna3hodoj6wobgg2ha"
+        "signupAttributes": [],
+        "socialProviders": [],
+        "usernameAttributes": [
+          "EMAIL"
+        ],
+        "verificationMechanisms": [
+          "EMAIL"
+        ]
       },
-      "lastPushTimeStamp": "2022-12-28T18:59:24.684Z",
+      "providerPlugin": "awscloudformation",
+      "service": "Cognito",
+      "output": {
+        "UserPoolId": "us-west-2_Nn4zS2lQp",
+        "AppClientIDWeb": "26vtme2i2hp95qngmj9lhmkfso",
+        "AppClientID": "40olhc725iapburqe59dtdlvap",
+        "IdentityPoolId": "us-west-2:e0ec24f8-f2e3-4153-91db-b27b17a2bde9",
+        "UserPoolArn": "arn:aws:cognito-idp:us-west-2:484645543282:userpool/us-west-2_Nn4zS2lQp",
+        "IdentityPoolName": "testAuthIdentityPool__staging",
+        "UserPoolName": "loctechsite"
+      },
+      "lastPushTimeStamp": "2023-02-07T16:51:13.837Z",
       "providerMetadata": {
-        "s3TemplateURL": "https://s3.amazonaws.com/amplify-loctechapps-staging-180446-deployment/amplify-cfn-templates/api/cloudformation-template.json",
-        "logicalId": "apiloctechapps"
+        "s3TemplateURL": "https://s3.amazonaws.com/amplify-amplify628b805112a44-staging-111646-deployment/amplify-cfn-templates/auth/loctechsite-cloudformation-template.json",
+        "logicalId": "authloctechsite"
+      }
+    }
+  },
+  "storage": {
+    "s3loctechsitestoragef79d8bac": {
+      "dependsOn": [],
+      "providerPlugin": "awscloudformation",
+      "service": "S3",
+      "output": {
+        "BucketName": "loctechsite-storage-f79d8bac111646-staging",
+        "Region": "us-west-2"
       },
-      "lastPushDirHash": "IN8GWII4AEg9z4EgKSubiPh0qU4="
+      "lastPushTimeStamp": "2023-02-07T16:51:13.838Z",
+      "providerMetadata": {
+        "s3TemplateURL": "https://s3.amazonaws.com/amplify-amplify628b805112a44-staging-111646-deployment/amplify-cfn-templates/storage/cloudformation-template.json",
+        "logicalId": "storages3loctechsitestoragef79d8bac"
+      }
     }
   }
 }

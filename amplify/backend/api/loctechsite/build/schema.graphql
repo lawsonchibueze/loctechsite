@@ -1,23 +1,101 @@
 
-enum Category {
-  AUTOCAD
-  DATA_SCIENCE
-  WEB_DEVELOPMENT
-  CREATIVE_GRAPHICS_DESIGN
-  OFFICE_PRODUCTIVITY
-  SECURITY
-  CLOUD_COMPUTING
-  PROJECT_MANAGEMENT
-  NETWORKING
-  PROGRAMMING
-  DIGITAL_MARKETING
-  FINANCE_ACCOUNTING
+enum TestimonialCategory {
+  STUDY_ENVIRONMENT
+  TRAINING_STANDARD
+  INSTRUCTOR
+  JOB_PLACEMENT
 }
 
-enum Level {
-  FOUNDATION
-  INTERMEDIATE
-  ADVANCE
+type Testimonial @aws_iam @aws_api_key {
+  id: ID!
+  image: AWSURL
+  category: TestimonialCategory
+  Featured: Boolean
+  Feedback: String
+  name: String
+  createdAt: AWSDateTime!
+  updatedAt: AWSDateTime!
+  _version: Int!
+  _deleted: Boolean
+  _lastChangedAt: AWSTimestamp!
+}
+
+type Events @aws_iam @aws_api_key {
+  id: ID!
+  topic: String
+  content: String
+  Image: AWSURL
+  totalSlot: Int
+  facebook: AWSURL
+  email: AWSEmail
+  cost: Int
+  buttonText: String
+  speakers: [AWSURL]
+  date: AWSDate
+  time: AWSDateTime
+  locationMap: AWSURL
+  location: String
+  createdAt: AWSDateTime!
+  updatedAt: AWSDateTime!
+  _version: Int!
+  _deleted: Boolean
+  _lastChangedAt: AWSTimestamp!
+}
+
+type Post @aws_iam @aws_api_key {
+  id: ID!
+  title: String
+  content: String
+  isFeatured: Boolean
+  image: AWSURL
+  category: String
+  tags: String
+  author: String
+  date: AWSDate
+  createdAt: AWSDateTime!
+  updatedAt: AWSDateTime!
+  _version: Int!
+  _deleted: Boolean
+  _lastChangedAt: AWSTimestamp!
+}
+
+type HeroData @aws_iam @aws_api_key {
+  id: ID!
+  image: String
+  smallText: String
+  mediumText: String
+  largeText: String
+  buttonText: String
+  createdAt: AWSDateTime!
+  updatedAt: AWSDateTime!
+  _version: Int!
+  _deleted: Boolean
+  _lastChangedAt: AWSTimestamp!
+}
+
+type Instructor @aws_iam @aws_api_key {
+  id: ID!
+  name: String
+  image: AWSURL
+  facebook: AWSURL
+  linkedin: AWSURL
+  rating: String
+  review: String
+  Courses(filter: ModelInstructorCourseFilterInput, sortDirection: ModelSortDirection, limit: Int, nextToken: String): ModelInstructorCourseConnection
+  createdAt: AWSDateTime!
+  updatedAt: AWSDateTime!
+  _version: Int!
+  _deleted: Boolean
+  _lastChangedAt: AWSTimestamp!
+}
+
+enum Category {
+  ALL
+  WEB_DEVELOPMENT
+  DATA_SCIENCE
+  NETWORKING_SECURITY
+  GRAPHICS_MEDIA
+  OFFICE_PRODUCTIVITY
 }
 
 type Course @aws_iam @aws_api_key {
@@ -25,15 +103,33 @@ type Course @aws_iam @aws_api_key {
   name: String!
   descriptions: String!
   price: Float!
-  excerpt: String!
   image: AWSURL
   video: AWSURL
   category: Category!
   duration: Int
   learningObjective: [String]
-  level: Level
-  curriculum: [String]
   isFeatured: Boolean!
+  instructors(filter: ModelInstructorCourseFilterInput, sortDirection: ModelSortDirection, limit: Int, nextToken: String): ModelInstructorCourseConnection
+  online: Boolean
+  curriculum: AWSURL
+  headTitle: String
+  headMeta: String
+  headContent: String
+  instructorImage: AWSURL
+  instructorName: String
+  createdAt: AWSDateTime!
+  updatedAt: AWSDateTime!
+  _version: Int!
+  _deleted: Boolean
+  _lastChangedAt: AWSTimestamp!
+}
+
+type InstructorCourse @aws_iam @aws_api_key {
+  id: ID!
+  instructorId: ID!
+  courseId: ID!
+  instructor: Instructor!
+  course: Course!
   createdAt: AWSDateTime!
   updatedAt: AWSDateTime!
   _version: Int!
@@ -191,6 +287,470 @@ enum ModelSortDirection {
   DESC
 }
 
+type ModelTestimonialConnection @aws_api_key @aws_iam {
+  items: [Testimonial]!
+  nextToken: String
+  startedAt: AWSTimestamp
+}
+
+input ModelTestimonialCategoryInput {
+  eq: TestimonialCategory
+  ne: TestimonialCategory
+}
+
+input ModelTestimonialFilterInput {
+  id: ModelIDInput
+  image: ModelStringInput
+  category: ModelTestimonialCategoryInput
+  Featured: ModelBooleanInput
+  Feedback: ModelStringInput
+  name: ModelStringInput
+  and: [ModelTestimonialFilterInput]
+  or: [ModelTestimonialFilterInput]
+  not: ModelTestimonialFilterInput
+}
+
+type Query {
+  getTestimonial(id: ID!): Testimonial @aws_api_key @aws_iam
+  listTestimonials(filter: ModelTestimonialFilterInput, limit: Int, nextToken: String): ModelTestimonialConnection @aws_api_key @aws_iam
+  syncTestimonials(filter: ModelTestimonialFilterInput, limit: Int, nextToken: String, lastSync: AWSTimestamp): ModelTestimonialConnection @aws_api_key @aws_iam
+  getEvents(id: ID!): Events @aws_api_key @aws_iam
+  listEvents(filter: ModelEventsFilterInput, limit: Int, nextToken: String): ModelEventsConnection @aws_api_key @aws_iam
+  syncEvents(filter: ModelEventsFilterInput, limit: Int, nextToken: String, lastSync: AWSTimestamp): ModelEventsConnection @aws_api_key @aws_iam
+  getPost(id: ID!): Post @aws_api_key @aws_iam
+  listPosts(filter: ModelPostFilterInput, limit: Int, nextToken: String): ModelPostConnection @aws_api_key @aws_iam
+  syncPosts(filter: ModelPostFilterInput, limit: Int, nextToken: String, lastSync: AWSTimestamp): ModelPostConnection @aws_api_key @aws_iam
+  getHeroData(id: ID!): HeroData @aws_api_key @aws_iam
+  listHeroData(filter: ModelHeroDataFilterInput, limit: Int, nextToken: String): ModelHeroDataConnection @aws_api_key @aws_iam
+  syncHeroData(filter: ModelHeroDataFilterInput, limit: Int, nextToken: String, lastSync: AWSTimestamp): ModelHeroDataConnection @aws_api_key @aws_iam
+  getInstructor(id: ID!): Instructor @aws_api_key @aws_iam
+  listInstructors(filter: ModelInstructorFilterInput, limit: Int, nextToken: String): ModelInstructorConnection @aws_api_key @aws_iam
+  syncInstructors(filter: ModelInstructorFilterInput, limit: Int, nextToken: String, lastSync: AWSTimestamp): ModelInstructorConnection @aws_api_key @aws_iam
+  getCourse(id: ID!): Course @aws_api_key @aws_iam
+  listCourses(filter: ModelCourseFilterInput, limit: Int, nextToken: String): ModelCourseConnection @aws_api_key @aws_iam
+  syncCourses(filter: ModelCourseFilterInput, limit: Int, nextToken: String, lastSync: AWSTimestamp): ModelCourseConnection @aws_api_key @aws_iam
+  getInstructorCourse(id: ID!): InstructorCourse @aws_api_key @aws_iam
+  listInstructorCourses(filter: ModelInstructorCourseFilterInput, limit: Int, nextToken: String): ModelInstructorCourseConnection @aws_api_key @aws_iam
+  syncInstructorCourses(filter: ModelInstructorCourseFilterInput, limit: Int, nextToken: String, lastSync: AWSTimestamp): ModelInstructorCourseConnection @aws_api_key @aws_iam
+  instructorCoursesByInstructorId(instructorId: ID!, sortDirection: ModelSortDirection, filter: ModelInstructorCourseFilterInput, limit: Int, nextToken: String): ModelInstructorCourseConnection @aws_api_key @aws_iam
+  instructorCoursesByCourseId(courseId: ID!, sortDirection: ModelSortDirection, filter: ModelInstructorCourseFilterInput, limit: Int, nextToken: String): ModelInstructorCourseConnection @aws_api_key @aws_iam
+}
+
+input ModelTestimonialConditionInput {
+  image: ModelStringInput
+  category: ModelTestimonialCategoryInput
+  Featured: ModelBooleanInput
+  Feedback: ModelStringInput
+  name: ModelStringInput
+  and: [ModelTestimonialConditionInput]
+  or: [ModelTestimonialConditionInput]
+  not: ModelTestimonialConditionInput
+}
+
+input CreateTestimonialInput {
+  id: ID
+  image: AWSURL
+  category: TestimonialCategory
+  Featured: Boolean
+  Feedback: String
+  name: String
+  _version: Int
+}
+
+input UpdateTestimonialInput {
+  id: ID!
+  image: AWSURL
+  category: TestimonialCategory
+  Featured: Boolean
+  Feedback: String
+  name: String
+  _version: Int
+}
+
+input DeleteTestimonialInput {
+  id: ID!
+  _version: Int
+}
+
+type Mutation {
+  createTestimonial(input: CreateTestimonialInput!, condition: ModelTestimonialConditionInput): Testimonial @aws_api_key @aws_iam
+  updateTestimonial(input: UpdateTestimonialInput!, condition: ModelTestimonialConditionInput): Testimonial @aws_api_key @aws_iam
+  deleteTestimonial(input: DeleteTestimonialInput!, condition: ModelTestimonialConditionInput): Testimonial @aws_api_key @aws_iam
+  createEvents(input: CreateEventsInput!, condition: ModelEventsConditionInput): Events @aws_api_key @aws_iam
+  updateEvents(input: UpdateEventsInput!, condition: ModelEventsConditionInput): Events @aws_api_key @aws_iam
+  deleteEvents(input: DeleteEventsInput!, condition: ModelEventsConditionInput): Events @aws_api_key @aws_iam
+  createPost(input: CreatePostInput!, condition: ModelPostConditionInput): Post @aws_api_key @aws_iam
+  updatePost(input: UpdatePostInput!, condition: ModelPostConditionInput): Post @aws_api_key @aws_iam
+  deletePost(input: DeletePostInput!, condition: ModelPostConditionInput): Post @aws_api_key @aws_iam
+  createHeroData(input: CreateHeroDataInput!, condition: ModelHeroDataConditionInput): HeroData @aws_api_key @aws_iam
+  updateHeroData(input: UpdateHeroDataInput!, condition: ModelHeroDataConditionInput): HeroData @aws_api_key @aws_iam
+  deleteHeroData(input: DeleteHeroDataInput!, condition: ModelHeroDataConditionInput): HeroData @aws_api_key @aws_iam
+  createInstructor(input: CreateInstructorInput!, condition: ModelInstructorConditionInput): Instructor @aws_api_key @aws_iam
+  updateInstructor(input: UpdateInstructorInput!, condition: ModelInstructorConditionInput): Instructor @aws_api_key @aws_iam
+  deleteInstructor(input: DeleteInstructorInput!, condition: ModelInstructorConditionInput): Instructor @aws_api_key @aws_iam
+  createCourse(input: CreateCourseInput!, condition: ModelCourseConditionInput): Course @aws_api_key @aws_iam
+  updateCourse(input: UpdateCourseInput!, condition: ModelCourseConditionInput): Course @aws_api_key @aws_iam
+  deleteCourse(input: DeleteCourseInput!, condition: ModelCourseConditionInput): Course @aws_api_key @aws_iam
+  createInstructorCourse(input: CreateInstructorCourseInput!, condition: ModelInstructorCourseConditionInput): InstructorCourse @aws_api_key @aws_iam
+  updateInstructorCourse(input: UpdateInstructorCourseInput!, condition: ModelInstructorCourseConditionInput): InstructorCourse @aws_api_key @aws_iam
+  deleteInstructorCourse(input: DeleteInstructorCourseInput!, condition: ModelInstructorCourseConditionInput): InstructorCourse @aws_api_key @aws_iam
+}
+
+input ModelSubscriptionTestimonialFilterInput {
+  id: ModelSubscriptionIDInput
+  image: ModelSubscriptionStringInput
+  category: ModelSubscriptionStringInput
+  Featured: ModelSubscriptionBooleanInput
+  Feedback: ModelSubscriptionStringInput
+  name: ModelSubscriptionStringInput
+  and: [ModelSubscriptionTestimonialFilterInput]
+  or: [ModelSubscriptionTestimonialFilterInput]
+}
+
+type Subscription {
+  onCreateTestimonial(filter: ModelSubscriptionTestimonialFilterInput): Testimonial @aws_subscribe(mutations: ["createTestimonial"]) @aws_api_key @aws_iam
+  onUpdateTestimonial(filter: ModelSubscriptionTestimonialFilterInput): Testimonial @aws_subscribe(mutations: ["updateTestimonial"]) @aws_api_key @aws_iam
+  onDeleteTestimonial(filter: ModelSubscriptionTestimonialFilterInput): Testimonial @aws_subscribe(mutations: ["deleteTestimonial"]) @aws_api_key @aws_iam
+  onCreateEvents(filter: ModelSubscriptionEventsFilterInput): Events @aws_subscribe(mutations: ["createEvents"]) @aws_api_key @aws_iam
+  onUpdateEvents(filter: ModelSubscriptionEventsFilterInput): Events @aws_subscribe(mutations: ["updateEvents"]) @aws_api_key @aws_iam
+  onDeleteEvents(filter: ModelSubscriptionEventsFilterInput): Events @aws_subscribe(mutations: ["deleteEvents"]) @aws_api_key @aws_iam
+  onCreatePost(filter: ModelSubscriptionPostFilterInput): Post @aws_subscribe(mutations: ["createPost"]) @aws_api_key @aws_iam
+  onUpdatePost(filter: ModelSubscriptionPostFilterInput): Post @aws_subscribe(mutations: ["updatePost"]) @aws_api_key @aws_iam
+  onDeletePost(filter: ModelSubscriptionPostFilterInput): Post @aws_subscribe(mutations: ["deletePost"]) @aws_api_key @aws_iam
+  onCreateHeroData(filter: ModelSubscriptionHeroDataFilterInput): HeroData @aws_subscribe(mutations: ["createHeroData"]) @aws_api_key @aws_iam
+  onUpdateHeroData(filter: ModelSubscriptionHeroDataFilterInput): HeroData @aws_subscribe(mutations: ["updateHeroData"]) @aws_api_key @aws_iam
+  onDeleteHeroData(filter: ModelSubscriptionHeroDataFilterInput): HeroData @aws_subscribe(mutations: ["deleteHeroData"]) @aws_api_key @aws_iam
+  onCreateInstructor(filter: ModelSubscriptionInstructorFilterInput): Instructor @aws_subscribe(mutations: ["createInstructor"]) @aws_api_key @aws_iam
+  onUpdateInstructor(filter: ModelSubscriptionInstructorFilterInput): Instructor @aws_subscribe(mutations: ["updateInstructor"]) @aws_api_key @aws_iam
+  onDeleteInstructor(filter: ModelSubscriptionInstructorFilterInput): Instructor @aws_subscribe(mutations: ["deleteInstructor"]) @aws_api_key @aws_iam
+  onCreateCourse(filter: ModelSubscriptionCourseFilterInput): Course @aws_subscribe(mutations: ["createCourse"]) @aws_api_key @aws_iam
+  onUpdateCourse(filter: ModelSubscriptionCourseFilterInput): Course @aws_subscribe(mutations: ["updateCourse"]) @aws_api_key @aws_iam
+  onDeleteCourse(filter: ModelSubscriptionCourseFilterInput): Course @aws_subscribe(mutations: ["deleteCourse"]) @aws_api_key @aws_iam
+  onCreateInstructorCourse(filter: ModelSubscriptionInstructorCourseFilterInput): InstructorCourse @aws_subscribe(mutations: ["createInstructorCourse"]) @aws_api_key @aws_iam
+  onUpdateInstructorCourse(filter: ModelSubscriptionInstructorCourseFilterInput): InstructorCourse @aws_subscribe(mutations: ["updateInstructorCourse"]) @aws_api_key @aws_iam
+  onDeleteInstructorCourse(filter: ModelSubscriptionInstructorCourseFilterInput): InstructorCourse @aws_subscribe(mutations: ["deleteInstructorCourse"]) @aws_api_key @aws_iam
+}
+
+type ModelEventsConnection @aws_api_key @aws_iam {
+  items: [Events]!
+  nextToken: String
+  startedAt: AWSTimestamp
+}
+
+input ModelEventsFilterInput {
+  id: ModelIDInput
+  topic: ModelStringInput
+  content: ModelStringInput
+  Image: ModelStringInput
+  totalSlot: ModelIntInput
+  facebook: ModelStringInput
+  email: ModelStringInput
+  cost: ModelIntInput
+  buttonText: ModelStringInput
+  speakers: ModelStringInput
+  date: ModelStringInput
+  time: ModelStringInput
+  locationMap: ModelStringInput
+  location: ModelStringInput
+  and: [ModelEventsFilterInput]
+  or: [ModelEventsFilterInput]
+  not: ModelEventsFilterInput
+}
+
+input ModelEventsConditionInput {
+  topic: ModelStringInput
+  content: ModelStringInput
+  Image: ModelStringInput
+  totalSlot: ModelIntInput
+  facebook: ModelStringInput
+  email: ModelStringInput
+  cost: ModelIntInput
+  buttonText: ModelStringInput
+  speakers: ModelStringInput
+  date: ModelStringInput
+  time: ModelStringInput
+  locationMap: ModelStringInput
+  location: ModelStringInput
+  and: [ModelEventsConditionInput]
+  or: [ModelEventsConditionInput]
+  not: ModelEventsConditionInput
+}
+
+input CreateEventsInput {
+  id: ID
+  topic: String
+  content: String
+  Image: AWSURL
+  totalSlot: Int
+  facebook: AWSURL
+  email: AWSEmail
+  cost: Int
+  buttonText: String
+  speakers: [AWSURL]
+  date: AWSDate
+  time: AWSDateTime
+  locationMap: AWSURL
+  location: String
+  _version: Int
+}
+
+input UpdateEventsInput {
+  id: ID!
+  topic: String
+  content: String
+  Image: AWSURL
+  totalSlot: Int
+  facebook: AWSURL
+  email: AWSEmail
+  cost: Int
+  buttonText: String
+  speakers: [AWSURL]
+  date: AWSDate
+  time: AWSDateTime
+  locationMap: AWSURL
+  location: String
+  _version: Int
+}
+
+input DeleteEventsInput {
+  id: ID!
+  _version: Int
+}
+
+input ModelSubscriptionEventsFilterInput {
+  id: ModelSubscriptionIDInput
+  topic: ModelSubscriptionStringInput
+  content: ModelSubscriptionStringInput
+  Image: ModelSubscriptionStringInput
+  totalSlot: ModelSubscriptionIntInput
+  facebook: ModelSubscriptionStringInput
+  email: ModelSubscriptionStringInput
+  cost: ModelSubscriptionIntInput
+  buttonText: ModelSubscriptionStringInput
+  speakers: ModelSubscriptionStringInput
+  date: ModelSubscriptionStringInput
+  time: ModelSubscriptionStringInput
+  locationMap: ModelSubscriptionStringInput
+  location: ModelSubscriptionStringInput
+  and: [ModelSubscriptionEventsFilterInput]
+  or: [ModelSubscriptionEventsFilterInput]
+}
+
+type ModelPostConnection @aws_api_key @aws_iam {
+  items: [Post]!
+  nextToken: String
+  startedAt: AWSTimestamp
+}
+
+input ModelPostFilterInput {
+  id: ModelIDInput
+  title: ModelStringInput
+  content: ModelStringInput
+  isFeatured: ModelBooleanInput
+  image: ModelStringInput
+  category: ModelStringInput
+  tags: ModelStringInput
+  author: ModelStringInput
+  date: ModelStringInput
+  and: [ModelPostFilterInput]
+  or: [ModelPostFilterInput]
+  not: ModelPostFilterInput
+}
+
+input ModelPostConditionInput {
+  title: ModelStringInput
+  content: ModelStringInput
+  isFeatured: ModelBooleanInput
+  image: ModelStringInput
+  category: ModelStringInput
+  tags: ModelStringInput
+  author: ModelStringInput
+  date: ModelStringInput
+  and: [ModelPostConditionInput]
+  or: [ModelPostConditionInput]
+  not: ModelPostConditionInput
+}
+
+input CreatePostInput {
+  id: ID
+  title: String
+  content: String
+  isFeatured: Boolean
+  image: AWSURL
+  category: String
+  tags: String
+  author: String
+  date: AWSDate
+  _version: Int
+}
+
+input UpdatePostInput {
+  id: ID!
+  title: String
+  content: String
+  isFeatured: Boolean
+  image: AWSURL
+  category: String
+  tags: String
+  author: String
+  date: AWSDate
+  _version: Int
+}
+
+input DeletePostInput {
+  id: ID!
+  _version: Int
+}
+
+input ModelSubscriptionPostFilterInput {
+  id: ModelSubscriptionIDInput
+  title: ModelSubscriptionStringInput
+  content: ModelSubscriptionStringInput
+  isFeatured: ModelSubscriptionBooleanInput
+  image: ModelSubscriptionStringInput
+  category: ModelSubscriptionStringInput
+  tags: ModelSubscriptionStringInput
+  author: ModelSubscriptionStringInput
+  date: ModelSubscriptionStringInput
+  and: [ModelSubscriptionPostFilterInput]
+  or: [ModelSubscriptionPostFilterInput]
+}
+
+type ModelHeroDataConnection @aws_api_key @aws_iam {
+  items: [HeroData]!
+  nextToken: String
+  startedAt: AWSTimestamp
+}
+
+input ModelHeroDataFilterInput {
+  id: ModelIDInput
+  image: ModelStringInput
+  smallText: ModelStringInput
+  mediumText: ModelStringInput
+  largeText: ModelStringInput
+  buttonText: ModelStringInput
+  and: [ModelHeroDataFilterInput]
+  or: [ModelHeroDataFilterInput]
+  not: ModelHeroDataFilterInput
+}
+
+input ModelHeroDataConditionInput {
+  image: ModelStringInput
+  smallText: ModelStringInput
+  mediumText: ModelStringInput
+  largeText: ModelStringInput
+  buttonText: ModelStringInput
+  and: [ModelHeroDataConditionInput]
+  or: [ModelHeroDataConditionInput]
+  not: ModelHeroDataConditionInput
+}
+
+input CreateHeroDataInput {
+  id: ID
+  image: String
+  smallText: String
+  mediumText: String
+  largeText: String
+  buttonText: String
+  _version: Int
+}
+
+input UpdateHeroDataInput {
+  id: ID!
+  image: String
+  smallText: String
+  mediumText: String
+  largeText: String
+  buttonText: String
+  _version: Int
+}
+
+input DeleteHeroDataInput {
+  id: ID!
+  _version: Int
+}
+
+input ModelSubscriptionHeroDataFilterInput {
+  id: ModelSubscriptionIDInput
+  image: ModelSubscriptionStringInput
+  smallText: ModelSubscriptionStringInput
+  mediumText: ModelSubscriptionStringInput
+  largeText: ModelSubscriptionStringInput
+  buttonText: ModelSubscriptionStringInput
+  and: [ModelSubscriptionHeroDataFilterInput]
+  or: [ModelSubscriptionHeroDataFilterInput]
+}
+
+type ModelInstructorConnection @aws_api_key @aws_iam {
+  items: [Instructor]!
+  nextToken: String
+  startedAt: AWSTimestamp
+}
+
+input ModelInstructorFilterInput {
+  id: ModelIDInput
+  name: ModelStringInput
+  image: ModelStringInput
+  facebook: ModelStringInput
+  linkedin: ModelStringInput
+  rating: ModelStringInput
+  review: ModelStringInput
+  and: [ModelInstructorFilterInput]
+  or: [ModelInstructorFilterInput]
+  not: ModelInstructorFilterInput
+}
+
+input ModelInstructorConditionInput {
+  name: ModelStringInput
+  image: ModelStringInput
+  facebook: ModelStringInput
+  linkedin: ModelStringInput
+  rating: ModelStringInput
+  review: ModelStringInput
+  and: [ModelInstructorConditionInput]
+  or: [ModelInstructorConditionInput]
+  not: ModelInstructorConditionInput
+}
+
+input CreateInstructorInput {
+  id: ID
+  name: String
+  image: AWSURL
+  facebook: AWSURL
+  linkedin: AWSURL
+  rating: String
+  review: String
+  _version: Int
+}
+
+input UpdateInstructorInput {
+  id: ID!
+  name: String
+  image: AWSURL
+  facebook: AWSURL
+  linkedin: AWSURL
+  rating: String
+  review: String
+  _version: Int
+}
+
+input DeleteInstructorInput {
+  id: ID!
+  _version: Int
+}
+
+input ModelSubscriptionInstructorFilterInput {
+  id: ModelSubscriptionIDInput
+  name: ModelSubscriptionStringInput
+  image: ModelSubscriptionStringInput
+  facebook: ModelSubscriptionStringInput
+  linkedin: ModelSubscriptionStringInput
+  rating: ModelSubscriptionStringInput
+  review: ModelSubscriptionStringInput
+  and: [ModelSubscriptionInstructorFilterInput]
+  or: [ModelSubscriptionInstructorFilterInput]
+}
+
 type ModelCourseConnection @aws_api_key @aws_iam {
   items: [Course]!
   nextToken: String
@@ -202,49 +762,46 @@ input ModelCategoryInput {
   ne: Category
 }
 
-input ModelLevelInput {
-  eq: Level
-  ne: Level
-}
-
 input ModelCourseFilterInput {
   id: ModelIDInput
   name: ModelStringInput
   descriptions: ModelStringInput
   price: ModelFloatInput
-  excerpt: ModelStringInput
   image: ModelStringInput
   video: ModelStringInput
   category: ModelCategoryInput
   duration: ModelIntInput
   learningObjective: ModelStringInput
-  level: ModelLevelInput
-  curriculum: ModelStringInput
   isFeatured: ModelBooleanInput
+  online: ModelBooleanInput
+  curriculum: ModelStringInput
+  headTitle: ModelStringInput
+  headMeta: ModelStringInput
+  headContent: ModelStringInput
+  instructorImage: ModelStringInput
+  instructorName: ModelStringInput
   and: [ModelCourseFilterInput]
   or: [ModelCourseFilterInput]
   not: ModelCourseFilterInput
-}
-
-type Query {
-  getCourse(id: ID!): Course @aws_api_key @aws_iam
-  listCourses(filter: ModelCourseFilterInput, limit: Int, nextToken: String): ModelCourseConnection @aws_api_key @aws_iam
-  syncCourses(filter: ModelCourseFilterInput, limit: Int, nextToken: String, lastSync: AWSTimestamp): ModelCourseConnection @aws_api_key @aws_iam
 }
 
 input ModelCourseConditionInput {
   name: ModelStringInput
   descriptions: ModelStringInput
   price: ModelFloatInput
-  excerpt: ModelStringInput
   image: ModelStringInput
   video: ModelStringInput
   category: ModelCategoryInput
   duration: ModelIntInput
   learningObjective: ModelStringInput
-  level: ModelLevelInput
-  curriculum: ModelStringInput
   isFeatured: ModelBooleanInput
+  online: ModelBooleanInput
+  curriculum: ModelStringInput
+  headTitle: ModelStringInput
+  headMeta: ModelStringInput
+  headContent: ModelStringInput
+  instructorImage: ModelStringInput
+  instructorName: ModelStringInput
   and: [ModelCourseConditionInput]
   or: [ModelCourseConditionInput]
   not: ModelCourseConditionInput
@@ -255,15 +812,19 @@ input CreateCourseInput {
   name: String!
   descriptions: String!
   price: Float!
-  excerpt: String!
   image: AWSURL
   video: AWSURL
   category: Category!
   duration: Int
   learningObjective: [String]
-  level: Level
-  curriculum: [String]
   isFeatured: Boolean!
+  online: Boolean
+  curriculum: AWSURL
+  headTitle: String
+  headMeta: String
+  headContent: String
+  instructorImage: AWSURL
+  instructorName: String
   _version: Int
 }
 
@@ -272,15 +833,19 @@ input UpdateCourseInput {
   name: String
   descriptions: String
   price: Float
-  excerpt: String
   image: AWSURL
   video: AWSURL
   category: Category
   duration: Int
   learningObjective: [String]
-  level: Level
-  curriculum: [String]
   isFeatured: Boolean
+  online: Boolean
+  curriculum: AWSURL
+  headTitle: String
+  headMeta: String
+  headContent: String
+  instructorImage: AWSURL
+  instructorName: String
   _version: Int
 }
 
@@ -289,33 +854,75 @@ input DeleteCourseInput {
   _version: Int
 }
 
-type Mutation {
-  createCourse(input: CreateCourseInput!, condition: ModelCourseConditionInput): Course @aws_api_key @aws_iam
-  updateCourse(input: UpdateCourseInput!, condition: ModelCourseConditionInput): Course @aws_api_key @aws_iam
-  deleteCourse(input: DeleteCourseInput!, condition: ModelCourseConditionInput): Course @aws_api_key @aws_iam
-}
-
 input ModelSubscriptionCourseFilterInput {
   id: ModelSubscriptionIDInput
   name: ModelSubscriptionStringInput
   descriptions: ModelSubscriptionStringInput
   price: ModelSubscriptionFloatInput
-  excerpt: ModelSubscriptionStringInput
   image: ModelSubscriptionStringInput
   video: ModelSubscriptionStringInput
   category: ModelSubscriptionStringInput
   duration: ModelSubscriptionIntInput
   learningObjective: ModelSubscriptionStringInput
-  level: ModelSubscriptionStringInput
-  curriculum: ModelSubscriptionStringInput
   isFeatured: ModelSubscriptionBooleanInput
+  online: ModelSubscriptionBooleanInput
+  curriculum: ModelSubscriptionStringInput
+  headTitle: ModelSubscriptionStringInput
+  headMeta: ModelSubscriptionStringInput
+  headContent: ModelSubscriptionStringInput
+  instructorImage: ModelSubscriptionStringInput
+  instructorName: ModelSubscriptionStringInput
   and: [ModelSubscriptionCourseFilterInput]
   or: [ModelSubscriptionCourseFilterInput]
 }
 
-type Subscription {
-  onCreateCourse(filter: ModelSubscriptionCourseFilterInput): Course @aws_subscribe(mutations: ["createCourse"]) @aws_api_key @aws_iam
-  onUpdateCourse(filter: ModelSubscriptionCourseFilterInput): Course @aws_subscribe(mutations: ["updateCourse"]) @aws_api_key @aws_iam
-  onDeleteCourse(filter: ModelSubscriptionCourseFilterInput): Course @aws_subscribe(mutations: ["deleteCourse"]) @aws_api_key @aws_iam
+type ModelInstructorCourseConnection @aws_iam @aws_api_key {
+  items: [InstructorCourse]!
+  nextToken: String
+  startedAt: AWSTimestamp
+}
+
+input ModelInstructorCourseFilterInput {
+  id: ModelIDInput
+  instructorId: ModelIDInput
+  courseId: ModelIDInput
+  and: [ModelInstructorCourseFilterInput]
+  or: [ModelInstructorCourseFilterInput]
+  not: ModelInstructorCourseFilterInput
+}
+
+input ModelInstructorCourseConditionInput {
+  instructorId: ModelIDInput
+  courseId: ModelIDInput
+  and: [ModelInstructorCourseConditionInput]
+  or: [ModelInstructorCourseConditionInput]
+  not: ModelInstructorCourseConditionInput
+}
+
+input CreateInstructorCourseInput {
+  id: ID
+  instructorId: ID!
+  courseId: ID!
+  _version: Int
+}
+
+input UpdateInstructorCourseInput {
+  id: ID!
+  instructorId: ID
+  courseId: ID
+  _version: Int
+}
+
+input DeleteInstructorCourseInput {
+  id: ID!
+  _version: Int
+}
+
+input ModelSubscriptionInstructorCourseFilterInput {
+  id: ModelSubscriptionIDInput
+  instructorId: ModelSubscriptionIDInput
+  courseId: ModelSubscriptionIDInput
+  and: [ModelSubscriptionInstructorCourseFilterInput]
+  or: [ModelSubscriptionInstructorCourseFilterInput]
 }
 

@@ -123,7 +123,7 @@
           ]
         },
         "Description": "api key description",
-        "Expires": 1676119615
+        "Expires": 1678380399
       }
     },
     "GraphQLAPINONEDS95A13CF0": {
@@ -309,7 +309,7 @@
         ]
       }
     },
-    "Course": {
+    "Testimonial": {
       "Type": "AWS::CloudFormation::Stack",
       "Properties": {
         "TemplateURL": {
@@ -332,7 +332,7 @@
               {
                 "Ref": "S3DeploymentRootKey"
               },
-              "/stacks/Course.json"
+              "/stacks/Testimonial.json"
             ]
           ]
         },
@@ -385,6 +385,775 @@
         "GraphQLAPITransformerSchema3CB2AE18"
       ]
     },
+    "Events": {
+      "Type": "AWS::CloudFormation::Stack",
+      "Properties": {
+        "TemplateURL": {
+          "Fn::Join": [
+            "",
+            [
+              "https://s3.",
+              {
+                "Ref": "AWS::Region"
+              },
+              ".",
+              {
+                "Ref": "AWS::URLSuffix"
+              },
+              "/",
+              {
+                "Ref": "S3DeploymentBucket"
+              },
+              "/",
+              {
+                "Ref": "S3DeploymentRootKey"
+              },
+              "/stacks/Events.json"
+            ]
+          ]
+        },
+        "Parameters": {
+          "DynamoDBModelTableReadIOPS": {
+            "Ref": "DynamoDBModelTableReadIOPS"
+          },
+          "DynamoDBModelTableWriteIOPS": {
+            "Ref": "DynamoDBModelTableWriteIOPS"
+          },
+          "DynamoDBBillingMode": {
+            "Ref": "DynamoDBBillingMode"
+          },
+          "DynamoDBEnablePointInTimeRecovery": {
+            "Ref": "DynamoDBEnablePointInTimeRecovery"
+          },
+          "DynamoDBEnableServerSideEncryption": {
+            "Ref": "DynamoDBEnableServerSideEncryption"
+          },
+          "referencetotransformerrootstackenv10C5A902Ref": {
+            "Ref": "env"
+          },
+          "referencetotransformerrootstackGraphQLAPI20497F53ApiId": {
+            "Fn::GetAtt": [
+              "GraphQLAPI",
+              "ApiId"
+            ]
+          },
+          "referencetotransformerrootstackS3DeploymentBucket7592718ARef": {
+            "Ref": "S3DeploymentBucket"
+          },
+          "referencetotransformerrootstackS3DeploymentRootKeyA71EA735Ref": {
+            "Ref": "S3DeploymentRootKey"
+          },
+          "referencetotransformerrootstackTestimonialNestedStackTestimonialNestedStackResourceE95E6A0COutputstransformerrootstackTestimonialQuerygetTestimonialauth0FunctionQuerygetTestimonialauth0FunctionAppSyncFunctionEE937F05FunctionId": {
+            "Fn::GetAtt": [
+              "Testimonial",
+              "Outputs.transformerrootstackTestimonialQuerygetTestimonialauth0FunctionQuerygetTestimonialauth0FunctionAppSyncFunctionEE937F05FunctionId"
+            ]
+          },
+          "referencetotransformerrootstackTestimonialNestedStackTestimonialNestedStackResourceE95E6A0COutputstransformerrootstackTestimonialQuerygetTestimonialpostAuth0FunctionQuerygetTestimonialpostAuth0FunctionAppSyncFunction3D6A4DA3FunctionId": {
+            "Fn::GetAtt": [
+              "Testimonial",
+              "Outputs.transformerrootstackTestimonialQuerygetTestimonialpostAuth0FunctionQuerygetTestimonialpostAuth0FunctionAppSyncFunction3D6A4DA3FunctionId"
+            ]
+          },
+          "referencetotransformerrootstackauthRoleNameFB872D50Ref": {
+            "Ref": "authRoleName"
+          },
+          "referencetotransformerrootstackunauthRoleName49F3C1FERef": {
+            "Ref": "unauthRoleName"
+          },
+          "referencetotransformerrootstackTestimonialNestedStackTestimonialNestedStackResourceE95E6A0COutputstransformerrootstackTestimonialMutationcreateTestimonialinit0FunctionMutationcreateTestimonialinit0FunctionAppSyncFunctionF91A65D0FunctionId": {
+            "Fn::GetAtt": [
+              "Testimonial",
+              "Outputs.transformerrootstackTestimonialMutationcreateTestimonialinit0FunctionMutationcreateTestimonialinit0FunctionAppSyncFunctionF91A65D0FunctionId"
+            ]
+          },
+          "referencetotransformerrootstackTestimonialNestedStackTestimonialNestedStackResourceE95E6A0COutputstransformerrootstackTestimonialMutationcreateTestimonialauth0FunctionMutationcreateTestimonialauth0FunctionAppSyncFunction4DA50FEEFunctionId": {
+            "Fn::GetAtt": [
+              "Testimonial",
+              "Outputs.transformerrootstackTestimonialMutationcreateTestimonialauth0FunctionMutationcreateTestimonialauth0FunctionAppSyncFunction4DA50FEEFunctionId"
+            ]
+          },
+          "referencetotransformerrootstackTestimonialNestedStackTestimonialNestedStackResourceE95E6A0COutputstransformerrootstackTestimonialMutationupdateTestimonialinit0FunctionMutationupdateTestimonialinit0FunctionAppSyncFunctionC14F678AFunctionId": {
+            "Fn::GetAtt": [
+              "Testimonial",
+              "Outputs.transformerrootstackTestimonialMutationupdateTestimonialinit0FunctionMutationupdateTestimonialinit0FunctionAppSyncFunctionC14F678AFunctionId"
+            ]
+          },
+          "referencetotransformerrootstackTestimonialNestedStackTestimonialNestedStackResourceE95E6A0COutputstransformerrootstackTestimonialSubscriptiononCreateTestimonialauth0FunctionSubscriptiononCreateTestimonialauth0FunctionAppSyncFunction14B04EC3FunctionId": {
+            "Fn::GetAtt": [
+              "Testimonial",
+              "Outputs.transformerrootstackTestimonialSubscriptiononCreateTestimonialauth0FunctionSubscriptiononCreateTestimonialauth0FunctionAppSyncFunction14B04EC3FunctionId"
+            ]
+          },
+          "referencetotransformerrootstackTestimonialNestedStackTestimonialNestedStackResourceE95E6A0COutputstransformerrootstackTestimonialSubscriptionOnCreateTestimonialDataResolverFnSubscriptionOnCreateTestimonialDataResolverFnAppSyncFunction1966CC28FunctionId": {
+            "Fn::GetAtt": [
+              "Testimonial",
+              "Outputs.transformerrootstackTestimonialSubscriptionOnCreateTestimonialDataResolverFnSubscriptionOnCreateTestimonialDataResolverFnAppSyncFunction1966CC28FunctionId"
+            ]
+          }
+        }
+      },
+      "DependsOn": [
+        "GraphQLAPITransformerSchema3CB2AE18"
+      ]
+    },
+    "Post": {
+      "Type": "AWS::CloudFormation::Stack",
+      "Properties": {
+        "TemplateURL": {
+          "Fn::Join": [
+            "",
+            [
+              "https://s3.",
+              {
+                "Ref": "AWS::Region"
+              },
+              ".",
+              {
+                "Ref": "AWS::URLSuffix"
+              },
+              "/",
+              {
+                "Ref": "S3DeploymentBucket"
+              },
+              "/",
+              {
+                "Ref": "S3DeploymentRootKey"
+              },
+              "/stacks/Post.json"
+            ]
+          ]
+        },
+        "Parameters": {
+          "DynamoDBModelTableReadIOPS": {
+            "Ref": "DynamoDBModelTableReadIOPS"
+          },
+          "DynamoDBModelTableWriteIOPS": {
+            "Ref": "DynamoDBModelTableWriteIOPS"
+          },
+          "DynamoDBBillingMode": {
+            "Ref": "DynamoDBBillingMode"
+          },
+          "DynamoDBEnablePointInTimeRecovery": {
+            "Ref": "DynamoDBEnablePointInTimeRecovery"
+          },
+          "DynamoDBEnableServerSideEncryption": {
+            "Ref": "DynamoDBEnableServerSideEncryption"
+          },
+          "referencetotransformerrootstackenv10C5A902Ref": {
+            "Ref": "env"
+          },
+          "referencetotransformerrootstackGraphQLAPI20497F53ApiId": {
+            "Fn::GetAtt": [
+              "GraphQLAPI",
+              "ApiId"
+            ]
+          },
+          "referencetotransformerrootstackS3DeploymentBucket7592718ARef": {
+            "Ref": "S3DeploymentBucket"
+          },
+          "referencetotransformerrootstackS3DeploymentRootKeyA71EA735Ref": {
+            "Ref": "S3DeploymentRootKey"
+          },
+          "referencetotransformerrootstackTestimonialNestedStackTestimonialNestedStackResourceE95E6A0COutputstransformerrootstackTestimonialQuerygetTestimonialauth0FunctionQuerygetTestimonialauth0FunctionAppSyncFunctionEE937F05FunctionId": {
+            "Fn::GetAtt": [
+              "Testimonial",
+              "Outputs.transformerrootstackTestimonialQuerygetTestimonialauth0FunctionQuerygetTestimonialauth0FunctionAppSyncFunctionEE937F05FunctionId"
+            ]
+          },
+          "referencetotransformerrootstackTestimonialNestedStackTestimonialNestedStackResourceE95E6A0COutputstransformerrootstackTestimonialQuerygetTestimonialpostAuth0FunctionQuerygetTestimonialpostAuth0FunctionAppSyncFunction3D6A4DA3FunctionId": {
+            "Fn::GetAtt": [
+              "Testimonial",
+              "Outputs.transformerrootstackTestimonialQuerygetTestimonialpostAuth0FunctionQuerygetTestimonialpostAuth0FunctionAppSyncFunction3D6A4DA3FunctionId"
+            ]
+          },
+          "referencetotransformerrootstackauthRoleNameFB872D50Ref": {
+            "Ref": "authRoleName"
+          },
+          "referencetotransformerrootstackunauthRoleName49F3C1FERef": {
+            "Ref": "unauthRoleName"
+          },
+          "referencetotransformerrootstackTestimonialNestedStackTestimonialNestedStackResourceE95E6A0COutputstransformerrootstackTestimonialMutationcreateTestimonialinit0FunctionMutationcreateTestimonialinit0FunctionAppSyncFunctionF91A65D0FunctionId": {
+            "Fn::GetAtt": [
+              "Testimonial",
+              "Outputs.transformerrootstackTestimonialMutationcreateTestimonialinit0FunctionMutationcreateTestimonialinit0FunctionAppSyncFunctionF91A65D0FunctionId"
+            ]
+          },
+          "referencetotransformerrootstackTestimonialNestedStackTestimonialNestedStackResourceE95E6A0COutputstransformerrootstackTestimonialMutationcreateTestimonialauth0FunctionMutationcreateTestimonialauth0FunctionAppSyncFunction4DA50FEEFunctionId": {
+            "Fn::GetAtt": [
+              "Testimonial",
+              "Outputs.transformerrootstackTestimonialMutationcreateTestimonialauth0FunctionMutationcreateTestimonialauth0FunctionAppSyncFunction4DA50FEEFunctionId"
+            ]
+          },
+          "referencetotransformerrootstackTestimonialNestedStackTestimonialNestedStackResourceE95E6A0COutputstransformerrootstackTestimonialMutationupdateTestimonialinit0FunctionMutationupdateTestimonialinit0FunctionAppSyncFunctionC14F678AFunctionId": {
+            "Fn::GetAtt": [
+              "Testimonial",
+              "Outputs.transformerrootstackTestimonialMutationupdateTestimonialinit0FunctionMutationupdateTestimonialinit0FunctionAppSyncFunctionC14F678AFunctionId"
+            ]
+          },
+          "referencetotransformerrootstackTestimonialNestedStackTestimonialNestedStackResourceE95E6A0COutputstransformerrootstackTestimonialSubscriptiononCreateTestimonialauth0FunctionSubscriptiononCreateTestimonialauth0FunctionAppSyncFunction14B04EC3FunctionId": {
+            "Fn::GetAtt": [
+              "Testimonial",
+              "Outputs.transformerrootstackTestimonialSubscriptiononCreateTestimonialauth0FunctionSubscriptiononCreateTestimonialauth0FunctionAppSyncFunction14B04EC3FunctionId"
+            ]
+          },
+          "referencetotransformerrootstackTestimonialNestedStackTestimonialNestedStackResourceE95E6A0COutputstransformerrootstackTestimonialSubscriptionOnCreateTestimonialDataResolverFnSubscriptionOnCreateTestimonialDataResolverFnAppSyncFunction1966CC28FunctionId": {
+            "Fn::GetAtt": [
+              "Testimonial",
+              "Outputs.transformerrootstackTestimonialSubscriptionOnCreateTestimonialDataResolverFnSubscriptionOnCreateTestimonialDataResolverFnAppSyncFunction1966CC28FunctionId"
+            ]
+          }
+        }
+      },
+      "DependsOn": [
+        "GraphQLAPITransformerSchema3CB2AE18"
+      ]
+    },
+    "HeroData": {
+      "Type": "AWS::CloudFormation::Stack",
+      "Properties": {
+        "TemplateURL": {
+          "Fn::Join": [
+            "",
+            [
+              "https://s3.",
+              {
+                "Ref": "AWS::Region"
+              },
+              ".",
+              {
+                "Ref": "AWS::URLSuffix"
+              },
+              "/",
+              {
+                "Ref": "S3DeploymentBucket"
+              },
+              "/",
+              {
+                "Ref": "S3DeploymentRootKey"
+              },
+              "/stacks/HeroData.json"
+            ]
+          ]
+        },
+        "Parameters": {
+          "DynamoDBModelTableReadIOPS": {
+            "Ref": "DynamoDBModelTableReadIOPS"
+          },
+          "DynamoDBModelTableWriteIOPS": {
+            "Ref": "DynamoDBModelTableWriteIOPS"
+          },
+          "DynamoDBBillingMode": {
+            "Ref": "DynamoDBBillingMode"
+          },
+          "DynamoDBEnablePointInTimeRecovery": {
+            "Ref": "DynamoDBEnablePointInTimeRecovery"
+          },
+          "DynamoDBEnableServerSideEncryption": {
+            "Ref": "DynamoDBEnableServerSideEncryption"
+          },
+          "referencetotransformerrootstackenv10C5A902Ref": {
+            "Ref": "env"
+          },
+          "referencetotransformerrootstackGraphQLAPI20497F53ApiId": {
+            "Fn::GetAtt": [
+              "GraphQLAPI",
+              "ApiId"
+            ]
+          },
+          "referencetotransformerrootstackS3DeploymentBucket7592718ARef": {
+            "Ref": "S3DeploymentBucket"
+          },
+          "referencetotransformerrootstackS3DeploymentRootKeyA71EA735Ref": {
+            "Ref": "S3DeploymentRootKey"
+          },
+          "referencetotransformerrootstackTestimonialNestedStackTestimonialNestedStackResourceE95E6A0COutputstransformerrootstackTestimonialQuerygetTestimonialauth0FunctionQuerygetTestimonialauth0FunctionAppSyncFunctionEE937F05FunctionId": {
+            "Fn::GetAtt": [
+              "Testimonial",
+              "Outputs.transformerrootstackTestimonialQuerygetTestimonialauth0FunctionQuerygetTestimonialauth0FunctionAppSyncFunctionEE937F05FunctionId"
+            ]
+          },
+          "referencetotransformerrootstackTestimonialNestedStackTestimonialNestedStackResourceE95E6A0COutputstransformerrootstackTestimonialQuerygetTestimonialpostAuth0FunctionQuerygetTestimonialpostAuth0FunctionAppSyncFunction3D6A4DA3FunctionId": {
+            "Fn::GetAtt": [
+              "Testimonial",
+              "Outputs.transformerrootstackTestimonialQuerygetTestimonialpostAuth0FunctionQuerygetTestimonialpostAuth0FunctionAppSyncFunction3D6A4DA3FunctionId"
+            ]
+          },
+          "referencetotransformerrootstackauthRoleNameFB872D50Ref": {
+            "Ref": "authRoleName"
+          },
+          "referencetotransformerrootstackunauthRoleName49F3C1FERef": {
+            "Ref": "unauthRoleName"
+          },
+          "referencetotransformerrootstackTestimonialNestedStackTestimonialNestedStackResourceE95E6A0COutputstransformerrootstackTestimonialMutationcreateTestimonialinit0FunctionMutationcreateTestimonialinit0FunctionAppSyncFunctionF91A65D0FunctionId": {
+            "Fn::GetAtt": [
+              "Testimonial",
+              "Outputs.transformerrootstackTestimonialMutationcreateTestimonialinit0FunctionMutationcreateTestimonialinit0FunctionAppSyncFunctionF91A65D0FunctionId"
+            ]
+          },
+          "referencetotransformerrootstackTestimonialNestedStackTestimonialNestedStackResourceE95E6A0COutputstransformerrootstackTestimonialMutationcreateTestimonialauth0FunctionMutationcreateTestimonialauth0FunctionAppSyncFunction4DA50FEEFunctionId": {
+            "Fn::GetAtt": [
+              "Testimonial",
+              "Outputs.transformerrootstackTestimonialMutationcreateTestimonialauth0FunctionMutationcreateTestimonialauth0FunctionAppSyncFunction4DA50FEEFunctionId"
+            ]
+          },
+          "referencetotransformerrootstackTestimonialNestedStackTestimonialNestedStackResourceE95E6A0COutputstransformerrootstackTestimonialMutationupdateTestimonialinit0FunctionMutationupdateTestimonialinit0FunctionAppSyncFunctionC14F678AFunctionId": {
+            "Fn::GetAtt": [
+              "Testimonial",
+              "Outputs.transformerrootstackTestimonialMutationupdateTestimonialinit0FunctionMutationupdateTestimonialinit0FunctionAppSyncFunctionC14F678AFunctionId"
+            ]
+          },
+          "referencetotransformerrootstackTestimonialNestedStackTestimonialNestedStackResourceE95E6A0COutputstransformerrootstackTestimonialSubscriptiononCreateTestimonialauth0FunctionSubscriptiononCreateTestimonialauth0FunctionAppSyncFunction14B04EC3FunctionId": {
+            "Fn::GetAtt": [
+              "Testimonial",
+              "Outputs.transformerrootstackTestimonialSubscriptiononCreateTestimonialauth0FunctionSubscriptiononCreateTestimonialauth0FunctionAppSyncFunction14B04EC3FunctionId"
+            ]
+          },
+          "referencetotransformerrootstackTestimonialNestedStackTestimonialNestedStackResourceE95E6A0COutputstransformerrootstackTestimonialSubscriptionOnCreateTestimonialDataResolverFnSubscriptionOnCreateTestimonialDataResolverFnAppSyncFunction1966CC28FunctionId": {
+            "Fn::GetAtt": [
+              "Testimonial",
+              "Outputs.transformerrootstackTestimonialSubscriptionOnCreateTestimonialDataResolverFnSubscriptionOnCreateTestimonialDataResolverFnAppSyncFunction1966CC28FunctionId"
+            ]
+          }
+        }
+      },
+      "DependsOn": [
+        "GraphQLAPITransformerSchema3CB2AE18"
+      ]
+    },
+    "Instructor": {
+      "Type": "AWS::CloudFormation::Stack",
+      "Properties": {
+        "TemplateURL": {
+          "Fn::Join": [
+            "",
+            [
+              "https://s3.",
+              {
+                "Ref": "AWS::Region"
+              },
+              ".",
+              {
+                "Ref": "AWS::URLSuffix"
+              },
+              "/",
+              {
+                "Ref": "S3DeploymentBucket"
+              },
+              "/",
+              {
+                "Ref": "S3DeploymentRootKey"
+              },
+              "/stacks/Instructor.json"
+            ]
+          ]
+        },
+        "Parameters": {
+          "DynamoDBModelTableReadIOPS": {
+            "Ref": "DynamoDBModelTableReadIOPS"
+          },
+          "DynamoDBModelTableWriteIOPS": {
+            "Ref": "DynamoDBModelTableWriteIOPS"
+          },
+          "DynamoDBBillingMode": {
+            "Ref": "DynamoDBBillingMode"
+          },
+          "DynamoDBEnablePointInTimeRecovery": {
+            "Ref": "DynamoDBEnablePointInTimeRecovery"
+          },
+          "DynamoDBEnableServerSideEncryption": {
+            "Ref": "DynamoDBEnableServerSideEncryption"
+          },
+          "referencetotransformerrootstackenv10C5A902Ref": {
+            "Ref": "env"
+          },
+          "referencetotransformerrootstackGraphQLAPI20497F53ApiId": {
+            "Fn::GetAtt": [
+              "GraphQLAPI",
+              "ApiId"
+            ]
+          },
+          "referencetotransformerrootstackS3DeploymentBucket7592718ARef": {
+            "Ref": "S3DeploymentBucket"
+          },
+          "referencetotransformerrootstackS3DeploymentRootKeyA71EA735Ref": {
+            "Ref": "S3DeploymentRootKey"
+          },
+          "referencetotransformerrootstackTestimonialNestedStackTestimonialNestedStackResourceE95E6A0COutputstransformerrootstackTestimonialQuerygetTestimonialauth0FunctionQuerygetTestimonialauth0FunctionAppSyncFunctionEE937F05FunctionId": {
+            "Fn::GetAtt": [
+              "Testimonial",
+              "Outputs.transformerrootstackTestimonialQuerygetTestimonialauth0FunctionQuerygetTestimonialauth0FunctionAppSyncFunctionEE937F05FunctionId"
+            ]
+          },
+          "referencetotransformerrootstackTestimonialNestedStackTestimonialNestedStackResourceE95E6A0COutputstransformerrootstackTestimonialQuerygetTestimonialpostAuth0FunctionQuerygetTestimonialpostAuth0FunctionAppSyncFunction3D6A4DA3FunctionId": {
+            "Fn::GetAtt": [
+              "Testimonial",
+              "Outputs.transformerrootstackTestimonialQuerygetTestimonialpostAuth0FunctionQuerygetTestimonialpostAuth0FunctionAppSyncFunction3D6A4DA3FunctionId"
+            ]
+          },
+          "referencetotransformerrootstackauthRoleNameFB872D50Ref": {
+            "Ref": "authRoleName"
+          },
+          "referencetotransformerrootstackunauthRoleName49F3C1FERef": {
+            "Ref": "unauthRoleName"
+          },
+          "referencetotransformerrootstackTestimonialNestedStackTestimonialNestedStackResourceE95E6A0COutputstransformerrootstackTestimonialMutationcreateTestimonialinit0FunctionMutationcreateTestimonialinit0FunctionAppSyncFunctionF91A65D0FunctionId": {
+            "Fn::GetAtt": [
+              "Testimonial",
+              "Outputs.transformerrootstackTestimonialMutationcreateTestimonialinit0FunctionMutationcreateTestimonialinit0FunctionAppSyncFunctionF91A65D0FunctionId"
+            ]
+          },
+          "referencetotransformerrootstackTestimonialNestedStackTestimonialNestedStackResourceE95E6A0COutputstransformerrootstackTestimonialMutationcreateTestimonialauth0FunctionMutationcreateTestimonialauth0FunctionAppSyncFunction4DA50FEEFunctionId": {
+            "Fn::GetAtt": [
+              "Testimonial",
+              "Outputs.transformerrootstackTestimonialMutationcreateTestimonialauth0FunctionMutationcreateTestimonialauth0FunctionAppSyncFunction4DA50FEEFunctionId"
+            ]
+          },
+          "referencetotransformerrootstackTestimonialNestedStackTestimonialNestedStackResourceE95E6A0COutputstransformerrootstackTestimonialMutationupdateTestimonialinit0FunctionMutationupdateTestimonialinit0FunctionAppSyncFunctionC14F678AFunctionId": {
+            "Fn::GetAtt": [
+              "Testimonial",
+              "Outputs.transformerrootstackTestimonialMutationupdateTestimonialinit0FunctionMutationupdateTestimonialinit0FunctionAppSyncFunctionC14F678AFunctionId"
+            ]
+          },
+          "referencetotransformerrootstackTestimonialNestedStackTestimonialNestedStackResourceE95E6A0COutputstransformerrootstackTestimonialSubscriptiononCreateTestimonialauth0FunctionSubscriptiononCreateTestimonialauth0FunctionAppSyncFunction14B04EC3FunctionId": {
+            "Fn::GetAtt": [
+              "Testimonial",
+              "Outputs.transformerrootstackTestimonialSubscriptiononCreateTestimonialauth0FunctionSubscriptiononCreateTestimonialauth0FunctionAppSyncFunction14B04EC3FunctionId"
+            ]
+          },
+          "referencetotransformerrootstackTestimonialNestedStackTestimonialNestedStackResourceE95E6A0COutputstransformerrootstackTestimonialSubscriptionOnCreateTestimonialDataResolverFnSubscriptionOnCreateTestimonialDataResolverFnAppSyncFunction1966CC28FunctionId": {
+            "Fn::GetAtt": [
+              "Testimonial",
+              "Outputs.transformerrootstackTestimonialSubscriptionOnCreateTestimonialDataResolverFnSubscriptionOnCreateTestimonialDataResolverFnAppSyncFunction1966CC28FunctionId"
+            ]
+          }
+        }
+      },
+      "DependsOn": [
+        "GraphQLAPITransformerSchema3CB2AE18"
+      ]
+    },
+    "Course": {
+      "Type": "AWS::CloudFormation::Stack",
+      "Properties": {
+        "TemplateURL": {
+          "Fn::Join": [
+            "",
+            [
+              "https://s3.",
+              {
+                "Ref": "AWS::Region"
+              },
+              ".",
+              {
+                "Ref": "AWS::URLSuffix"
+              },
+              "/",
+              {
+                "Ref": "S3DeploymentBucket"
+              },
+              "/",
+              {
+                "Ref": "S3DeploymentRootKey"
+              },
+              "/stacks/Course.json"
+            ]
+          ]
+        },
+        "Parameters": {
+          "DynamoDBModelTableReadIOPS": {
+            "Ref": "DynamoDBModelTableReadIOPS"
+          },
+          "DynamoDBModelTableWriteIOPS": {
+            "Ref": "DynamoDBModelTableWriteIOPS"
+          },
+          "DynamoDBBillingMode": {
+            "Ref": "DynamoDBBillingMode"
+          },
+          "DynamoDBEnablePointInTimeRecovery": {
+            "Ref": "DynamoDBEnablePointInTimeRecovery"
+          },
+          "DynamoDBEnableServerSideEncryption": {
+            "Ref": "DynamoDBEnableServerSideEncryption"
+          },
+          "referencetotransformerrootstackenv10C5A902Ref": {
+            "Ref": "env"
+          },
+          "referencetotransformerrootstackGraphQLAPI20497F53ApiId": {
+            "Fn::GetAtt": [
+              "GraphQLAPI",
+              "ApiId"
+            ]
+          },
+          "referencetotransformerrootstackS3DeploymentBucket7592718ARef": {
+            "Ref": "S3DeploymentBucket"
+          },
+          "referencetotransformerrootstackS3DeploymentRootKeyA71EA735Ref": {
+            "Ref": "S3DeploymentRootKey"
+          },
+          "referencetotransformerrootstackTestimonialNestedStackTestimonialNestedStackResourceE95E6A0COutputstransformerrootstackTestimonialQuerygetTestimonialauth0FunctionQuerygetTestimonialauth0FunctionAppSyncFunctionEE937F05FunctionId": {
+            "Fn::GetAtt": [
+              "Testimonial",
+              "Outputs.transformerrootstackTestimonialQuerygetTestimonialauth0FunctionQuerygetTestimonialauth0FunctionAppSyncFunctionEE937F05FunctionId"
+            ]
+          },
+          "referencetotransformerrootstackTestimonialNestedStackTestimonialNestedStackResourceE95E6A0COutputstransformerrootstackTestimonialQuerygetTestimonialpostAuth0FunctionQuerygetTestimonialpostAuth0FunctionAppSyncFunction3D6A4DA3FunctionId": {
+            "Fn::GetAtt": [
+              "Testimonial",
+              "Outputs.transformerrootstackTestimonialQuerygetTestimonialpostAuth0FunctionQuerygetTestimonialpostAuth0FunctionAppSyncFunction3D6A4DA3FunctionId"
+            ]
+          },
+          "referencetotransformerrootstackauthRoleNameFB872D50Ref": {
+            "Ref": "authRoleName"
+          },
+          "referencetotransformerrootstackunauthRoleName49F3C1FERef": {
+            "Ref": "unauthRoleName"
+          },
+          "referencetotransformerrootstackTestimonialNestedStackTestimonialNestedStackResourceE95E6A0COutputstransformerrootstackTestimonialMutationcreateTestimonialinit0FunctionMutationcreateTestimonialinit0FunctionAppSyncFunctionF91A65D0FunctionId": {
+            "Fn::GetAtt": [
+              "Testimonial",
+              "Outputs.transformerrootstackTestimonialMutationcreateTestimonialinit0FunctionMutationcreateTestimonialinit0FunctionAppSyncFunctionF91A65D0FunctionId"
+            ]
+          },
+          "referencetotransformerrootstackTestimonialNestedStackTestimonialNestedStackResourceE95E6A0COutputstransformerrootstackTestimonialMutationcreateTestimonialauth0FunctionMutationcreateTestimonialauth0FunctionAppSyncFunction4DA50FEEFunctionId": {
+            "Fn::GetAtt": [
+              "Testimonial",
+              "Outputs.transformerrootstackTestimonialMutationcreateTestimonialauth0FunctionMutationcreateTestimonialauth0FunctionAppSyncFunction4DA50FEEFunctionId"
+            ]
+          },
+          "referencetotransformerrootstackTestimonialNestedStackTestimonialNestedStackResourceE95E6A0COutputstransformerrootstackTestimonialMutationupdateTestimonialinit0FunctionMutationupdateTestimonialinit0FunctionAppSyncFunctionC14F678AFunctionId": {
+            "Fn::GetAtt": [
+              "Testimonial",
+              "Outputs.transformerrootstackTestimonialMutationupdateTestimonialinit0FunctionMutationupdateTestimonialinit0FunctionAppSyncFunctionC14F678AFunctionId"
+            ]
+          },
+          "referencetotransformerrootstackTestimonialNestedStackTestimonialNestedStackResourceE95E6A0COutputstransformerrootstackTestimonialSubscriptiononCreateTestimonialauth0FunctionSubscriptiononCreateTestimonialauth0FunctionAppSyncFunction14B04EC3FunctionId": {
+            "Fn::GetAtt": [
+              "Testimonial",
+              "Outputs.transformerrootstackTestimonialSubscriptiononCreateTestimonialauth0FunctionSubscriptiononCreateTestimonialauth0FunctionAppSyncFunction14B04EC3FunctionId"
+            ]
+          },
+          "referencetotransformerrootstackTestimonialNestedStackTestimonialNestedStackResourceE95E6A0COutputstransformerrootstackTestimonialSubscriptionOnCreateTestimonialDataResolverFnSubscriptionOnCreateTestimonialDataResolverFnAppSyncFunction1966CC28FunctionId": {
+            "Fn::GetAtt": [
+              "Testimonial",
+              "Outputs.transformerrootstackTestimonialSubscriptionOnCreateTestimonialDataResolverFnSubscriptionOnCreateTestimonialDataResolverFnAppSyncFunction1966CC28FunctionId"
+            ]
+          }
+        }
+      },
+      "DependsOn": [
+        "GraphQLAPITransformerSchema3CB2AE18"
+      ]
+    },
+    "InstructorCourse": {
+      "Type": "AWS::CloudFormation::Stack",
+      "Properties": {
+        "TemplateURL": {
+          "Fn::Join": [
+            "",
+            [
+              "https://s3.",
+              {
+                "Ref": "AWS::Region"
+              },
+              ".",
+              {
+                "Ref": "AWS::URLSuffix"
+              },
+              "/",
+              {
+                "Ref": "S3DeploymentBucket"
+              },
+              "/",
+              {
+                "Ref": "S3DeploymentRootKey"
+              },
+              "/stacks/InstructorCourse.json"
+            ]
+          ]
+        },
+        "Parameters": {
+          "DynamoDBModelTableReadIOPS": {
+            "Ref": "DynamoDBModelTableReadIOPS"
+          },
+          "DynamoDBModelTableWriteIOPS": {
+            "Ref": "DynamoDBModelTableWriteIOPS"
+          },
+          "DynamoDBBillingMode": {
+            "Ref": "DynamoDBBillingMode"
+          },
+          "DynamoDBEnablePointInTimeRecovery": {
+            "Ref": "DynamoDBEnablePointInTimeRecovery"
+          },
+          "DynamoDBEnableServerSideEncryption": {
+            "Ref": "DynamoDBEnableServerSideEncryption"
+          },
+          "referencetotransformerrootstackenv10C5A902Ref": {
+            "Ref": "env"
+          },
+          "referencetotransformerrootstackGraphQLAPI20497F53ApiId": {
+            "Fn::GetAtt": [
+              "GraphQLAPI",
+              "ApiId"
+            ]
+          },
+          "referencetotransformerrootstackS3DeploymentBucket7592718ARef": {
+            "Ref": "S3DeploymentBucket"
+          },
+          "referencetotransformerrootstackS3DeploymentRootKeyA71EA735Ref": {
+            "Ref": "S3DeploymentRootKey"
+          },
+          "referencetotransformerrootstackTestimonialNestedStackTestimonialNestedStackResourceE95E6A0COutputstransformerrootstackTestimonialQuerygetTestimonialauth0FunctionQuerygetTestimonialauth0FunctionAppSyncFunctionEE937F05FunctionId": {
+            "Fn::GetAtt": [
+              "Testimonial",
+              "Outputs.transformerrootstackTestimonialQuerygetTestimonialauth0FunctionQuerygetTestimonialauth0FunctionAppSyncFunctionEE937F05FunctionId"
+            ]
+          },
+          "referencetotransformerrootstackTestimonialNestedStackTestimonialNestedStackResourceE95E6A0COutputstransformerrootstackTestimonialQuerygetTestimonialpostAuth0FunctionQuerygetTestimonialpostAuth0FunctionAppSyncFunction3D6A4DA3FunctionId": {
+            "Fn::GetAtt": [
+              "Testimonial",
+              "Outputs.transformerrootstackTestimonialQuerygetTestimonialpostAuth0FunctionQuerygetTestimonialpostAuth0FunctionAppSyncFunction3D6A4DA3FunctionId"
+            ]
+          },
+          "referencetotransformerrootstackauthRoleNameFB872D50Ref": {
+            "Ref": "authRoleName"
+          },
+          "referencetotransformerrootstackunauthRoleName49F3C1FERef": {
+            "Ref": "unauthRoleName"
+          },
+          "referencetotransformerrootstackTestimonialNestedStackTestimonialNestedStackResourceE95E6A0COutputstransformerrootstackTestimonialMutationcreateTestimonialinit0FunctionMutationcreateTestimonialinit0FunctionAppSyncFunctionF91A65D0FunctionId": {
+            "Fn::GetAtt": [
+              "Testimonial",
+              "Outputs.transformerrootstackTestimonialMutationcreateTestimonialinit0FunctionMutationcreateTestimonialinit0FunctionAppSyncFunctionF91A65D0FunctionId"
+            ]
+          },
+          "referencetotransformerrootstackTestimonialNestedStackTestimonialNestedStackResourceE95E6A0COutputstransformerrootstackTestimonialMutationcreateTestimonialauth0FunctionMutationcreateTestimonialauth0FunctionAppSyncFunction4DA50FEEFunctionId": {
+            "Fn::GetAtt": [
+              "Testimonial",
+              "Outputs.transformerrootstackTestimonialMutationcreateTestimonialauth0FunctionMutationcreateTestimonialauth0FunctionAppSyncFunction4DA50FEEFunctionId"
+            ]
+          },
+          "referencetotransformerrootstackTestimonialNestedStackTestimonialNestedStackResourceE95E6A0COutputstransformerrootstackTestimonialMutationupdateTestimonialinit0FunctionMutationupdateTestimonialinit0FunctionAppSyncFunctionC14F678AFunctionId": {
+            "Fn::GetAtt": [
+              "Testimonial",
+              "Outputs.transformerrootstackTestimonialMutationupdateTestimonialinit0FunctionMutationupdateTestimonialinit0FunctionAppSyncFunctionC14F678AFunctionId"
+            ]
+          },
+          "referencetotransformerrootstackTestimonialNestedStackTestimonialNestedStackResourceE95E6A0COutputstransformerrootstackTestimonialSubscriptiononCreateTestimonialauth0FunctionSubscriptiononCreateTestimonialauth0FunctionAppSyncFunction14B04EC3FunctionId": {
+            "Fn::GetAtt": [
+              "Testimonial",
+              "Outputs.transformerrootstackTestimonialSubscriptiononCreateTestimonialauth0FunctionSubscriptiononCreateTestimonialauth0FunctionAppSyncFunction14B04EC3FunctionId"
+            ]
+          },
+          "referencetotransformerrootstackTestimonialNestedStackTestimonialNestedStackResourceE95E6A0COutputstransformerrootstackTestimonialSubscriptionOnCreateTestimonialDataResolverFnSubscriptionOnCreateTestimonialDataResolverFnAppSyncFunction1966CC28FunctionId": {
+            "Fn::GetAtt": [
+              "Testimonial",
+              "Outputs.transformerrootstackTestimonialSubscriptionOnCreateTestimonialDataResolverFnSubscriptionOnCreateTestimonialDataResolverFnAppSyncFunction1966CC28FunctionId"
+            ]
+          }
+        }
+      },
+      "DependsOn": [
+        "GraphQLAPITransformerSchema3CB2AE18"
+      ]
+    },
+    "ConnectionStack": {
+      "Type": "AWS::CloudFormation::Stack",
+      "Properties": {
+        "TemplateURL": {
+          "Fn::Join": [
+            "",
+            [
+              "https://s3.",
+              {
+                "Ref": "AWS::Region"
+              },
+              ".",
+              {
+                "Ref": "AWS::URLSuffix"
+              },
+              "/",
+              {
+                "Ref": "S3DeploymentBucket"
+              },
+              "/",
+              {
+                "Ref": "S3DeploymentRootKey"
+              },
+              "/stacks/ConnectionStack.json"
+            ]
+          ]
+        },
+        "Parameters": {
+          "referencetotransformerrootstackGraphQLAPI20497F53ApiId": {
+            "Fn::GetAtt": [
+              "GraphQLAPI",
+              "ApiId"
+            ]
+          },
+          "referencetotransformerrootstackGraphQLAPINONEDS2BA9D1C8Name": {
+            "Fn::GetAtt": [
+              "GraphQLAPINONEDS95A13CF0",
+              "Name"
+            ]
+          },
+          "referencetotransformerrootstackS3DeploymentBucket7592718ARef": {
+            "Ref": "S3DeploymentBucket"
+          },
+          "referencetotransformerrootstackS3DeploymentRootKeyA71EA735Ref": {
+            "Ref": "S3DeploymentRootKey"
+          },
+          "referencetotransformerrootstackInstructorNestedStackInstructorNestedStackResource209A887FOutputstransformerrootstackInstructorInstructorDataSource2AF0B5F4Name": {
+            "Fn::GetAtt": [
+              "Instructor",
+              "Outputs.transformerrootstackInstructorInstructorDataSource2AF0B5F4Name"
+            ]
+          },
+          "referencetotransformerrootstackInstructorNestedStackInstructorNestedStackResource209A887FOutputstransformerrootstackInstructorInstructorTable92D237ACRef": {
+            "Fn::GetAtt": [
+              "Instructor",
+              "Outputs.transformerrootstackInstructorInstructorTable92D237ACRef"
+            ]
+          },
+          "referencetotransformerrootstackauthRoleNameFB872D50Ref": {
+            "Ref": "authRoleName"
+          },
+          "referencetotransformerrootstackunauthRoleName49F3C1FERef": {
+            "Ref": "unauthRoleName"
+          },
+          "referencetotransformerrootstackCourseNestedStackCourseNestedStackResource4207C654OutputstransformerrootstackCourseCourseDataSourceC9AC81DCName": {
+            "Fn::GetAtt": [
+              "Course",
+              "Outputs.transformerrootstackCourseCourseDataSourceC9AC81DCName"
+            ]
+          },
+          "referencetotransformerrootstackCourseNestedStackCourseNestedStackResource4207C654OutputstransformerrootstackCourseCourseTable05C76E2ERef": {
+            "Fn::GetAtt": [
+              "Course",
+              "Outputs.transformerrootstackCourseCourseTable05C76E2ERef"
+            ]
+          },
+          "referencetotransformerrootstackInstructorCourseNestedStackInstructorCourseNestedStackResourceEA3F9B93OutputstransformerrootstackInstructorCourseInstructorCourseDataSourceA30788FDName": {
+            "Fn::GetAtt": [
+              "InstructorCourse",
+              "Outputs.transformerrootstackInstructorCourseInstructorCourseDataSourceA30788FDName"
+            ]
+          },
+          "referencetotransformerrootstackInstructorCourseNestedStackInstructorCourseNestedStackResourceEA3F9B93OutputstransformerrootstackInstructorCourseInstructorCourseTable9F0545B5Ref": {
+            "Fn::GetAtt": [
+              "InstructorCourse",
+              "Outputs.transformerrootstackInstructorCourseInstructorCourseTable9F0545B5Ref"
+            ]
+          }
+        }
+      },
+      "DependsOn": [
+        "Course",
+        "GraphQLAPITransformerSchema3CB2AE18",
+        "Instructor",
+        "InstructorCourse"
+      ]
+    },
     "CustomResourcesjson": {
       "Type": "AWS::CloudFormation::Stack",
       "Properties": {
@@ -428,7 +1197,14 @@
       "DependsOn": [
         "GraphQLAPI",
         "GraphQLAPITransformerSchema3CB2AE18",
-        "Course"
+        "Testimonial",
+        "Events",
+        "Post",
+        "HeroData",
+        "Instructor",
+        "Course",
+        "InstructorCourse",
+        "ConnectionStack"
       ]
     }
   },
@@ -499,6 +1275,5 @@
         }
       }
     }
-  },
-  "Description": "{\"createdOn\":\"Linux\",\"createdBy\":\"AmplifyAdmin\",\"createdWith\":\"10.6.0-rc.f14440eb3.0\",\"stackType\":\"api-AppSync\",\"metadata\":{}}"
+  }
 }
