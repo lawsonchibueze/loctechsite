@@ -1,9 +1,6 @@
 /* eslint-disable @next/next/no-img-element */
-import { DataStore } from "@aws-amplify/datastore";
-import Link from "next/link";
-import { useEffect, useState } from "react";
-import { Course } from "../../models";
 import { motion } from "framer-motion";
+import Link from "next/link";
 
 export default function Card({ course }) {
   return (
