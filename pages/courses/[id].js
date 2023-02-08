@@ -10,6 +10,8 @@ import { BsDot, BsPeople, BsPerson, BsPlayCircle } from "react-icons/bs";
 import { FaFacebookF, FaInstagram, FaTwitter } from "react-icons/fa";
 import { FiMessageSquare } from "react-icons/fi";
 import { Course } from "../../models";
+import reactMarkdown from "react-markdown";
+import { ReactMarkdown } from "react-markdown/lib/react-markdown";
 
 export default function CourseComponent({ course }) {
   const router = useRouter();
@@ -48,7 +50,7 @@ export default function CourseComponent({ course }) {
             About This Course
           </h1>
           <div className="text-[#696969] text-[16px] flex flex-col gap-10 lg:w-3/5 leading-loose">
-            {course.descriptions}
+            <ReactMarkdown>{course.descriptions}</ReactMarkdown>
           </div>
           <div>
             <h1 className="font-medium text-2xl my-6">Learning Objectives</h1>
