@@ -70,7 +70,7 @@ export default function Navbar() {
           <img
             src="/assets/logo1.png"
             alt="navbar"
-            className="-ml-8 w-auto h-52"
+            className="-ml-8 w-auto h-40"
           />
         </Link>
         <div
