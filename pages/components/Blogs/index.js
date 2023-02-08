@@ -8,7 +8,7 @@ import Image from "next/image";
 import CommentField from "./CommentField";
 import author from "/public/images/author.jpg";
 
-export default function Blogs({ post }) {
+const Blogs = ({ post }) => {
   return (
     <div>
       <div className="flex flex-col lg:justify-center lg:items-center gap-8 px-4 mt-12">
@@ -49,4 +49,6 @@ export default function Blogs({ post }) {
       </div>
     </div>
   );
-}
+};
+
+export default Blogs;

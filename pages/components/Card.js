@@ -2,7 +2,7 @@
 import { motion } from "framer-motion";
 import Link from "next/link";
 
-export default function Card({ course }) {
+const Card = ({ course }) => {
   return (
     <motion.div
       initial={{ opacity: 0, y: -180 }}
@@ -69,4 +69,6 @@ export default function Card({ course }) {
       </Link>
     </motion.div>
   );
-}
+};
+
+export default Card;
