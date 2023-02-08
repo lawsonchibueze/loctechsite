@@ -2,7 +2,7 @@ import Head from "next/head";
 import Image from "next/image";
 import { MdOutlineNotificationsActive } from "react-icons/md";
 // import { special, stats } from "./components/data";
-import BreadCrumb from "./components/Breadcrumb";
+import BreadCrumb from "../components/Breadcrumb";
 import aboutImg from "/public/images/about-us-02-introduce-image.png";
 
 export default function AboutUs() {
