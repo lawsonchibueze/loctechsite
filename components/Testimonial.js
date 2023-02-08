@@ -3,7 +3,7 @@ import Image from "next/image";
 import { useEffect, useState } from "react";
 import { ImQuotesRight } from "react-icons/im";
 import { IoIosArrowBack, IoIosArrowForward } from "react-icons/io";
-import { Testimonial } from "../../models";
+import { Testimonial } from "../models";
 import { DataStore } from "aws-amplify";
 
 export default function TestimonialComponent(props) {

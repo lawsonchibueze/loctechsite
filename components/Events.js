@@ -1,10 +1,9 @@
 /* eslint-disable @next/next/no-img-element */
 import { MapPinIcon } from "@heroicons/react/24/outline";
 import { DataStore } from "aws-amplify";
-import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useState } from "react";
-import { Events } from "../../models";
+import { Events } from "../models";
 import about1 from "/public/images/about1.jpg";
 import about2 from "/public/images/about2.jpg";
 import about3 from "/public/images/about3.jpg";

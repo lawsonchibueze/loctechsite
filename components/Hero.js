@@ -4,7 +4,7 @@ import { motion } from "framer-motion";
 import Image from "next/image";
 import React, { useEffect, useState } from "react";
 import { MdOutlineNotificationsActive } from "react-icons/md";
-import { HeroData } from "../../models";
+import { HeroData } from "../models";
 import brain from "/public/images/artificial-intelligence.png";
 import book from "/public/images/certificate.png";
 import cert from "/public/images/porfolio.png";

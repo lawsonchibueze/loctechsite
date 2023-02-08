@@ -1,18 +1,11 @@
 import Head from "next/head";
-import Image from "next/image";
-import Features from "./components/Features";
-import Hero from "./components/Hero";
-
-import { DataStore } from "@aws-amplify/datastore";
-import { Course } from "../models";
-import { useState, useEffect } from "react";
-
-import FeaturedCourses from "./components/FeaturedCourses";
-import Views from "./components/views";
-import Testimonial from "./components/Testimonial";
-import Events from "./components/Events";
-import Blog from "./components/Blog";
+import Features from "../components/Features";
+import Hero from "../components/Hero";
 import { AnimatePresence } from "framer-motion";
+import Blog from "../components/Blog";
+import Events from "../components/Events";
+import Testimonial from "../components/Testimonial";
+import Views from "../components/views";
 
 export default function Home() {
   // const [courses, setCourses] = useState([]);
