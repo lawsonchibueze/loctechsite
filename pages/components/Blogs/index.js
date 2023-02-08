@@ -6,9 +6,7 @@ import {
 } from "@heroicons/react/24/outline";
 import Image from "next/image";
 import CommentField from "./CommentField";
-import Text from "./Text";
 import author from "/public/images/author.jpg";
-import blog from "/public/images/blog.jpg";
 
 export default function Blogs({ post }) {
   return (
