@@ -1,8 +1,16 @@
 /* eslint-disable @next/next/no-img-element */
 import { motion } from "framer-motion";
 import Link from "next/link";
+import { withSSRContext } from "aws-amplify";
+import { useRouter } from "next/router";
+import { Course } from "../models";
 
 const Card = ({ course }) => {
+  const router = useRouter();
+  if (router.isFallback) {
+    return <div>Loading...</div>;
+  }
+
   return (
     <motion.div
       initial={{ opacity: 0, y: -180 }}
@@ -72,3 +80,28 @@ const Card = ({ course }) => {
 };
 
 export default Card;
+
+export async function getStaticPaths(req) {
+  const { DataStore } = withSSRContext(req);
+  const courses = await DataStore.query(Course);
+  const paths = courses.map((course) => ({ params: { id: course.id } }));
+  console.log(paths);
+  return {
+    paths,
+    fallback: true,
+  };
+}
+
+export async function getStaticProps(req) {
+  const { DataStore } = withSSRContext(req);
+  const { params } = req;
+  const { id } = params;
+  const course = await DataStore.query(Course, id);
+
+  return {
+    props: {
+      course: JSON.parse(JSON.stringify(course)),
+    },
+    revalidate: 1,
+  };
+}

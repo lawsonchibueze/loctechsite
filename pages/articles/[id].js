@@ -1,8 +1,7 @@
 import { withSSRContext } from "aws-amplify";
-import { Post } from "../../models";
-import Markdown from "react-markdown";
-import { useRouter } from "next/router";
 import Head from "next/head";
+import { useRouter } from "next/router";
+import { Post } from "../../models";
 import Blogs from "../components/Blogs";
 
 export default function PostComponent({ post }) {
