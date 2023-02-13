@@ -33,9 +33,9 @@ export default function TestimonialComponent(props) {
             See What Our Students Have To Say
           </p>
         </div>
-        <div className="overflow-hidden flex flex-col">
+        <div className="">
           <div
-            className="flex lg:flex-row md:grid md:grid-cols-2 flex-col gap-10 transition-all duration-1000 ease-in-out"
+            className="lg:flex sm:flex lg:flex-row md:grid md:grid-cols-2 sm:flex-col gap-10 transition-all duration-1000 ease-in-out"
             style={{ transform: `translateX(-${currentSlide * 100}vw)` }}
           >
             {testimonials
