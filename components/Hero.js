@@ -3,6 +3,7 @@ import { DataStore } from "@aws-amplify/datastore";
 import { motion } from "framer-motion";
 import Image from "next/image";
 import React, { useEffect, useState } from "react";
+import Link from "next/link";
 import { MdOutlineNotificationsActive } from "react-icons/md";
 import { HeroData } from "../models";
 import brain from "/public/images/artificial-intelligence.png";
@@ -62,9 +63,11 @@ const Hero = () => {
               <h3 className="text-gray-900 text-2xl lg:text-start text-center mb-8 tracking-wider">
                 {hero.mediumText}
               </h3>
-              <button className="bg-violet-700 text-white font-bold rounded-md lg:w-60 w-72 py-5 lg:py-4 px-6 lg:px-0 lg:text-base text-lg hover:shadow-lg transition-shadow duration-500 ease-linear">
-                {hero.buttonText}
-              </button>
+              <Link href="https://loctechng.com/courses">
+                <button className="bg-violet-700 text-white font-bold rounded-md lg:w-60 w-72 py-5 lg:py-4 px-6 lg:px-0 lg:text-base text-lg hover:shadow-lg transition-shadow duration-500 ease-linear">
+                  {hero.buttonText}
+                </button>
+              </Link>
             </motion.div>
             <div className="relative lg:-mt-12">
               <img
