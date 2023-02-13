@@ -37,11 +37,11 @@ export default function Blog() {
   return (
     <div className="mt-20 lg:p-20 px-4">
       <div className="lg:grid flex flex-col lg:grid-cols-4 lg:grid-flow-row gap-12 ">
-        <div className="flex flex-col gap-6 items-center h-fit">
-          <h1 className="text-xl font-medium text-violet-700 borde leading-snug lg:self-start text-center md:text-xl uppercase">
+        <div className="flex flex-col gap-6 md:items-start items-center h-fit">
+          <h1 className="text-xl font-semibold text-violet-700 borde leading-snug lg:self-start md:self-center text-center md:text-2xl uppercase">
             Article Update
           </h1>
-          <h2 className="text-[#181818] text-3xl font-medium lg:text-start text-center">
+          <h2 className="text-[#181818] text-3xl font-medium lg:text-start md:self-start text-center">
             Loctech News and Article
           </h2>
           <div className="flex flex-col gap-5">
@@ -63,7 +63,7 @@ export default function Blog() {
             })}
           </div>
         </div>
-        <div className="grid lg:grid-cols-3 grid-flow-row gap-8 col-span-3">
+        <div className="grid lg:grid-cols-3 md:grid-cols-2 grid-flow-row gap-8 col-span-3">
           {posts
             .map((post, index) => {
               return (

@@ -19,14 +19,11 @@ export default function All() {
 
   return (
     <div>
-      <div className="grid lg:grid-cols-4 grid-flow-row gap-8">
+      <div className="grid lg:grid-cols-4 md:grid-cols-2 grid-flow-row gap-8">
         {courses
           .map((course, index) => {
-            if (course.isFeatured === true) {
-              return <Card key={index} course={course} />;
-            }
-          })
-          .slice(0, 8)}
+            return <Card key={index} course={course} />;
+          }).slice(0, 8)}
       </div>
     </div>
   );

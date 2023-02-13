@@ -47,7 +47,7 @@ export default function Courses() {
             duration: 1,
             delay: 0.6
           }}
-          className='grid lg:grid-cols-4 grid-flow-row gap-8 lg:px-20 px-4 my-20'
+          className='grid lg:grid-cols-4 md:grid-cols-2 grid-flow-row gap-8 lg:px-20 px-4 my-20'
         >
           {courses.map((course, index) => {
             return (

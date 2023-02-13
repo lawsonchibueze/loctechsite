@@ -1,3 +1,4 @@
+/* eslint-disable @next/next/no-img-element */
 import {
   MagnifyingGlassIcon,
   ShoppingBagIcon,
@@ -65,12 +66,12 @@ export default function Navbar() {
 
   return (
     <div className={`navbar ${sticky ? "sticky_navbar" : ""}`}>
-      <div className="flex gap-4 items-center justify-between lg:justify-start w-full lg:w-fit">
-        <Link href="/" className="text-4xl font-bold flex items-center gap-2">
+      <div className="flex items-center justify-between lg:justify-start w-full lg:w-fit">
+        <Link href="/" className="text-4xl font-bold flex items-center">
           <img
             src="/assets/logo1.png"
             alt="navbar"
-            className="-ml-8 w-40 h-40 object-cover"
+            className="lg:-ml-8 lg:w-40 lg:h-40 w-32 h-32 md:w-36 md:h-36 object-cover -ml-3"
           />
         </Link>
         <div
@@ -81,23 +82,20 @@ export default function Navbar() {
                     <div className="w-10 h-[2px] bg-[#64ffda]"></div>
                     <div className="w-8 h-[2px] bg-[#64ffda]"></div> */}
           <div
-            className={`w-8 h-[2px] bg-black transition ease transform duration-300 ${
-              isOpen
-                ? "rotate-45 translate-y-3 opacity-50 group-hover:opacity-100"
-                : "opacity-50 group-hover:opacity-100"
-            }`}
+            className={`w-8 h-[2px] md:h-[4px] md:w-10 bg-black transition ease transform duration-300 ${isOpen
+              ? "rotate-45 translate-y-3 opacity-50 group-hover:opacity-100"
+              : "opacity-50 group-hover:opacity-100"
+              }`}
           />
           <div
-            className={`w-8 h-[2px] bg-black transition ease transform duration-300 ${
-              isOpen ? "opacity-0" : "opacity-50 group-hover:opacity-100"
-            }`}
+            className={`w-8 h-[2px] md:h-[4px] md:w-10 bg-black transition ease transform duration-300 ${isOpen ? "opacity-0" : "opacity-50 group-hover:opacity-100"
+              }`}
           />
           <div
-            className={`w-8 h-[2px] bg-black transition ease transform duration-300 ${
-              isOpen
-                ? "-rotate-45 -translate-y-3 opacity-50 group-hover:opacity-100"
-                : "opacity-50 group-hover:opacity-100"
-            }`}
+            className={`w-8 h-[2px] md:h-[4px] md:w-10 bg-black transition ease transform duration-300 ${isOpen
+              ? "-rotate-45 -translate-y-3 opacity-50 group-hover:opacity-100"
+              : "opacity-50 group-hover:opacity-100"
+              }`}
           />
         </div>
         {/* <div className='h-10 w-[1px] bg-gray-300 hidden lg:block'></div> */}
@@ -118,7 +116,7 @@ export default function Navbar() {
               <Link
                 key={index}
                 href={link.href}
-                // className={path === link.href && "text-violet-700"}
+              // className={path === link.href && "text-violet-700"}
               >
                 {link.name}
               </Link>
@@ -133,8 +131,8 @@ export default function Navbar() {
         </Link>
       </div>
       {showLinks && (
-        <div className="absolute lg:hidden bg-gray-50 inset-y-0 right-0 h-screen w-4/5 bg-opacity-100 z-30 backdrop-blur-lg">
-          <div className="flex flex-col space-y-10 mt-20 p-10 items-center text-black font-medium text-[22px]">
+        <div className="absolute lg:hidden bg-gray-50 inset-y-0 right-0 h-screen w-full bg-opacity-100 z-30 backdrop-blur-lg">
+          <div className="flex flex-col gap-10 md:gap-20 mt-20 p-10 items-center text-black font-medium text-4xl md:text-7xl">
             {links.map((link, index) => (
               <Link onClick={removeLink} href={link.href} key={index}>
                 {link.name}
