@@ -39,8 +39,8 @@ export default function FeaturedPost() {
           are on top all times
         </div>
       </div>
-      <div className="mx-auto max-w-2xl py-16 px-4 sm:py-24 sm:px-6 lg:max-w-7xl lg:px-2">
-        <div className='grid lg:grid-cols-3 grid-flow-row gap-10 col-span-3'>
+      <div className="lg:px-20 px-4 my-20">
+        <div className='grid lg:grid-cols-3 md:grid-cols-2 grid-flow-row gap-10 col-span-3'>
           {posts.map((post, index) => {
             return (
               <div key={index} className='flex flex-col shadow-xl gap-4 pb-6 rounded-b-md group overflow-hidden'>

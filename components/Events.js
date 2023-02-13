@@ -9,24 +9,6 @@ import about2 from "/public/images/about2.jpg";
 import about3 from "/public/images/about3.jpg";
 import { ReactMarkdown } from "react-markdown/lib/react-markdown";
 
-const data = [
-  {
-    image: about1,
-    date: "AUGUST 18, 2021",
-    desc: "Global Education Meeting for Everyone",
-  },
-  {
-    image: about2,
-    date: "November 9, 2021",
-    desc: "London International Conference on Education",
-  },
-  {
-    image: about3,
-    date: "DECEMBER 31, 2021",
-    desc: "Digital Skills: Using Information to Build Business",
-  },
-];
-
 export default function Event() {
   const [events, setEvents] = useState([]);
 
@@ -45,7 +27,7 @@ export default function Event() {
     <div className="my-32 lg:px-20 px-4">
       <div className="flex lg:flex-row flex-col gap-12">
         <div className="flex flex-col gap-4 items-center lg:w-[30%] w-full flex-1">
-          <h1 className="text-base font-semibold text-violet-700 borde leading-snug lg:self-start self-center">
+          <h1 className="text-base font-semibold text-violet-700 borde leading-snug lg:self-start self-center md:text-2xl">
             EVENTS
           </h1>
           <h2 className="text-[#181818] text-3xl font-medium lg:text-start text-center lg:self-start self-center">
@@ -59,7 +41,7 @@ export default function Event() {
             View all
           </button>
         </div>
-        <div className="grid lg:grid-cols-3 grid-flow-row gap-8">
+        <div className="grid lg:grid-cols-3 md:grid-cols-2 grid-flow-row gap-8">
           {events.map((event, index) => {
             return (
               <Link

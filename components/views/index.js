@@ -53,7 +53,7 @@ export default function Views() {
   }, []);
 
   return (
-    <div className="lg:px-20 px-4 mt-20 flex flex-col justify-center items-center">
+    <div className="lg:px-20 md:px-8 px-4 mt-20 flex flex-col justify-center items-center">
       <h1 className="text-3xl font-medium text-[#252525] mb-10">
         Explore Our Courses
       </h1>

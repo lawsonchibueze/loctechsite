@@ -19,12 +19,12 @@ export default function Office() {
 
   return (
     <div>
-      <div className="grid lg:grid-cols-5 grid-flow-row gap-10">
+      <div className="grid lg:grid-cols-4 md:grid-cols-2 grid-flow-row gap-10">
         {courses.map((course, index) => {
           if (course.category === "OFFICE_PRODUCTIVITY") {
             return <Card key={index} course={course} />;
           }
-        })}
+        }).slice(0, 8)}
       </div>
     </div>
   );
