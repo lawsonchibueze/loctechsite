@@ -68,9 +68,6 @@ const Hero = () => {
                   {hero.buttonText}
                 </button>
               </Link>
-              <button className="bg-violet-700 text-white font-bold rounded-md lg:w-60 w-72 py-5 lg:py-4 px-6 lg:px-0 lg:text-base text-lg hover:shadow-lg transition-shadow duration-500 ease-linear lg:self-start md:self-start self-center">
-                {hero.buttonText}
-              </button>
             </motion.div>
             <div className="relative lg:-mt-12">
               <img
