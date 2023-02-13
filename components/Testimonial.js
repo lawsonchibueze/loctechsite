@@ -26,16 +26,16 @@ export default function TestimonialComponent(props) {
     <div className="bg-[#f8f8f8]">
       <div className="flex flex-col gap-12 mt-10 lg:p-20 px-4 py-10 relative">
         <div className="flex flex-col gap-6 items-center">
-          <h1 className="text-base font-bold text-violet-700 borde leading-snugr">
+          <h1 className="text-base font-bold text-violet-700 borde leading-snug md:text-2xl">
             TESTIMONIALS
           </h1>
           <p className="text-[#181818] text-3xl font-medium text-center">
             See What Our Students Have To Say
           </p>
         </div>
-        <div className="overflow-hidden flex flex-col">
+        <div className="">
           <div
-            className="flex lg:flex-row flex-col gap-10 transition-all duration-1000 ease-in-out"
+            className="lg:flex sm:flex lg:flex-row md:grid md:grid-cols-2 sm:flex-col gap-10 transition-all duration-1000 ease-in-out"
             style={{ transform: `translateX(-${currentSlide * 100}vw)` }}
           >
             {testimonials

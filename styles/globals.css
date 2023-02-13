@@ -39,7 +39,16 @@ body {
 
 @media screen and (max-width: 425px) {
   .navbar {
-    padding: 0px 10px 0 0;
+    padding: 0px 14px;
+    height: 4rem;
+  }
+}
+
+
+@media screen and (min-width: 720px) {
+  .navbar {
+    padding: 0 5rem;
+    height: 6rem;
   }
 }
 
@@ -57,7 +66,22 @@ body {
 
 @media screen and (max-width: 425px) {
   .sticky_navbar {
-    padding: 0px 10px 0 0;
+    padding: 0px 10px;
+    height: 4rem;
+  }
+}
+
+@media screen and (min-width: 425px) {
+  .sticky_navbar {
+    padding: 0px 20px;
+    height: 6rem;
+  }
+}
+
+@media screen and (min-width: 720px) {
+  .sticky_navbar {
+    padding: 0 5rem;
+    height: 6rem;
   }
 }
 

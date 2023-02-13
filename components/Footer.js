@@ -41,7 +41,7 @@ export default function Footer() {
               </a>
             </div>
           </div>
-          <div className="grid lg:grid-cols-3 grid-flow-row gap-8 lg:gap-32">
+          <div className="grid lg:grid-cols-3 md:grid-cols-3 grid-flow-row gap-8 lg:gap-32">
             <div className="flex flex-col gap-4">
               <h1 className="font-bold text-lg text-[#252525]">About</h1>
               <ul className="flex flex-col gap-5 text-base font-semibold text-[#9b9b9b]">

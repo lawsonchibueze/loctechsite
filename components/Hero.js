@@ -50,17 +50,17 @@ const Hero = () => {
       {data.map((hero, index) => {
         return (
           <div
-            className="lg:grid flex flex-col lg:grid-cols-2 gap-10 lg:px-20 px-4 relative lg:mt-32 mt-10"
+            className="lg:grid flex flex-col lg:grid-cols-2 md:flex-row gap-10 md:px-8 lg:px-20 px-4 relative lg:mt-32 mt-10"
             key={index}
           >
-            <motion.div className="flex flex-col">
-              <h2 className="text-violet-700 lg:text-xl lg:text-start text-center font-semibold tracking-widest mb-2">
+            <motion.div className="flex flex-col md:pb-10">
+              <h2 className="text-violet-700 lg:text-xl lg:text-start md:text-start text-center font-semibold tracking-widest mb-2">
                 {hero.smallText}
               </h2>
-              <p className="font-semibold lg:text-6xl text-4xl leading-snug lg:text-start text-center text-red-700 mb-8">
+              <p className="font-semibold lg:text-6xl text-4xl leading-snug lg:text-start md:text-start text-center text-red-700 mb-8">
                 {hero.largeText}
               </p>
-              <h3 className="text-gray-900 text-2xl lg:text-start text-center mb-8 tracking-wider">
+              <h3 className="text-gray-900 text-2xl lg:text-start md:text-start text-center mb-8 tracking-wider">
                 {hero.mediumText}
               </h3>
               <Link href="https://loctechng.com/courses">
@@ -68,12 +68,15 @@ const Hero = () => {
                   {hero.buttonText}
                 </button>
               </Link>
+              <button className="bg-violet-700 text-white font-bold rounded-md lg:w-60 w-72 py-5 lg:py-4 px-6 lg:px-0 lg:text-base text-lg hover:shadow-lg transition-shadow duration-500 ease-linear lg:self-start md:self-start self-center">
+                {hero.buttonText}
+              </button>
             </motion.div>
             <div className="relative lg:-mt-12">
               <img
                 src={hero.image}
                 alt="hero 1"
-                className="object-cover lg:min-w-full lg:w-fit"
+                className="object-cover lg:min-w-full lg:w-fit md:w-full md:h-full"
               />
               {/* <div className="absolute bg-white lg:w-[50%]  px-8 py-5 rounded-lg drop-shadow-xl bottom-12 lg:-left-20 left-1 animate-bounce bg-opacity-60 backdrop-filter backdrop-blur-lg">
                 <div className="">Tomorrow is our <span className="font-semibold">&quot;When I Grow Up&quot; Spirit Day!</span>

@@ -19,12 +19,12 @@ export default function Graphics() {
 
   return (
     <div>
-      <div className="grid lg:grid-cols-4 grid-flow-row gap-6">
+      <div className="grid lg:grid-cols-4 md:grid-cols-2 grid-flow-row gap-6">
         {courses.map((course, index) => {
           if (course.category === "GRAPHICS_MEDIA") {
             return <Card key={index} course={course} />;
           }
-        })}
+        }).slice(0, 8)}
       </div>
     </div>
   );
