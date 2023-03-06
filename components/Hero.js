@@ -63,7 +63,7 @@ const Hero = () => {
               <h3 className="text-gray-900 text-2xl lg:text-start md:text-start text-center mb-8 tracking-wider">
                 {hero.mediumText}
               </h3>
-              <Link href="https://loctechng.com/courses">
+              <Link href="https://bit.ly/Scholarship_2023">
                 <button className="bg-violet-700 text-white font-bold rounded-md lg:w-60 w-72 py-5 lg:py-4 px-6 lg:px-0 lg:text-base text-lg hover:shadow-lg transition-shadow duration-500 ease-linear">
                   {hero.buttonText}
                 </button>
