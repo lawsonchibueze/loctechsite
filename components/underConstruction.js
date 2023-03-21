@@ -1,4 +1,5 @@
 import React from "react";
+import Image from "next/image";
 
 import { FiFacebook, FiLinkedin, FiTwitter, FiYoutube } from "react-icons/fi";
 
@@ -11,7 +12,7 @@ function SiteUnderConstruction() {
       <p className="text-lg mb-8 text-black flex flex-col justify-center items-center">
         We're working hard to bring you something awesome. Stay tuned!
       </p>
-      <img
+      <Image
         src="/assets/logo1.png"
         alt="Site under construction"
         width={200}
