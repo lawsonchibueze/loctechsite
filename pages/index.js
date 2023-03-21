@@ -1,11 +1,12 @@
 import Head from "next/head";
-import Features from "../components/Features";
-import Hero from "../components/Hero";
-import { AnimatePresence } from "framer-motion";
-import Blog from "../components/Blog";
-import Events from "../components/Events";
-import Testimonial from "../components/Testimonial";
-import Views from "../components/views";
+import SiteUnderConstruction from "../components/underConstruction";
+// import Features from "../components/Features";
+// import Hero from "../components/Hero";
+// import { AnimatePresence } from "framer-motion";
+// import Blog from "../components/Blog";
+// import Events from "../components/Events";
+// import Testimonial from "../components/Testimonial";
+// import Views from "../components/views";
 
 export default function Home() {
   // const [courses, setCourses] = useState([]);
@@ -30,12 +31,13 @@ export default function Home() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <div>
-        <Hero />
+        {/* <Hero />
         <Features />
         <Views />
         <Events />
         <Blog />
-        <Testimonial />
+        <Testimonial /> */}
+        <SiteUnderConstruction />
       </div>
     </div>
   );
