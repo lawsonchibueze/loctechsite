@@ -1,5 +1,5 @@
 import Head from "next/head";
-import SiteUnderConstruction from "../components/underConstruction";
+import UnderConstruction from "../components/UnderConstruction";
 // import Features from "../components/Features";
 // import Hero from "../components/Hero";
 // import { AnimatePresence } from "framer-motion";
@@ -37,7 +37,7 @@ export default function Home() {
         <Events />
         <Blog />
         <Testimonial /> */}
-        <SiteUnderConstruction />
+        <UnderConstruction />
       </div>
     </div>
   );

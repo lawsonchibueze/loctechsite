@@ -3,7 +3,7 @@ import Image from "next/image";
 
 import { FiFacebook, FiLinkedin, FiTwitter, FiYoutube } from "react-icons/fi";
 
-function SiteUnderConstruction() {
+function UnderConstruction() {
   return (
     <div className="bg-neutral-300 h-screen flex flex-col justify-center items-center">
       <h1 className="text-4xl text-black font-bold mb-8">
@@ -75,4 +75,4 @@ function SiteUnderConstruction() {
   );
 }
 
-export default SiteUnderConstruction;
+export default UnderConstruction;
