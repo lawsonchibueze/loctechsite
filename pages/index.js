@@ -12,13 +12,7 @@ const Home = () => {
         <p className="text-lg mb-2 text-black flex flex-col justify-center items-center text-center">
           We're working hard to bring you something awesome. Stay tuned!
         </p>
-        <Image
-          src="/assets/logo1.png"
-          alt="Site under construction"
-          width={200}
-          height={200}
-          className="max-w-lg mb-3 text-black"
-        />
+
         <p className="text-lg text-black py-2">
           Please Call or Send us a Mail:
         </p>
