@@ -1,6 +1,4 @@
 import React from "react";
-import { FiFacebook, FiLinkedin, FiTwitter, FiYoutube } from "react-icons/fi";
-import Image from "next/image";
 
 const Home = () => {
   return (
@@ -16,47 +14,7 @@ const Home = () => {
         <p className="text-lg text-black py-2">
           Please Call or Send us a Mail:
         </p>
-        <div className="flex space-x-4">
-          <a href="#" className="text-blue-500 hover:text-blue-700">
-            <i className="fab fa-facebook-f fa-lg"></i>
-          </a>
-          <a href="#" className="text-blue-500 hover:text-blue-700">
-            <i className="fab fa-twitter fa-lg"></i>
-          </a>
-          <a href="#" className="text-blue-500 hover:text-blue-700">
-            <i className="fab fa-instagram fa-lg"></i>
-          </a>
-        </div>
-        {/* <div className="flex gap-10 items-center text-[#252525] text-xl">
-          <a
-            href="https://twitter.com/loctechtraining"
-            target="_blank"
-            rel="noreferrer"
-          >
-            <FiTwitter className="hover:text-violet-700 transition-colors duration-300 ease-in-out" />
-          </a>
-          <a
-            href="https://facebook.com/loctechtraining/"
-            target="_blank"
-            rel="noreferrer"
-          >
-            <FiFacebook className="hover:text-violet-700 transition-colors duration-300 ease-in-out" />
-          </a>
-          <a
-            href="https://www.linkedin.com/company/loctech-it-training-institute"
-            target="_blank"
-            rel="noreferrer"
-          >
-            <FiLinkedin className="hover:text-violet-700 transition-colors duration-300 ease-in-out" />
-          </a>
-          <a
-            href="https://www.youtube.com/@loctechtraining2346"
-            target="_blank"
-            rel="noreferrer"
-          >
-            <FiYoutube className="hover:text-violet-700 transition-colors duration-300 ease-in-out" />
-          </a>
-        </div> */}
+
         <div className="flex flex-col gap-1">
           <span className="text-violet-700 font-bold text-lg pt-5">
             +2347038885466
