@@ -19,7 +19,9 @@ const Home = () => {
           height={200}
           className="max-w-lg mb-3 text-black"
         />
-        <p className="text-lg text-black py-2">Follow us on social media:</p>
+        <p className="text-lg text-black py-2">
+          Please Call or Send us a Mail:
+        </p>
         <div className="flex space-x-4">
           <a href="#" className="text-blue-500 hover:text-blue-700">
             <i className="fab fa-facebook-f fa-lg"></i>
@@ -31,7 +33,7 @@ const Home = () => {
             <i className="fab fa-instagram fa-lg"></i>
           </a>
         </div>
-        <div className="flex gap-10 items-center text-[#252525] text-xl">
+        {/* <div className="flex gap-10 items-center text-[#252525] text-xl">
           <a
             href="https://twitter.com/loctechtraining"
             target="_blank"
@@ -60,18 +62,14 @@ const Home = () => {
           >
             <FiYoutube className="hover:text-violet-700 transition-colors duration-300 ease-in-out" />
           </a>
-        </div>
+        </div> */}
         <div className="flex flex-col gap-1">
-          {/* <h1>Call us</h1> */}
           <span className="text-violet-700 font-bold text-lg pt-5">
             +2347038885466
           </span>
+          <div className="font-semibold">customercare@loctechng.com</div>
         </div>
-        {/* <div className="lg:w-1/2 font-semibold">
-        4A Etim Okpoyo Street, Bridge Bus Stop, Aba Road, Port Harcourt, Nigeria
-      </div> */}
       </div>
-      <div className="font-semibold">customercare@loctechng.com</div>
     </div>
   );
 };
