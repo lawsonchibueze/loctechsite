@@ -17,26 +17,6 @@ const Home = () => {
           className="max-w-lg mb-3 text-black"
         />
         <p className="text-lg text-black py-2">follow us on social media</p>
-        <div className="flex space-x-4">
-          <a href="https://www.facebook.com/loctechtraining" target="_blank">
-            <FiFacebook className="text-3xl text-black" />
-          </a>
-          <a href="https://twitter.com/loctechtraining" target="_blank">
-            <FiTwitter className="text-3xl text-black" />
-          </a>
-          <a
-            href="https://www.linkedin.com/company/11495008/admin/"
-            target="_blank"
-          >
-            <FiLinkedin className="text-3xl text-black" />
-          </a>
-          <a
-            href="https://www.youtube.com/@loctechtraining2346"
-            target="_blank"
-          >
-            <FiYoutube className="text-3xl text-black" />
-          </a>
-        </div>
 
         <div className="flex flex-col gap-1 text-purple-800 font-bold pt-4">
           <span>+234 703 888 5466</span>
