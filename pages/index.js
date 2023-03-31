@@ -7,7 +7,7 @@ const Home = () => {
   return (
     <div>
       <div className="bg-neutral-300 h-screen flex flex-col justify-center items-center text-center">
-        <Link href="/https://bit.ly/Scholarship_2023">
+        <Link href="https://bit.ly/Scholarship_2023">
           <h1 className="text-4xl text-black font-bold mb-8 ">
             Scholarship 2023
           </h1>
@@ -21,7 +21,7 @@ const Home = () => {
             height={400}
             className="max-w-lg mb-3 text-black"
           />
-          <Link href="/https://bit.ly/Scholarship_2023" className="pt-4 ">
+          <Link href="https://bit.ly/Scholarship_2023" className="pt-4 ">
             <button className="bg-white px-4 rounded-md text-violet-700">
               Register Now{" "}
             </button>
